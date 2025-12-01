@@ -502,7 +502,8 @@
                     <h2 class="text-xl md:text-2xl mb-4 md:mb-6 border-b border-stone-800 pb-2" data-i18n="step2_title">Mirror Frame</h2>
                     <p class="text-sm text-stone-400 mb-4" data-i18n="step2_desc">Choose the frame finish for the mirror.</p>
                     
-                    <div class="grid grid-cols-2 gap-4">
+                    <!-- Changed grid to support 3 items -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <!-- Gold Option -->
                         <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('frame', 'Vintage Gold')">
                             <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3">
@@ -524,6 +525,15 @@
                             <h3 class="text-base md:text-lg" data-i18n="frame_silver">Vintage Silver</h3>
                             <div id="check-frame-Vintage Silver" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
                         </div>
+
+                        <!-- No Frame Option -->
+                        <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('frame', 'None')">
+                            <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 flex items-center justify-center bg-stone-800/50 rounded-lg border-2 border-stone-600">
+                                 <i data-lucide="ban" class="w-10 h-10 text-stone-500"></i>
+                            </div>
+                            <h3 class="text-base md:text-lg" data-i18n="frame_none">No Frame</h3>
+                            <div id="check-frame-None" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
+                        </div>
                     </div>
                     <input type="hidden" id="frameSelection" required>
                 </section>
@@ -533,7 +543,8 @@
                     <h2 class="text-xl md:text-2xl mb-4 md:mb-6 border-b border-stone-800 pb-2" data-i18n="step3_title">Velvet Rope</h2>
                     <p class="text-sm text-stone-400 mb-4" data-i18n="step3_desc">Select the color of the velvet crowd control ropes.</p>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Changed grid to support 4 items -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <!-- Red -->
                     <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'Red')">
                         <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-red-950/10 flex items-center justify-center border-2 border-red-950 shadow-lg overflow-hidden">
@@ -577,6 +588,15 @@
                         </div>
                         <h3 class="text-base md:text-lg" data-i18n="rope_white">White Velvet</h3>
                         <div id="check-rope-White" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
+                    </div>
+
+                    <!-- No Rope Option -->
+                    <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'None')">
+                        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 flex items-center justify-center bg-stone-800/50 rounded-lg border-2 border-stone-600">
+                             <i data-lucide="ban" class="w-10 h-10 text-stone-500"></i>
+                        </div>
+                        <h3 class="text-base md:text-lg" data-i18n="rope_none">No Rope</h3>
+                        <div id="check-rope-None" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
                     </div>
                 </div>
                 <input type="hidden" id="ropeSelection" required>
@@ -637,7 +657,6 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
             <!-- Gallery Item 1 -->
-            <!-- Added onclick event to trigger lightbox -->
             <div class="gallery-item relative overflow-hidden rounded-lg shadow-lg aspect-[3/4] group cursor-pointer" onclick="openLightbox('luxury.jpg')">
                 <img src="luxury.jpg" class="gallery-img w-full h-full object-cover" alt="Wedding Event">
                 <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -740,26 +759,37 @@
     </footer>
 
     <script>
-        /* --- Intro Animation Logic --- */
-        (function playIntro() {
+        /* --- Intro Animation Logic (Fixed for Persistent Skipping) --- */
+        (function manageIntro() {
             const intro = document.getElementById('intro-screen');
-            
-            if (intro) {
-                // 1. IMMEDIATE REVEAL: Force the intro to be visible
-                intro.classList.remove('hidden');
-                intro.classList.add('flex');
-                
-                // 2. Wait 3 seconds for animation to play, then fade out
-                setTimeout(() => {
-                    intro.style.transition = "opacity 1s ease";
-                    intro.style.opacity = "0";
-                    intro.style.pointerEvents = "none";
+            // Check localStorage to see if user visited before
+            const hasSeenIntro = localStorage.getItem('frameByKaram_intro_seen');
+
+            if (hasSeenIntro) {
+                // If already seen, remove intro IMMEDIATELY so it's never visible
+                if (intro) {
+                    intro.style.display = 'none'; // Instant hide
+                    intro.remove(); // Remove from DOM
+                }
+            } else {
+                // First time: Show intro, then hide and save memory
+                if (intro) {
+                    intro.classList.remove('hidden');
+                    intro.classList.add('flex'); // CRITICAL FIX: Restore flex to center content
                     
-                    // 3. Remove from DOM after fade is complete to free up resources
+                    // Mark as seen so next reload skips it
+                    localStorage.setItem('frameByKaram_intro_seen', 'true');
+
                     setTimeout(() => {
-                        if (intro.parentNode) intro.parentNode.removeChild(intro);
-                    }, 1000);
-                }, 3000);
+                        intro.style.transition = "opacity 1s ease";
+                        intro.style.opacity = "0";
+                        intro.style.pointerEvents = "none";
+                        
+                        setTimeout(() => {
+                            if (intro.parentNode) intro.parentNode.removeChild(intro);
+                        }, 1000);
+                    }, 3000); // 3 seconds display
+                }
             }
         })();
 
@@ -790,7 +820,7 @@
                 moonIcon.classList.remove('hidden');
             }
             
-            if(!document.getElementById('preview-section').classList.contains('hidden')) {
+            if(document.getElementById('preview-section') && !document.getElementById('preview-section').classList.contains('hidden')) {
                 updatePreview();
             }
         }
@@ -875,11 +905,13 @@
                 step2_desc: "Choose the frame finish for the mirror.",
                 frame_gold: "Vintage Gold",
                 frame_silver: "Vintage Silver",
+                frame_none: "No Frame",
                 step3_title: "Velvet Rope",
                 step3_desc: "Select the color of the velvet crowd control ropes.",
                 rope_red: "Red Velvet",
                 rope_pink: "Pink Velvet",
                 rope_white: "White Velvet",
+                rope_none: "No Rope",
                 step4_title: "Photo Mount",
                 step4_desc: "The cardboard frame attached to final printed photos.",
                 mount_white: "Classic White",
@@ -933,11 +965,13 @@
                 step2_desc: "בחר את גימור המסגרת למראה.",
                 frame_gold: "זהב וינטג׳",
                 frame_silver: "כסף וינטג׳",
+                frame_none: "ללא מסגרת",
                 step3_title: "חבל קטיפה",
                 step3_desc: "בחר את צבע חבלי הקטיפה לתיחום.",
                 rope_red: "קטיפה אדומה",
                 rope_pink: "קטיפה ורודה",
                 rope_white: "קטיפה לבנה",
+                rope_none: "ללא חבל",
                 step4_title: "מסגרת תמונה",
                 step4_desc: "מסגרת הקרטון המצורפת לתמונות המודפסות.",
                 mount_white: "לבן קלאסי",
@@ -991,11 +1025,13 @@
                 step2_desc: "اختر تشطيب إطار المرآة.",
                 frame_gold: "ذهب عتيق",
                 frame_silver: "فضة عتيقة",
+                frame_none: "بدون إطار",
                 step3_title: "حبل المخمل",
                 step3_desc: "اختر لون حبال المخمل.",
                 rope_red: "مخمل أحمر",
                 rope_pink: "مخمل وردي",
                 rope_white: "مخمل أبيض",
+                rope_none: "بدون حبل",
                 step4_title: "إطار الصورة",
                 step4_desc: "إطار الكرتون المرفق بالصور المطبوعة.",
                 mount_white: "أبيض كلاسيكي",
@@ -1075,7 +1111,9 @@
                 });
 
                 // Update preview text if visible
-                updatePreview();
+                if(document.getElementById('preview-section') && !document.getElementById('preview-section').classList.contains('hidden')) {
+                    updatePreview();
+                }
 
                 // Fade Back In
                 activePage.classList.remove('opacity-0', 'translate-y-10');
@@ -1117,58 +1155,65 @@
 
         function updatePreview() {
             // Show preview section if any selection is made
-            if(selections.frame || selections.rope || selections.cardboard) {
-                document.getElementById('preview-section').classList.remove('hidden');
-            }
+            // NOTE: This section might be hidden by default in recent edits, ensuring no crash if element missing.
+            const previewSection = document.getElementById('preview-section');
+            if (previewSection) {
+                if(selections.frame || selections.rope || selections.cardboard) {
+                    previewSection.classList.remove('hidden');
+                }
 
-            // 1. Update Frame in Preview
-            const previewFrame = document.getElementById('preview-frame');
-            previewFrame.innerHTML = ''; // Clear previous
-            if(selections.frame === 'Vintage Gold') {
-                const img = document.createElement('img');
-                img.src = 'royal-gold.png';
-                img.className = 'w-full h-full object-contain drop-shadow-2xl';
-                // Add error handler just in case file is missing (though redundant with user instructions)
-                img.onerror = function() { this.style.display='none'; }; 
-                previewFrame.appendChild(img);
-            } else if(selections.frame === 'Vintage Silver') {
-                const div = document.createElement('div');
-                div.className = 'w-full h-full rounded-lg bg-gradient-to-br from-gray-300 via-gray-100 to-gray-400 border-4 border-gray-500 shadow-2xl';
-                previewFrame.appendChild(div);
-            } else {
-                // Placeholder
-                previewFrame.innerHTML = '<div class="w-full h-full border-2 border-dashed border-stone-500/50 flex items-center justify-center text-stone-500 text-xs text-center p-2">Select Frame</div>';
-            }
-
-            // 2. Update Rope in Preview
-            const previewRope = document.getElementById('preview-rope');
-            previewRope.innerHTML = '';
-            
-            if (selections.rope) {
-                const img = document.createElement('img');
+                const previewFrame = document.getElementById('preview-frame');
+                const previewRope = document.getElementById('preview-rope');
                 
-                // Determine source based on selection
-                if (selections.rope === 'Red') img.src = 'red-rope.png';
-                else if (selections.rope === 'Pink') img.src = 'pink-rope.png';
-                else if (selections.rope === 'White') img.src = 'white-rope.png';
-                
-                // Reduced scale from 125 to 110
-                img.className = 'h-full object-contain drop-shadow-lg scale-110 origin-bottom'; 
-                img.onerror = function() { this.style.display='none'; };
-                previewRope.appendChild(img);
-            }
+                // Reset containers
+                previewFrame.innerHTML = '';
+                previewRope.innerHTML = '';
 
-            // 3. Update Mount in Preview
-            const previewMount = document.getElementById('preview-mount');
-            const previewMountName = document.getElementById('preview-mount-name');
-            
-            if(selections.cardboard === 'White') {
-                // Use a slightly off-white for better contrast in dark mode
-                previewMount.className = "w-48 h-60 shadow-lg relative flex items-center justify-center transition-all duration-300 bg-stone-200 border border-stone-300";
-                previewMountName.innerText = translations[currentLang].mount_white;
-            } else if(selections.cardboard === 'Natural Kraft') {
-                previewMount.className = "w-48 h-60 shadow-lg relative flex items-center justify-center transition-all duration-300 bg-[#d2b48c] border border-[#b08d55]";
-                previewMountName.innerText = translations[currentLang].mount_kraft;
+                // 1. Frame Layer
+                if(selections.frame === 'Vintage Gold') {
+                    const img = document.createElement('img');
+                    img.src = 'royal-gold.png';
+                    img.className = 'w-full h-full object-contain drop-shadow-2xl';
+                    img.onerror = function() { this.style.display='none'; }; 
+                    previewFrame.appendChild(img);
+                } else if(selections.frame === 'Vintage Silver') {
+                    const div = document.createElement('div');
+                    div.className = 'w-full h-full rounded-lg bg-gradient-to-br from-gray-300 via-gray-100 to-gray-400 border-4 border-gray-500 shadow-2xl';
+                    previewFrame.appendChild(div);
+                } else if (selections.frame === 'None') {
+                     const div = document.createElement('div');
+                     div.className = 'w-full h-full rounded-sm bg-gradient-to-br from-slate-300 via-white to-slate-400 border-4 border-gray-700 shadow-xl opacity-80';
+                     previewFrame.appendChild(div);
+                } else {
+                    previewFrame.innerHTML = '<div class="w-full h-full border-2 border-dashed border-stone-500/50 flex items-center justify-center text-stone-500 text-xs text-center p-2">Select Frame</div>';
+                }
+
+                // 2. Rope Layer
+                if (selections.rope && selections.rope !== 'None') {
+                    const img = document.createElement('img');
+                    
+                    if (selections.rope === 'Red') img.src = 'red-rope.png';
+                    else if (selections.rope === 'Pink') img.src = 'pink-rope.png';
+                    else if (selections.rope === 'White') img.src = 'white-rope.png';
+                    
+                    img.className = 'h-full object-contain drop-shadow-lg scale-110 origin-bottom'; 
+                    img.onerror = function() { this.style.display='none'; };
+                    previewRope.appendChild(img);
+                }
+
+                // 3. Update Mount in Preview
+                const previewMount = document.getElementById('preview-mount');
+                const previewMountName = document.getElementById('preview-mount-name');
+                
+                if (previewMount) {
+                    if(selections.cardboard === 'White') {
+                        previewMount.className = "w-48 h-60 shadow-lg relative flex items-center justify-center transition-all duration-300 bg-stone-200 border border-stone-300";
+                        previewMountName.innerText = translations[currentLang].mount_white;
+                    } else if(selections.cardboard === 'Natural Kraft') {
+                        previewMount.className = "w-48 h-60 shadow-lg relative flex items-center justify-center transition-all duration-300 bg-[#d2b48c] border border-[#b08d55]";
+                        previewMountName.innerText = translations[currentLang].mount_kraft;
+                    }
+                }
             }
         }
 
