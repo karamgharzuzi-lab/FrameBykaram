@@ -507,6 +507,11 @@
                         <!-- Gold Option -->
                         <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('frame', 'Vintage Gold')">
                             <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3">
+                                <!-- Enlarge Button (Fixed Position: Inside the box) -->
+                                <button type="button" onclick="event.stopPropagation(); openLightbox('royal-gold.png')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+                                    <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+                                </button>
+                                
                                 <img 
                                     src="royal-gold.png" 
                                     id="img-gold-frame"
@@ -548,6 +553,10 @@
                     <!-- Red -->
                     <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'Red')">
                         <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-red-950/10 flex items-center justify-center border-2 border-red-950 shadow-lg overflow-hidden">
+                            <!-- Enlarge Button (Fixed Position: Inside the box) -->
+                            <button type="button" onclick="event.stopPropagation(); openLightbox('red-rope.png')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+                                <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+                            </button>
                             <img 
                                 src="red-rope.png" 
                                 id="img-red-rope"
@@ -563,6 +572,10 @@
                     <!-- Pink -->
                     <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'Pink')">
                         <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-pink-500/10 flex items-center justify-center border-2 border-pink-400 shadow-lg overflow-hidden">
+                             <!-- Enlarge Button (Fixed Position: Inside the box) -->
+                            <button type="button" onclick="event.stopPropagation(); openLightbox('pink-rope.png')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+                                <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+                            </button>
                              <img 
                                 src="pink-rope.png" 
                                 id="img-pink-rope"
@@ -578,6 +591,10 @@
                     <!-- White -->
                     <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'White')">
                         <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gray-200/30 flex items-center justify-center border-2 border-gray-300 shadow-lg overflow-hidden">
+                             <!-- Enlarge Button (Fixed Position: Inside the box) -->
+                            <button type="button" onclick="event.stopPropagation(); openLightbox('white-rope.png')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+                                <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+                            </button>
                              <img 
                                 src="white-rope.png" 
                                 id="img-white-rope"
@@ -759,7 +776,19 @@
     </footer>
 
     <script>
-        /* --- Intro Animation Logic (Forced Play) --- */
+        // Initialize Icons (Updated to ensure execution)
+        document.addEventListener('DOMContentLoaded', function() {
+             try {
+                lucide.createIcons();
+            } catch (e) {
+                console.warn("Icon load failed", e);
+            }
+        });
+        // Also run immediately in case DOM is already ready
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+
+
+        /* --- Intro Animation Logic (Fixed for Persistent Skipping) --- */
         (function manageIntro() {
             const intro = document.getElementById('intro-screen');
             
