@@ -759,37 +759,26 @@
     </footer>
 
     <script>
-        /* --- Intro Animation Logic (Fixed for Persistent Skipping) --- */
+        /* --- Intro Animation Logic (Forced Play) --- */
         (function manageIntro() {
             const intro = document.getElementById('intro-screen');
-            // Check localStorage to see if user visited before
-            const hasSeenIntro = localStorage.getItem('frameByKaram_intro_seen');
-
-            if (hasSeenIntro) {
-                // If already seen, remove intro IMMEDIATELY so it's never visible
-                if (intro) {
-                    intro.style.display = 'none'; // Instant hide
-                    intro.remove(); // Remove from DOM
-                }
-            } else {
-                // First time: Show intro, then hide and save memory
-                if (intro) {
-                    intro.classList.remove('hidden');
-                    intro.classList.add('flex'); // CRITICAL FIX: Restore flex to center content
+            
+            if (intro) {
+                // 1. Make Visible Immediately
+                intro.classList.remove('hidden');
+                intro.classList.add('flex'); 
+                
+                // 2. Play Animation for 3 seconds, then Fade Out
+                setTimeout(() => {
+                    intro.style.transition = "opacity 1s ease";
+                    intro.style.opacity = "0";
+                    intro.style.pointerEvents = "none";
                     
-                    // Mark as seen so next reload skips it
-                    localStorage.setItem('frameByKaram_intro_seen', 'true');
-
+                    // 3. Cleanup after fade
                     setTimeout(() => {
-                        intro.style.transition = "opacity 1s ease";
-                        intro.style.opacity = "0";
-                        intro.style.pointerEvents = "none";
-                        
-                        setTimeout(() => {
-                            if (intro.parentNode) intro.parentNode.removeChild(intro);
-                        }, 1000);
-                    }, 3000); // 3 seconds display
-                }
+                        if (intro.parentNode) intro.parentNode.removeChild(intro);
+                    }, 1000);
+                }, 3000); 
             }
         })();
 
