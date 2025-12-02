@@ -274,9 +274,10 @@
             transform: rotate(180deg);
         }
 
-        /* Luxury Page Frame */
+        /* Luxury Page Frame - Fixed CSS Only Version */
         .page-frame {
-            position: fixed;
+            /* CHANGED TO ABSOLUTE SO IT SCROLLS WITH THE PAGE */
+            position: absolute; 
             top: 0;
             left: 0;
             right: 0;
@@ -321,6 +322,18 @@
             animation-delay: 1.2s; /* Start expanding after logo appears */
         }
 
+        /* Static Luxury Link Style (Replaces strong animation) */
+        .luxury-link-static {
+             transition: all 0.3s ease;
+             /* Static elegant shadow instead of pulsing */
+             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); 
+        }
+        .luxury-link-static:hover {
+             /* Subtle glow only on hover */
+             filter: drop-shadow(0 0 8px rgba(191, 149, 63, 0.5));
+             transform: translateY(-1px);
+        }
+
         /* Custom Scrollbar Styling */
         ::-webkit-scrollbar {
             width: 12px;
@@ -350,7 +363,8 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col" lang="en">
+<!-- Added 'relative' to body so absolute frame behaves correctly -->
+<body class="min-h-screen flex flex-col relative" lang="en">
 
     <!-- Intro Animation Screen (Hidden by default to prevent reappearing on reload) -->
     <div id="intro-screen" class="fixed inset-0 z-[10000] hidden items-center justify-center bg-black transition-opacity duration-1000">
@@ -487,20 +501,20 @@
                 </div>
             </section>
 
-                <!-- Gallery Prompt / Teaser -->
-                <div class="text-center mb-8 md:mb-12 animate-pulse">
-                    <button type="button" onclick="showPage('gallery')" class="group inline-flex items-center gap-2 transform transition-transform hover:scale-105">
-                        <span class="text-lg md:text-xl font-bold tracking-wide border-b-2 border-transparent group-hover:border-[#bf953f] gold-text uppercase" data-i18n="check_gallery_teaser">
-                            Check the gallery before you Start
-                        </span>
-                        <i data-lucide="camera" class="w-5 h-5 md:w-6 md:h-6 text-[#bf953f]"></i>
-                    </button>
-                </div>
+            <!-- Gallery Prompt / Teaser (Moved Here) -->
+            <div class="text-center mb-8 md:mb-12">
+                <button type="button" onclick="showPage('gallery')" class="group inline-flex items-center gap-2 md:gap-3 luxury-link-static px-3 py-2 md:px-6 md:py-3 bg-stone-900/50 border border-[#bf953f]/30 rounded-sm hover:border-[#bf953f] transition-all duration-300">
+                    <span class="text-xs md:text-lg font-bold tracking-wide md:tracking-widest gold-text uppercase whitespace-nowrap" data-i18n="check_gallery_teaser">
+                        Check the gallery before you Start
+                    </span>
+                    <i data-lucide="camera" class="w-4 h-4 md:w-5 md:h-5 text-[#bf953f] group-hover:scale-110 transition-transform"></i>
+                </button>
+            </div>
 
-                <!-- Step 2: Mirror Frame -->
-                <section class="mb-8 md:mb-12">
-                    <h2 class="text-xl md:text-2xl mb-4 md:mb-6 border-b border-stone-800 pb-2" data-i18n="step2_title">Mirror Frame</h2>
-                    <p class="text-sm text-stone-400 mb-4" data-i18n="step2_desc">Choose the frame finish for the mirror.</p>
+            <!-- Step 2: Mirror Frame -->
+            <section class="mb-8 md:mb-12">
+                <h2 class="text-xl md:text-2xl mb-4 md:mb-6 border-b border-stone-800 pb-2" data-i18n="step2_title">Mirror Frame</h2>
+                <p class="text-sm text-stone-400 mb-4" data-i18n="step2_desc">Choose the frame finish for the mirror.</p>
                     
                     <!-- Changed grid to support 3 items -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -543,80 +557,182 @@
                     <input type="hidden" id="frameSelection" required>
                 </section>
 
+                <!-- Gallery Prompt / Teaser REMOVED from here -->
+
                 <!-- Step 3: Velvet Rope -->
                 <section class="mb-8 md:mb-12">
-                    <h2 class="text-xl md:text-2xl mb-4 md:mb-6 border-b border-stone-800 pb-2" data-i18n="step3_title">Velvet Rope</h2>
+                    <h2 class="text-xl md:text-2xl mb-4 md:mb-6 border-b border-stone-800 pb-2" data-i18n="step3_title">Velvet Rope / Twisted Rope</h2>
                     <p class="text-sm text-stone-400 mb-4" data-i18n="step3_desc">Select the color of the velvet crowd control ropes.</p>
                     
-                    <!-- Changed grid to support 4 items -->
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <!-- Red -->
-                    <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'Red')">
-                        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-red-950/10 flex items-center justify-center border-2 border-red-950 shadow-lg overflow-hidden">
+                    <!-- Changed grid to support 5 items (auto-flow) -->
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                        <!-- Red -->
+                        <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'Red')">
+                            <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-red-950/10 flex items-center justify-center border-2 border-red-950 shadow-lg overflow-hidden">
+                                <!-- Enlarge Button (Fixed Position: Inside the box) -->
+                                <button type="button" onclick="event.stopPropagation(); openLightbox('red-rope.png')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+                                    <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+                                </button>
+                                <img 
+                                    src="red-rope.png" 
+                                    id="img-red-rope"
+                                    alt="Red Velvet Rope" 
+                                    class="w-4/5 h-4/5 object-contain drop-shadow-md"
+                                    onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#7f1d1d';"
+                                >
+                            </div>
+                            <h3 class="text-base md:text-lg" data-i18n="rope_red">Red Velvet</h3>
+                            <div id="check-rope-Red" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
+                        </div>
+
+                        <!-- Pink -->
+                        <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'Twisted Pink')">
+                            <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-pink-500/10 flex items-center justify-center border-2 border-pink-400 shadow-lg overflow-hidden">
+                                 <!-- Enlarge Button (Fixed Position: Inside the box) -->
+                                <button type="button" onclick="event.stopPropagation(); openLightbox('twisted-pink.png')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+                                    <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+                                </button>
+                                 <img 
+                                    src="twisted-pink.png" 
+                                    id="img-pink-rope"
+                                    alt="Twisted Pink Rope" 
+                                    class="w-4/5 h-4/5 object-contain drop-shadow-md"
+                                    onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#f472b6';"
+                                >
+                            </div>
+                            <h3 class="text-base md:text-lg" data-i18n="rope_twisted_pink">Twisted Pink</h3>
+                            <div id="check-rope-Twisted Pink" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
+                        </div>
+
+                        <!-- White -->
+                        <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'Twisted White')">
+                            <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gray-200/30 flex items-center justify-center border-2 border-gray-300 shadow-lg overflow-hidden">
+                                 <!-- Enlarge Button (Fixed Position: Inside the box) -->
+                                <button type="button" onclick="event.stopPropagation(); openLightbox('twisted-white.png')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+                                    <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+                                </button>
+                                 <img 
+                                    src="twisted-white.png" 
+                                    id="img-white-rope"
+                                    alt="Twisted White Rope" 
+                                    class="w-4/5 h-4/5 object-contain drop-shadow-md"
+                                    onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#e5e7eb';"
+                                >
+                            </div>
+                            <h3 class="text-base md:text-lg" data-i18n="rope_twisted_white">Twisted White</h3>
+                            <div id="check-rope-Twisted White" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
+                        </div>
+
+                        <!-- Gold -->
+                        <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'Twisted Gold')">
+                            <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-yellow-600/10 flex items-center justify-center border-2 border-yellow-600 shadow-lg overflow-hidden">
+                                 <!-- Enlarge Button (Fixed Position: Inside the box) -->
+                                <button type="button" onclick="event.stopPropagation(); openLightbox('twisted-gold.png')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+                                    <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+                                </button>
+                                 <img 
+                                    src="twisted-gold.png" 
+                                    id="img-gold-rope"
+                                    alt="Twisted Gold Rope" 
+                                    class="w-4/5 h-4/5 object-contain drop-shadow-md"
+                                    onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#ca8a04';"
+                                >
+                            </div>
+                            <h3 class="text-base md:text-lg" data-i18n="rope_twisted_gold">Twisted Gold</h3>
+                            <div id="check-rope-Twisted Gold" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
+                        </div>
+
+                        <!-- No Rope Option -->
+                        <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'None')">
+                            <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 flex items-center justify-center bg-stone-800/50 rounded-lg border-2 border-stone-600">
+                                 <i data-lucide="ban" class="w-10 h-10 text-stone-500"></i>
+                            </div>
+                            <h3 class="text-base md:text-lg" data-i18n="rope_none">No Rope</h3>
+                            <div id="check-rope-None" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="ropeSelection" required>
+            </section>
+
+            <!-- NEW Carpet Section -->
+            <section class="mb-8 md:mb-12">
+                <h2 class="text-xl md:text-2xl mb-4 md:mb-6 border-b border-stone-800 pb-2" data-i18n="step_carpet_title">Carpet</h2>
+                <p class="text-sm text-stone-400 mb-4" data-i18n="step_carpet_desc">Select the carpet color for your event.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Red Carpet -->
+                    <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('carpet', 'Red')">
+                        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3">
                             <!-- Enlarge Button (Fixed Position: Inside the box) -->
-                            <button type="button" onclick="event.stopPropagation(); openLightbox('red-rope.png')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+                            <button type="button" onclick="event.stopPropagation(); openLightbox('carpet-red.png')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
                                 <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
                             </button>
+                            
+                            <!-- Placeholder Image -->
                             <img 
-                                src="red-rope.png" 
-                                id="img-red-rope"
-                                alt="Red Velvet Rope" 
-                                class="w-4/5 h-4/5 object-contain drop-shadow-md"
-                                onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#7f1d1d';"
+                                src="carpet-red.png" 
+                                onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#7f1d1d';" 
+                                id="img-carpet-red"
+                                alt="Red Carpet" 
+                                class="w-full h-full rounded-lg object-cover border-2 border-red-900 shadow-lg"
                             >
+                             <div class="absolute inset-0 flex items-center justify-center -z-10 bg-stone-800/50 rounded-lg">
+                                <i data-lucide="image" class="w-8 h-8 text-stone-600"></i>
+                            </div>
                         </div>
-                        <h3 class="text-base md:text-lg" data-i18n="rope_red">Red Velvet</h3>
-                        <div id="check-rope-Red" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
+                        <h3 class="text-base md:text-lg" data-i18n="carpet_red">Red Carpet</h3>
+                        <div id="check-carpet-Red" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
                     </div>
 
-                    <!-- Pink -->
-                    <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'Pink')">
-                        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-pink-500/10 flex items-center justify-center border-2 border-pink-400 shadow-lg overflow-hidden">
-                             <!-- Enlarge Button (Fixed Position: Inside the box) -->
-                            <button type="button" onclick="event.stopPropagation(); openLightbox('pink-rope.png')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+                    <!-- Beige Carpet -->
+                    <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('carpet', 'Beige')">
+                        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3">
+                            <!-- Enlarge Button (Fixed Position: Inside the box) -->
+                            <button type="button" onclick="event.stopPropagation(); openLightbox('carpet-beige.png')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
                                 <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
                             </button>
-                             <img 
-                                src="pink-rope.png" 
-                                id="img-pink-rope"
-                                alt="Pink Velvet Rope" 
-                                class="w-4/5 h-4/5 object-contain drop-shadow-md"
-                                onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#f472b6';"
+
+                            <!-- Placeholder Image -->
+                            <img 
+                                src="carpet-beige.png" 
+                                onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#d4c4a8';"
+                                id="img-carpet-beige"
+                                alt="Beige Carpet" 
+                                class="w-full h-full rounded-lg object-cover border-2 border-[#bfa880] shadow-lg"
                             >
+                             <div class="absolute inset-0 flex items-center justify-center -z-10 bg-stone-800/50 rounded-lg">
+                                <i data-lucide="image" class="w-8 h-8 text-stone-600"></i>
+                            </div>
                         </div>
-                        <h3 class="text-base md:text-lg" data-i18n="rope_pink">Pink Velvet</h3>
-                        <div id="check-rope-Pink" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
+                        <h3 class="text-base md:text-lg" data-i18n="carpet_beige">Beige Carpet</h3>
+                        <div id="check-carpet-Beige" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
                     </div>
 
-                    <!-- White -->
-                    <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'White')">
-                        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gray-200/30 flex items-center justify-center border-2 border-gray-300 shadow-lg overflow-hidden">
-                             <!-- Enlarge Button (Fixed Position: Inside the box) -->
-                            <button type="button" onclick="event.stopPropagation(); openLightbox('white-rope.png')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+                    <!-- Pink Carpet -->
+                    <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('carpet', 'Pink')">
+                        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3">
+                            <!-- Enlarge Button (Fixed Position: Inside the box) -->
+                            <button type="button" onclick="event.stopPropagation(); openLightbox('carpet-pink.png')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
                                 <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
                             </button>
-                             <img 
-                                src="white-rope.png" 
-                                id="img-white-rope"
-                                alt="White Velvet Rope" 
-                                class="w-4/5 h-4/5 object-contain drop-shadow-md"
-                                onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#e5e7eb';"
-                            >
-                        </div>
-                        <h3 class="text-base md:text-lg" data-i18n="rope_white">White Velvet</h3>
-                        <div id="check-rope-White" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
-                    </div>
 
-                    <!-- No Rope Option -->
-                    <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'None')">
-                        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 flex items-center justify-center bg-stone-800/50 rounded-lg border-2 border-stone-600">
-                             <i data-lucide="ban" class="w-10 h-10 text-stone-500"></i>
+                            <!-- Placeholder Image -->
+                            <img 
+                                src="carpet-pink.png" 
+                                onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#fbcfe8';"
+                                id="img-carpet-pink"
+                                alt="Pink Carpet" 
+                                class="w-full h-full rounded-lg object-cover border-2 border-pink-300 shadow-lg"
+                            >
+                             <div class="absolute inset-0 flex items-center justify-center -z-10 bg-stone-800/50 rounded-lg">
+                                <i data-lucide="image" class="w-8 h-8 text-stone-600"></i>
+                            </div>
                         </div>
-                        <h3 class="text-base md:text-lg" data-i18n="rope_none">No Rope</h3>
-                        <div id="check-rope-None" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
+                        <h3 class="text-base md:text-lg" data-i18n="carpet_pink">Pink Carpet</h3>
+                        <div id="check-carpet-Pink" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
                     </div>
                 </div>
-                <input type="hidden" id="ropeSelection" required>
+                <input type="hidden" id="carpetSelection" required>
             </section>
 
                 <!-- Step 4: Cardboard / Photo Mount -->
@@ -648,6 +764,34 @@
                     <input type="hidden" id="cardboardSelection" required>
                 </section>
 
+                <!-- LIVE PREVIEW SECTION -->
+                <section id="preview-section" class="mb-8 md:mb-12 hidden">
+                    <h2 class="text-xl md:text-2xl mb-4 md:mb-6 border-b border-stone-800 pb-2" data-i18n="preview_title">Final Result Preview</h2>
+                    
+                    <div class="bg-stone-900 p-4 md:p-6 rounded-lg shadow-xl border border-stone-800">
+                        <div class="flex flex-col items-center justify-center">
+                            
+                            <!-- The Booth Setup -->
+                            <div class="flex flex-col items-center">
+                                <h4 class="text-sm uppercase tracking-widest text-stone-400 mb-4" data-i18n="preview_booth">Booth Setup</h4>
+                                <!-- Stage Container -->
+                                <div class="preview-stage w-full max-w-[16rem] h-80 rounded-lg relative flex items-center justify-center">
+                                    <!-- Frame Layer -->
+                                    <div id="preview-frame" class="w-40 h-56 relative z-10 transition-all duration-300">
+                                        <!-- Dynamic Content injected by JS -->
+                                    </div>
+                                    
+                                    <!-- Rope Layer (Foreground) -->
+                                    <div id="preview-rope" class="absolute bottom-0 w-full h-32 z-20 flex justify-center items-end pb-4 transition-all duration-300">
+                                        <!-- Dynamic Content injected by JS -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
                 <!-- Summary & Submit -->
                 <section class="bg-stone-900 border border-stone-800 p-6 md:p-8 rounded-lg text-center">
                     <h3 class="serif-font text-xl md:text-2xl mb-4 gold-text" style="text-shadow: 0 0 12px rgba(191, 149, 63, 0.6);" data-i18n="summary_title">Ready to Book?</h3>
@@ -677,32 +821,21 @@
             <div class="gallery-item relative overflow-hidden rounded-lg shadow-lg aspect-[3/4] group cursor-pointer" onclick="openLightbox('luxury.jpg')">
                 <img src="luxury.jpg" class="gallery-img w-full h-full object-cover" alt="Wedding Event">
                 <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <div class="text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <i data-lucide="maximize-2" class="w-8 h-8 text-[#bf953f] mx-auto mb-2"></i>
-                        <span class="text-white font-serif italic text-xl">Weddings</span>
-                    </div>
+                    <span class="text-white font-serif italic text-xl">Weddings</span>
                 </div>
             </div>
-
             <!-- Gallery Item 2 -->
             <div class="gallery-item relative overflow-hidden rounded-lg shadow-lg aspect-[3/4] group cursor-pointer" onclick="openLightbox('luxury.jpg')">
                 <img src="luxury.jpg" class="gallery-img w-full h-full object-cover" alt="Event Photo">
                 <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <div class="text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <i data-lucide="maximize-2" class="w-8 h-8 text-[#bf953f] mx-auto mb-2"></i>
-                        <span class="text-white font-serif italic text-xl">Events</span>
-                    </div>
+                    <span class="text-white font-serif italic text-xl">Events</span>
                 </div>
             </div>
-
             <!-- Gallery Item 3 -->
             <div class="gallery-item relative overflow-hidden rounded-lg shadow-lg aspect-[3/4] group cursor-pointer" onclick="openLightbox('luxury.jpg')">
                 <img src="luxury.jpg" class="gallery-img w-full h-full object-cover" alt="Party Photo">
                 <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <div class="text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <i data-lucide="maximize-2" class="w-8 h-8 text-[#bf953f] mx-auto mb-2"></i>
-                        <span class="text-white font-serif italic text-xl">Parties</span>
-                    </div>
+                    <span class="text-white font-serif italic text-xl">Parties</span>
                 </div>
             </div>
         </div>
@@ -743,7 +876,8 @@
                     <span class="text-xs uppercase tracking-widest text-stone-500" data-i18n="label_phone">Contact Us</span>
                     <!-- Updated href to international format to ensure dialer opens correctly -->
                     <!-- Removed target="_top" to prevent page reload -->
-                    <a href="tel:+972524040714" class="text-2xl md:text-3xl font-light text-stone-200 hover:text-[#bf953f] transition-colors font-serif tracking-wide">
+                    <!-- Changed text-stone-200 to text-[var(--text-main)] for theme adaptability -->
+                    <a href="tel:+972524040714" class="text-2xl md:text-3xl font-light text-[var(--text-main)] hover:text-[#bf953f] transition-colors font-serif tracking-wide">
                         052-404-0714
                     </a>
                 </div>
@@ -776,38 +910,26 @@
     </footer>
 
     <script>
-        // Initialize Icons (Updated to ensure execution)
-        document.addEventListener('DOMContentLoaded', function() {
-             try {
-                lucide.createIcons();
-            } catch (e) {
-                console.warn("Icon load failed", e);
-            }
-        });
-        // Also run immediately in case DOM is already ready
-        if (typeof lucide !== 'undefined') lucide.createIcons();
-
-
         /* --- Intro Animation Logic (Fixed for Persistent Skipping) --- */
         (function manageIntro() {
             const intro = document.getElementById('intro-screen');
             
             if (intro) {
-                // 1. Make Visible Immediately
+                // 1. IMMEDIATE REVEAL: Force the intro to be visible
                 intro.classList.remove('hidden');
-                intro.classList.add('flex'); 
+                intro.classList.add('flex');
                 
-                // 2. Play Animation for 3 seconds, then Fade Out
+                // 2. Wait 3 seconds for animation to play, then fade out
                 setTimeout(() => {
                     intro.style.transition = "opacity 1s ease";
                     intro.style.opacity = "0";
                     intro.style.pointerEvents = "none";
                     
-                    // 3. Cleanup after fade
+                    // 3. Remove from DOM after fade is complete to free up resources
                     setTimeout(() => {
                         if (intro.parentNode) intro.parentNode.removeChild(intro);
                     }, 1000);
-                }, 3000); 
+                }, 3000);
             }
         })();
 
@@ -838,7 +960,7 @@
                 moonIcon.classList.remove('hidden');
             }
             
-            if(document.getElementById('preview-section') && !document.getElementById('preview-section').classList.contains('hidden')) {
+            if(!document.getElementById('preview-section').classList.contains('hidden')) {
                 updatePreview();
             }
         }
@@ -923,13 +1045,14 @@
                 step2_desc: "Choose the frame finish for the mirror.",
                 frame_gold: "Vintage Gold",
                 frame_silver: "Vintage Silver",
-                frame_none: "No Frame",
-                step3_title: "Velvet Rope",
-                step3_desc: "Select the color of the velvet crowd control ropes.",
-                rope_red: "Red Velvet",
-                rope_pink: "Pink Velvet",
-                rope_white: "White Velvet",
+                rope_black: "Black Velvet",
                 rope_none: "No Rope",
+                // Carpet Translations
+                step_carpet_title: "Carpet",
+                step_carpet_desc: "Select the carpet color for your event.",
+                carpet_red: "Red Carpet",
+                carpet_beige: "Beige Carpet",
+                carpet_pink: "Pink Carpet",
                 step4_title: "Photo Mount",
                 step4_desc: "The cardboard frame attached to final printed photos.",
                 mount_white: "Classic White",
@@ -983,13 +1106,14 @@
                 step2_desc: "בחר את גימור המסגרת למראה.",
                 frame_gold: "זהב וינטג׳",
                 frame_silver: "כסף וינטג׳",
-                frame_none: "ללא מסגרת",
-                step3_title: "חבל קטיפה",
-                step3_desc: "בחר את צבע חבלי הקטיפה לתיחום.",
-                rope_red: "קטיפה אדומה",
-                rope_pink: "קטיפה ורודה",
-                rope_white: "קטיפה לבנה",
+                rope_black: "קטיפה שחורה",
                 rope_none: "ללא חבל",
+                // Carpet Translations HE
+                step_carpet_title: "שטיח",
+                step_carpet_desc: "בחר את צבע השטיח לאירוע.",
+                carpet_red: "שטיח אדום",
+                carpet_beige: "שטיח בז׳",
+                carpet_pink: "שטיח ורוד",
                 step4_title: "מסגרת תמונה",
                 step4_desc: "מסגרת הקרטון המצורפת לתמונות המודפסות.",
                 mount_white: "לבן קלאסי",
@@ -1043,13 +1167,14 @@
                 step2_desc: "اختر تشطيب إطار المرآة.",
                 frame_gold: "ذهب عتيق",
                 frame_silver: "فضة عتيقة",
-                frame_none: "بدون إطار",
-                step3_title: "حبل المخمل",
-                step3_desc: "اختر لون حبال المخمل.",
-                rope_red: "مخمل أحمر",
-                rope_pink: "مخمل وردي",
-                rope_white: "مخمل أبيض",
+                rope_black: "مخمل أسود",
                 rope_none: "بدون حبل",
+                // Carpet Translations AR
+                step_carpet_title: "سجاد",
+                step_carpet_desc: "اختر لون السجاد للمناسبة.",
+                carpet_red: "سجاد أحمر",
+                carpet_beige: "سجاد بيج",
+                carpet_pink: "سجاد وردي",
                 step4_title: "إطار الصورة",
                 step4_desc: "إطار الكرتون المرفق بالصور المطبوعة.",
                 mount_white: "أبيض كلاسيكي",
@@ -1129,9 +1254,7 @@
                 });
 
                 // Update preview text if visible
-                if(document.getElementById('preview-section') && !document.getElementById('preview-section').classList.contains('hidden')) {
-                    updatePreview();
-                }
+                updatePreview();
 
                 // Fade Back In
                 activePage.classList.remove('opacity-0', 'translate-y-10');
@@ -1145,6 +1268,7 @@
         const selections = {
             frame: null,
             rope: null,
+            carpet: null, // Added carpet
             cardboard: null
         };
 
@@ -1173,21 +1297,40 @@
 
         function updatePreview() {
             // Show preview section if any selection is made
-            // NOTE: This section might be hidden by default in recent edits, ensuring no crash if element missing.
-            const previewSection = document.getElementById('preview-section');
-            if (previewSection) {
-                if(selections.frame || selections.rope || selections.cardboard) {
-                    previewSection.classList.remove('hidden');
-                }
+            if(selections.frame || selections.rope || selections.cardboard) {
+                document.getElementById('preview-section').classList.remove('hidden');
+            }
 
-                const previewFrame = document.getElementById('preview-frame');
-                const previewRope = document.getElementById('preview-rope');
-                
-                // Reset containers
-                previewFrame.innerHTML = '';
-                previewRope.innerHTML = '';
+            const previewFrame = document.getElementById('preview-frame');
+            const previewRope = document.getElementById('preview-rope');
+            
+            // Reset containers
+            previewFrame.innerHTML = '';
+            previewRope.innerHTML = '';
 
-                // 1. Frame Layer
+            // 1. Frame Layer
+            // CHECK FOR COMBO FIRST
+            if(selections.frame === 'Vintage Gold' && selections.rope === 'Red') {
+                 const img = document.createElement('img');
+                img.src = 'gold-red-combo.png';
+                img.className = 'w-full h-full object-contain drop-shadow-2xl scale-125'; 
+                img.onerror = function() { 
+                    // Fallback to standard if combo missing
+                    console.log("Combo missing, falling back");
+                    const fallbackImg = document.createElement('img');
+                    fallbackImg.src = 'royal-gold.png';
+                    fallbackImg.className = 'w-full h-full object-contain drop-shadow-2xl';
+                    previewFrame.innerHTML = '';
+                    previewFrame.appendChild(fallbackImg);
+                    
+                    const fallbackRope = document.createElement('img');
+                    fallbackRope.src = 'red-rope.png';
+                    fallbackRope.className = 'h-full object-contain drop-shadow-lg scale-110 origin-bottom'; 
+                    previewRope.appendChild(fallbackRope);
+                }; 
+                previewFrame.appendChild(img);
+            } else {
+                // STANDARD LOGIC
                 if(selections.frame === 'Vintage Gold') {
                     const img = document.createElement('img');
                     img.src = 'royal-gold.png';
@@ -1211,26 +1354,13 @@
                     const img = document.createElement('img');
                     
                     if (selections.rope === 'Red') img.src = 'red-rope.png';
-                    else if (selections.rope === 'Pink') img.src = 'pink-rope.png';
-                    else if (selections.rope === 'White') img.src = 'white-rope.png';
+                    else if (selections.rope === 'Twisted Pink') img.src = 'twisted-pink.png';
+                    else if (selections.rope === 'Twisted White') img.src = 'twisted-white.png';
+                    else if (selections.rope === 'Twisted Gold') img.src = 'twisted-gold.png';
                     
                     img.className = 'h-full object-contain drop-shadow-lg scale-110 origin-bottom'; 
                     img.onerror = function() { this.style.display='none'; };
                     previewRope.appendChild(img);
-                }
-
-                // 3. Update Mount in Preview
-                const previewMount = document.getElementById('preview-mount');
-                const previewMountName = document.getElementById('preview-mount-name');
-                
-                if (previewMount) {
-                    if(selections.cardboard === 'White') {
-                        previewMount.className = "w-48 h-60 shadow-lg relative flex items-center justify-center transition-all duration-300 bg-stone-200 border border-stone-300";
-                        previewMountName.innerText = translations[currentLang].mount_white;
-                    } else if(selections.cardboard === 'Natural Kraft') {
-                        previewMount.className = "w-48 h-60 shadow-lg relative flex items-center justify-center transition-all duration-300 bg-[#d2b48c] border border-[#b08d55]";
-                        previewMountName.innerText = translations[currentLang].mount_kraft;
-                    }
                 }
             }
         }
@@ -1302,6 +1432,7 @@
             const eventType = document.getElementById('eventType').value;
             const frame = selections.frame;
             const rope = selections.rope;
+            const carpet = selections.carpet;
             const cardboard = selections.cardboard;
 
             if (!name || !phone || !date || !email || !eventType || !location) {
@@ -1330,6 +1461,7 @@
 *Customization Details:*
 🪞 *Frame:* ${frame}
 🧶 *Rope:* ${rope}
+🚩 *Carpet:* ${carpet || 'None'}
 🖼️ *Mount:* ${cardboard}
 
 Please confirm availability. Thank you!
