@@ -344,7 +344,8 @@
 
         /* Luxury Page Frame - Fixed CSS Only Version */
         .page-frame {
-            position: fixed;
+            /* CRITICAL: Keep as absolute so it scrolls WITH the page content. Do not change to fixed. */
+            position: absolute;
             top: 0;
             left: 0;
             right: 0;
@@ -430,6 +431,7 @@
         }
     </style>
 </head>
+<!-- Added 'relative' to body ensures the absolute frame stretches to the full height of the content -->
 <body class="min-h-screen flex flex-col relative" lang="en">
 
     <!-- Intro Animation Screen (Hidden by default to prevent reappearing on reload) -->
