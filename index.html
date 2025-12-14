@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Luxe Mirror Booth | Reservation</title>
+        <!-- PWA -->
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#1a1a1a">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Fonts: Playfair/Lato (English), Rubik (Hebrew), Cairo (Arabic) -->
@@ -429,6 +434,94 @@
         #lightbox.open #lightbox-img {
             transform: scale(1);
         }
+        @keyframes softGoldTextGlow {
+    0% {
+        text-shadow:
+            0 0 6px rgba(191,149,63,0.4),
+            0 0 12px rgba(191,149,63,0.2);
+        color: #bf953f;
+    }
+    50% {
+        text-shadow:
+            0 0 10px rgba(252,246,186,0.9),
+            0 0 22px rgba(191,149,63,0.6);
+        color: #fcf6ba;
+    }
+    100% {
+        text-shadow:
+            0 0 6px rgba(191,149,63,0.4),
+            0 0 12px rgba(191,149,63,0.2);
+        color: #bf953f;
+    }
+}
+
+.gallery-text-cta {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    animation: softGoldTextGlow 2.8s ease-in-out infinite;
+}
+/* --- Rope section polish --- */
+.rope-grid {
+  gap: 1.25rem; /* nicer spacing */
+}
+
+.option-card {
+  border-radius: 14px;
+  padding: 1.25rem;
+  border: 1px solid rgba(231,229,228,0.14);
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.12));
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+  min-height: 240px; /* keeps cards same height */
+  justify-content: space-between;
+}
+
+.option-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(191,149,63,0.65);
+  box-shadow: 0 0 0 1px rgba(191,149,63,0.25), 0 22px 55px rgba(0,0,0,0.45);
+}
+
+.option-card.selected {
+  border-color: rgba(191,149,63,0.95);
+  background: radial-gradient(circle at 50% 30%, rgba(191,149,63,0.20), rgba(0,0,0,0.10));
+  box-shadow: 0 0 0 1px rgba(252,246,186,0.25), 0 0 28px rgba(191,149,63,0.25);
+}
+
+.option-card .aspect-square {
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(231,229,228,0.10);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.option-card img {
+  width: 82%;
+  height: 82%;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,0.35));
+  transform: translateZ(0);
+}
+
+.option-card h3 {
+  margin-top: 0.9rem;
+  font-size: 1.05rem;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+}
+
+/* check icon badge */
+.option-card [id^="check-rope-"] {
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(191,149,63,0.55);
+  border-radius: 999px;
+  padding: 6px;
+  box-shadow: 0 0 18px rgba(191,149,63,0.25);
+}
+
     </style>
 </head>
 <!-- Added 'relative' to body ensures the absolute frame stretches to the full height of the content -->
@@ -440,7 +533,11 @@
             
             <!-- UPDATED: Tries to load logo.jpg first. If missing, shows text. -->
             <img 
-                src="logo.jpg" 
+<!-- OLD -->
+src="logo.jpg"
+
+<!-- NEW -->
+src="logo.png"
                 alt="FrameByKaram Logo" 
                 class="mx-auto w-40 md:w-64 object-contain opacity-0 animate-logo-reveal mb-6"
                 onerror="this.style.display='none'; document.getElementById('fallback-logo-text').classList.remove('hidden');"
@@ -601,6 +698,16 @@
                     </div>
                 </div>
             </section>
+            <div class="mb-12 md:mb-16 flex justify-center">
+  <button
+    type="button"
+    onclick="showPage('gallery')"
+    data-i18n="check_gallery_teaser"
+    class="gallery-text-cta uppercase tracking-widest text-sm md:text-base font-semibold"
+  >
+    Check the gallery before you start
+  </button>
+</div>
 
             <!-- Step 2: Mirror Frame -->
             <section class="mb-8 md:mb-12">
@@ -667,10 +774,10 @@
                     <p class="text-sm text-stone-400 mb-4" data-i18n="step3_desc">Select the color of the velvet crowd control ropes.</p>
                     
                     <!-- Changed grid to support 5 items (auto-flow) -->
-                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+<div class="rope-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                         <!-- Red -->
                         <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'Red')">
-                            <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-red-950/10 flex items-center justify-center border-2 border-red-950 shadow-lg overflow-hidden">
+<div class="relative w-full max-w-[12rem] md:max-w-[14rem] aspect-square mx-auto mb-4 flex items-center justify-center overflow-hidden">
                                 <!-- Enlarge Button (Fixed Position: Inside the box) -->
                                 <button type="button" onclick="event.stopPropagation(); openLightbox('red-rope.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
                                     <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
@@ -689,7 +796,7 @@
 
                         <!-- Twisted Pink -->
                         <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'Twisted Pink')">
-                            <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-pink-500/10 flex items-center justify-center border-2 border-pink-400 shadow-lg overflow-hidden">
+<div class="relative w-full max-w-[12rem] md:max-w-[14rem] aspect-square mx-auto mb-4 flex items-center justify-center overflow-hidden">
                                  <!-- Enlarge Button (Fixed Position: Inside the box) -->
                                 <button type="button" onclick="event.stopPropagation(); openLightbox('twisted-pink.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
                                     <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
@@ -708,7 +815,7 @@
 
                         <!-- Twisted White -->
                         <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'Twisted White')">
-                            <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gray-200/30 flex items-center justify-center border-2 border-gray-300 shadow-lg overflow-hidden">
+<div class="relative w-full max-w-[12rem] md:max-w-[14rem] aspect-square mx-auto mb-4 flex items-center justify-center overflow-hidden">
                                  <!-- Enlarge Button (Fixed Position: Inside the box) -->
                                 <button type="button" onclick="event.stopPropagation(); openLightbox('twisted-white.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
                                     <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
@@ -727,7 +834,7 @@
 
                         <!-- Twisted Gold -->
                         <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'Twisted Gold')">
-                            <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-yellow-600/10 flex items-center justify-center border-2 border-yellow-600 shadow-lg overflow-hidden">
+<div class="relative w-full max-w-[12rem] md:max-w-[14rem] aspect-square mx-auto mb-4 flex items-center justify-center overflow-hidden">
                                  <!-- Enlarge Button (Fixed Position: Inside the box) -->
                                 <button type="button" onclick="event.stopPropagation(); openLightbox('twisted-gold.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
                                     <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
@@ -746,7 +853,7 @@
 
                         <!-- No Rope Option -->
                         <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'None')">
-                            <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 flex items-center justify-center bg-stone-800/50 rounded-lg border-2 border-stone-600">
+<div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 flex items-center justify-center overflow-hidden">
                                  <i data-lucide="ban" class="w-10 h-10 text-stone-500"></i>
                             </div>
                             <h3 class="text-base md:text-lg" data-i18n="rope_none">No Rope</h3>
@@ -1583,6 +1690,12 @@ Please confirm availability. Thank you!
 
             const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
             window.open(url, '_blank');
+        }
+                /* --- PWA Service Worker Register --- */
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("./sw.js").catch(() => {});
+            });
         }
     </script>
 </body>
