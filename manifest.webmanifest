@@ -1,8 +1,10 @@
 {
+  "id": "/",
   "name": "FrameByKaram Gallery",
   "short_name": "FrameByKaram",
   "start_url": "/",
   "display": "standalone",
+  "form_factor": "wide",
   "background_color": "#1a1a1a",
   "theme_color": "#1a1a1a",
   "icons": [
