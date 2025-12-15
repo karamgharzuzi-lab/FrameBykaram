@@ -533,16 +533,11 @@
             
             <!-- UPDATED: Tries to load logo.jpg first. If missing, shows text. -->
             <img 
-<!-- OLD -->
-src="logo.jpg"
-
-<!-- NEW -->
-src="logo.png"
-                alt="FrameByKaram Logo" 
-                class="mx-auto w-40 md:w-64 object-contain opacity-0 animate-logo-reveal mb-6"
-                onerror="this.style.display='none'; document.getElementById('fallback-logo-text').classList.remove('hidden');"
-            >
-
+    src="logo.png"
+    alt="FrameByKaram Logo" 
+    class="mx-auto w-40 md:w-64 object-contain opacity-0 animate-logo-reveal mb-6"
+    onerror="this.style.display='none'; document.getElementById('fallback-logo-text').classList.remove('hidden');"
+/>
             <!-- Fallback Text (Hidden by default, shows if image fails) -->
             <div id="fallback-logo-text" class="hidden serif-font always-serif text-4xl md:text-7xl gold-text tracking-widest opacity-0 animate-logo-reveal font-bold">
                 FrameByKaram
