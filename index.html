@@ -578,7 +578,6 @@ src="logo.png"
                 <span class="nav-link active" onclick="showPage('booking')" data-page="booking" data-i18n="nav_reserve">Reserve</span>
                 <span class="nav-link" onclick="showPage('gallery')" data-page="gallery" data-i18n="nav_gallery">Gallery</span>
                 <span class="nav-link" onclick="showPage('about')" data-page="about" data-i18n="nav_about">Contact Us</span>
-                <span class="nav-link" onclick="goClientLogin()" data-page="client-login" data-i18n="nav_client_login">Client Login</span>
             </div>
 
             <!-- Language & Theme Switcher -->
@@ -1161,9 +1160,6 @@ src="logo.png"
         }
 
         /* --- Page Navigation with Animation --- */
-function goClientLogin() {
-    window.location.href = "client-login.html";
-}
         function showPage(pageId) {
             const pages = ['booking', 'gallery', 'about'];
             const pageElements = {
@@ -1221,7 +1217,6 @@ function goClientLogin() {
                 nav_gallery: "Gallery",
                 nav_reserve: "Reserve",
                 nav_about: "Contact Us",
-nav_client_login: "Client Login",
                 hero_title: "Reflect Your Elegance",
                 hero_subtitle: "Customize your premium photo experience. Select your finishes below to request a reservation.",
                 gallery_heading: "Moments of Elegance",
@@ -1287,7 +1282,6 @@ nav_client_login: "Client Login",
                 nav_gallery: "גלריה",
                 nav_reserve: "הזמנה",
                 nav_about: "צור קשר",
-nav_client_login: "כניסת לקוחות",
                 hero_title: "Reflect Your Elegance",
                 hero_subtitle: "התאם אישית את חווית הצילום שלך. בחר את הגימורים למטה לבקשת הזמנה.",
                 gallery_heading: "רגעים של אלגנטיות",
@@ -1353,7 +1347,6 @@ nav_client_login: "כניסת לקוחות",
                 nav_gallery: "معرض",
                 nav_reserve: "حجز",
                 nav_about: "اتصل بنا",
-nav_client_login: "دخول العملاء",
                 hero_title: "Reflect Your Elegance",
                 hero_subtitle: "صمم تجربة التصوير الخاصة بك. اختر التشطيبات أدناه لطلب الحجز.",
                 gallery_heading: "لحظات من الأناقة",
