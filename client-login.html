@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Login | Luxe Mirror Booth</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-black text-white p-4">
+  <div class="w-full max-w-sm p-6 border border-white/20 rounded-xl">
+    <h1 class="text-xl mb-4 text-center">Client Login</h1>
+
+    <label class="block text-xs mb-2 opacity-70">Email</label>
+    <input id="email" type="email" placeholder="demo@client.com"
+      class="w-full mb-4 p-2 bg-transparent border border-white/30 rounded" />
+
+    <label class="block text-xs mb-2 opacity-70">PIN</label>
+    <input id="pin" type="password" placeholder="1234"
+      class="w-full mb-4 p-2 bg-transparent border border-white/30 rounded" />
+
+    <button id="btn" class="w-full p-2 border border-white rounded hover:bg-white hover:text-black transition">
+      Login
+    </button>
+
+    <p id="msg" class="text-sm mt-4 text-center opacity-70"></p>
+
+    <div class="text-center mt-6">
+      <a href="index.html" class="text-sm opacity-70 hover:opacity-100 underline">Back to website</a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("btn").addEventListener("click", async () => {
+      const email = (document.getElementById("email").value || "").trim().toLowerCase();
+      const pin = (document.getElementById("pin").value || "").trim();
+      const msg = document.getElementById("msg");
+
+      msg.textContent = "";
+
+      try {
+        const res = await fetch("clients.json", { cache: "no-store" });
+        if (!res.ok) throw new Error("Could not load clients.json");
+
+        const db = await res.json();
+        const client = db[email];
+
+        if (!client || client.pin !== pin) {
+          msg.textContent = "Invalid email or PIN.";
+          return;
+        }
+
+        // Save a simple session token in localStorage
+        localStorage.setItem("client_email", email);
+        localStorage.setItem("client_pin", pin);
+
+        // Go to portal
+        window.location.href = "client-portal.html";
+      } catch (e) {
+        msg.textContent = "Login system error. Check file paths and hosting.";
+      }
+    });
+  </script>
+</body>
+</html>
