@@ -773,9 +773,26 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
                         <!-- No Frame Option -->
                         <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('frame', 'None')">
-                            <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 flex items-center justify-center bg-stone-800/50 rounded-lg border-2 border-stone-600">
-                                 <i data-lucide="ban" class="w-10 h-10 text-stone-500"></i>
-                            </div>
+                            <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 overflow-hidden rounded-lg border-2 border-stone-600 shadow-lg group">
+    
+    <!-- Enlarge Button -->
+    <button
+        type="button"
+        onclick="event.stopPropagation(); openLightbox('mirror-no-frame.jpg')"
+        class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg"
+        title="Enlarge Image"
+    >
+        <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+    </button>
+
+    <!-- Frameless Mirror Image -->
+    <img
+        src="mirror-no-frame.jpg"
+        alt="Mirror Without Frame"
+        class="w-full h-full object-cover"
+        onerror="this.style.display='none'; this.parentElement.classList.add('bg-stone-800/50');"
+    >
+</div>
                             <h3 class="text-base md:text-lg" data-i18n="frame_none">No Frame</h3>
                             <div id="check-frame-None" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
                         </div>
