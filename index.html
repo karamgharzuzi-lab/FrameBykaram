@@ -636,84 +636,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             
             <form id="bookingForm" onsubmit="event.preventDefault(); sendToWhatsApp();">
                 
-                <!-- Step 1: Contact Details -->
-                <section class="mb-8 md:mb-12">
-                    <h2 class="text-xl md:text-2xl mb-4 md:mb-6 border-b border-stone-800 pb-2" data-i18n="step1_title">Your Details</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                        <div>
-                        <label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_name">Full Name</label>
-                        <!-- Reduced mobile padding: changed p-3 to py-2 px-3 -->
-                        <input required type="text" id="name" placeholder="Your Name" class="lux-input w-full py-2 px-3 md:p-4 rounded-sm text-base" data-i18n-placeholder="placeholder_name">
-                    </div>
-                    <div>
-                        <label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_phone">Phone Number</label>
-                        <input required type="tel" id="phone" placeholder="050-0000000" class="lux-input w-full p-3 md:p-4 rounded-sm text-base">
-                    </div>
-                    
-                    <!-- Custom Animated Date Picker -->
-                    <div class="relative">
-                        <label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_date">Event Date</label>
-                        
-                        <!-- Hidden input to store actual value for WhatsApp/Form -->
-                        <input type="hidden" id="date">
-                        
-                        <!-- Display Input (Click to open calendar) -->
-                        <button type="button" onclick="toggleCalendar()" class="lux-input w-full p-3 md:p-4 rounded-sm flex justify-between items-center text-left cursor-pointer group text-base">
-                            <span id="dateDisplay" class="text-stone-400">Select Date</span>
-                            <i data-lucide="calendar" class="w-4 h-4 text-stone-500 group-hover:text-[#bf953f] transition-colors"></i>
-                        </button>
-
-                        <!-- Calendar Popup -->
-                        <div id="customCalendar" class="calendar-popup absolute left-0 top-full mt-1 rounded-sm shadow-xl">
-                            <div class="calendar-header">
-                                <button type="button" onclick="changeMonth(-1)" class="hover:text-white transition-colors"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
-                                <span id="currentMonthYear">Month Year</span>
-                                <button type="button" onclick="changeMonth(1)" class="hover:text-white transition-colors"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
-                            </div>
-                            <div class="calendar-grid" id="calendarDays">
-                                <!-- JS will populate this -->
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_email">Email Address</label>
-                        <input required type="email" id="email" placeholder="client@example.com" class="lux-input w-full p-3 md:p-4 rounded-sm text-base" data-i18n-placeholder="placeholder_email">
-                    </div>
-                    
-                    <!-- NEW Event Location Field -->
-                    <div>
-                        <label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_location">Event Location</label>
-                        <input required type="text" id="location" placeholder="City, Venue name..." class="lux-input w-full py-2 px-3 md:p-4 rounded-sm text-base" data-i18n-placeholder="placeholder_location">
-                    </div>
-
-                    <!-- ANIMATED Custom Event Type Dropdown -->
-                    <div class="relative">
-                        <label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_event_type">Event Type</label>
-                        
-                        <!-- Hidden Input to store the actual value for the form logic -->
-                        <input type="hidden" id="eventType">
-
-                        <!-- Trigger Button -->
-                        <button type="button" onclick="toggleDropdown()" class="lux-input w-full py-2 px-3 md:p-4 rounded-sm flex justify-between items-center text-left cursor-pointer group text-base">
-                            <span id="eventTypeLabel" class="text-stone-400" data-i18n="select_event_type">Select Event Type</span>
-                            <i data-lucide="chevron-down" id="dropdownArrow" class="dropdown-arrow w-4 h-4 text-stone-500 group-hover:text-[#bf953f] transition-colors"></i>
-                        </button>
-
-                        <!-- Dropdown Menu -->
-                        <div id="eventTypeDropdown" class="custom-dropdown-menu absolute z-50 left-0 right-0 top-full mt-1 rounded-sm shadow-xl overflow-hidden w-full">
-                            <ul class="flex flex-col text-stone-400">
-                                <li class="p-3 md:p-4 hover:bg-stone-800/50 hover:text-[#bf953f] cursor-pointer transition-colors border-b border-stone-800/50 last:border-0" onclick="selectEventOption('Wedding', 'event_wedding')" data-i18n="event_wedding">Wedding</li>
-                                <li class="p-3 md:p-4 hover:bg-stone-800/50 hover:text-[#bf953f] cursor-pointer transition-colors border-b border-stone-800/50 last:border-0" onclick="selectEventOption('Engagement', 'event_engagement')" data-i18n="event_engagement">Engagement</li>
-                                <li class="p-3 md:p-4 hover:bg-stone-800/50 hover:text-[#bf953f] cursor-pointer transition-colors border-b border-stone-800/50 last:border-0" onclick="selectEventOption('Birthday', 'event_birthday')" data-i18n="event_birthday">Birthday</li>
-                                <li class="p-3 md:p-4 hover:bg-stone-800/50 hover:text-[#bf953f] cursor-pointer transition-colors border-b border-stone-800/50 last:border-0" onclick="selectEventOption('Corporate', 'event_corporate')" data-i18n="event_corporate">Corporate</li>
-                                <li class="p-3 md:p-4 hover:bg-stone-800/50 hover:text-[#bf953f] cursor-pointer transition-colors" onclick="selectEventOption('Other', 'event_other')" data-i18n="event_other">Other</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <div class="mb-12 md:mb-16 flex justify-center">
+	            <div class="mb-12 md:mb-16 flex justify-center">
   <button
     type="button"
     onclick="showPage('gallery')"
@@ -1092,7 +1015,83 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 </div>
                 <input type="hidden" id="cardboardSelection" required>
             </section>
+            <!-- Step 1: Contact Details -->
+            <section class="mb-8 md:mb-12">
+                <h2 class="text-xl md:text-2xl mb-4 md:mb-6 border-b border-stone-800 pb-2" data-i18n="step1_title">Your Details</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    <div>
+                    <label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_name">Full Name</label>
+                    <!-- Reduced mobile padding: changed p-3 to py-2 px-3 -->
+                    <input required type="text" id="name" placeholder="Your Name" class="lux-input w-full py-2 px-3 md:p-4 rounded-sm text-base" data-i18n-placeholder="placeholder_name">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_phone">Phone Number</label>
+                    <input required type="tel" id="phone" placeholder="050-0000000" class="lux-input w-full p-3 md:p-4 rounded-sm text-base">
+                </div>
+                
+                <!-- Custom Animated Date Picker -->
+                <div class="relative">
+                    <label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_date">Event Date</label>
+                    
+                    <!-- Hidden input to store actual value for WhatsApp/Form -->
+                    <input type="hidden" id="date">
+                    
+                    <!-- Display Input (Click to open calendar) -->
+                    <button type="button" onclick="toggleCalendar()" class="lux-input w-full p-3 md:p-4 rounded-sm flex justify-between items-center text-left cursor-pointer group text-base">
+                        <span id="dateDisplay" class="text-stone-400">Select Date</span>
+                        <i data-lucide="calendar" class="w-4 h-4 text-stone-500 group-hover:text-[#bf953f] transition-colors"></i>
+                    </button>
 
+                    <!-- Calendar Popup -->
+                    <div id="customCalendar" class="calendar-popup absolute left-0 top-full mt-1 rounded-sm shadow-xl">
+                        <div class="calendar-header">
+                            <button type="button" onclick="changeMonth(-1)" class="hover:text-white transition-colors"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
+                            <span id="currentMonthYear">Month Year</span>
+                            <button type="button" onclick="changeMonth(1)" class="hover:text-white transition-colors"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
+                        </div>
+                        <div class="calendar-grid" id="calendarDays">
+                            <!-- JS will populate this -->
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_email">Email Address</label>
+                    <input required type="email" id="email" placeholder="client@example.com" class="lux-input w-full p-3 md:p-4 rounded-sm text-base" data-i18n-placeholder="placeholder_email">
+                </div>
+                
+                <!-- NEW Event Location Field -->
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_location">Event Location</label>
+                    <input required type="text" id="location" placeholder="City, Venue name..." class="lux-input w-full py-2 px-3 md:p-4 rounded-sm text-base" data-i18n-placeholder="placeholder_location">
+                </div>
+
+                <!-- ANIMATED Custom Event Type Dropdown -->
+                <div class="relative">
+                    <label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_event_type">Event Type</label>
+                    
+                    <!-- Hidden Input to store the actual value for the form logic -->
+                    <input type="hidden" id="eventType">
+
+                    <!-- Trigger Button -->
+                    <button type="button" onclick="toggleDropdown()" class="lux-input w-full py-2 px-3 md:p-4 rounded-sm flex justify-between items-center text-left cursor-pointer group text-base">
+                        <span id="eventTypeLabel" class="text-stone-400" data-i18n="select_event_type">Select Event Type</span>
+                        <i data-lucide="chevron-down" id="dropdownArrow" class="dropdown-arrow w-4 h-4 text-stone-500 group-hover:text-[#bf953f] transition-colors"></i>
+                    </button>
+
+                    <!-- Dropdown Menu -->
+                    <div id="eventTypeDropdown" class="custom-dropdown-menu absolute z-50 left-0 right-0 top-full mt-1 rounded-sm shadow-xl overflow-hidden w-full">
+                        <ul class="flex flex-col text-stone-400">
+                            <li class="p-3 md:p-4 hover:bg-stone-800/50 hover:text-[#bf953f] cursor-pointer transition-colors border-b border-stone-800/50 last:border-0" onclick="selectEventOption('Wedding', 'event_wedding')" data-i18n="event_wedding">Wedding</li>
+                            <li class="p-3 md:p-4 hover:bg-stone-800/50 hover:text-[#bf953f] cursor-pointer transition-colors border-b border-stone-800/50 last:border-0" onclick="selectEventOption('Engagement', 'event_engagement')" data-i18n="event_engagement">Engagement</li>
+                            <li class="p-3 md:p-4 hover:bg-stone-800/50 hover:text-[#bf953f] cursor-pointer transition-colors border-b border-stone-800/50 last:border-0" onclick="selectEventOption('Birthday', 'event_birthday')" data-i18n="event_birthday">Birthday</li>
+                            <li class="p-3 md:p-4 hover:bg-stone-800/50 hover:text-[#bf953f] cursor-pointer transition-colors border-b border-stone-800/50 last:border-0" onclick="selectEventOption('Corporate', 'event_corporate')" data-i18n="event_corporate">Corporate</li>
+                            <li class="p-3 md:p-4 hover:bg-stone-800/50 hover:text-[#bf953f] cursor-pointer transition-colors" onclick="selectEventOption('Other', 'event_other')" data-i18n="event_other">Other</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
             <!-- Summary & Submit -->
                 <section class="bg-stone-900 border border-stone-800 p-6 md:p-8 rounded-lg text-center">
                     <h3 class="serif-font text-xl md:text-2xl mb-4 gold-text" style="text-shadow: 0 0 12px rgba(191, 149, 63, 0.6);" data-i18n="summary_title">Ready to Book?</h3>
@@ -1100,7 +1099,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         Clicking the button below will open WhatsApp with your order details pre-filled.
                     </p>
                     <button type="submit" class="gold-btn w-full md:w-auto px-8 md:px-12 py-3 md:py-4 text-base md:text-lg font-bold uppercase tracking-widest rounded-sm" data-i18n="btn_submit">
-                        Send Request on WhatsApp
+                        Get Your Offer
                     </button>
                 </section>
 
@@ -1372,7 +1371,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 event_other: "Other",
                 summary_title: "Ready to Book?",
                 summary_desc: "Clicking the button below will open WhatsApp with your order details pre-filled.",
-                btn_submit: "Send Request on WhatsApp",
+                btn_submit: "Get Your Offer",
                 btn_book_experience: "Book This Experience",
                 alert_contact: "Please fill in all contact details.",
                 alert_select: "Please select an option for Frame, Rope, and Photo Mount.",
@@ -1438,7 +1437,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 event_other: "אחר",
                 summary_title: "מוכנים להזמין?",
                 summary_desc: "לחיצה על הכפתור למטה תפתח את וואטסאפ עם פרטי ההזמנה שלך.",
-                btn_submit: "שלח בקשה בוואטסאפ",
+                btn_submit: "קבל הצעת מחיר",
                 btn_book_experience: "הזמן חוויה זו",
                 alert_contact: "נא למלא את כל פרטי הקשר.",
                 alert_select: "נא לבחור אפשרות למסגרת, חבל ומסגרת תמונה.",
@@ -1504,7 +1503,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 event_other: "آخر",
                 summary_title: "جاهز للحجز؟",
                 summary_desc: "النقر على الزر أدناه سيفتح واتساب مع تفاصيل طلبك.",
-                btn_submit: "إرسال الطلب عبر واتساب",
+                btn_submit: "احصل على عرض السعر",
                 btn_book_experience: "احجز هذه التجربة",
                 alert_contact: "يرجى ملء جميع تفاصيل الاتصال.",
                 alert_select: "يرجى اختيار إطار، حبل، وإطار للصورة.",
