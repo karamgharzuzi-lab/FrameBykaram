@@ -636,18 +636,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             
             <form id="bookingForm" onsubmit="event.preventDefault(); sendToWhatsApp();">
                 
-	            <div class="mb-12 md:mb-16 flex justify-center">
-  <button
-    type="button"
-    onclick="showPage('gallery')"
-    data-i18n="check_gallery_teaser"
-    class="gallery-text-cta uppercase tracking-widest text-sm md:text-base font-semibold"
-  >
-    Check the gallery before you start
-  </button>
-</div>
-
-            <!-- Step 2: Mirror Frame -->
+	            <!-- Step 2: Mirror Frame -->
             <section class="mb-8 md:mb-12">
                 <h2 class="text-xl md:text-2xl mb-4 md:mb-6 border-b border-stone-800 pb-2" data-i18n="step2_title">Mirror Frame</h2>
                 <p class="text-sm text-stone-400 mb-4" data-i18n="step2_desc">Choose the frame finish for the mirror.</p>
@@ -1157,41 +1146,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <p class="text-stone-400 max-w-xl mx-auto text-lg font-light" data-i18n="gallery_subheading">
                 Browse through our collection of past events and mirror experiences.
             </p>
+<div class="mt-8 text-6xl md:text-8xl italic tracking-widest text-stone-500/60 serif-font always-serif">
+    SOON
+</div>
         </header>
+                </p>
+</header>
+</div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-            <!-- Gallery Item 1 -->
-            <div class="gallery-item relative overflow-hidden rounded-lg shadow-lg aspect-[3/4] group cursor-pointer" onclick="openLightbox('luxury.jpg')">
-                <img src="luxury.jpg" class="gallery-img w-full h-full object-cover" alt="Wedding Event">
-                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span class="text-white font-serif italic text-xl">Weddings</span>
-                </div>
-            </div>
-            <!-- Gallery Item 2 -->
-            <div class="gallery-item relative overflow-hidden rounded-lg shadow-lg aspect-[3/4] group cursor-pointer" onclick="openLightbox('luxury.jpg')">
-                <img src="luxury.jpg" class="gallery-img w-full h-full object-cover" alt="Event Photo">
-                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span class="text-white font-serif italic text-xl">Events</span>
-                </div>
-            </div>
-            <!-- Gallery Item 3 -->
-            <div class="gallery-item relative overflow-hidden rounded-lg shadow-lg aspect-[3/4] group cursor-pointer" onclick="openLightbox('luxury.jpg')">
-                <img src="luxury.jpg" class="gallery-img w-full h-full object-cover" alt="Party Photo">
-                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span class="text-white font-serif italic text-xl">Parties</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="text-center">
-            <button onclick="showPage('booking')" class="gold-btn px-12 py-4 text-lg font-bold uppercase tracking-widest rounded-sm">
-                <span data-i18n="btn_book_experience">Book This Experience</span>
-            </button>
-        </div>
-    </div>
-
-    <!-- === ABOUT US PAGE SECTION (Hidden by default) === -->
-    <div id="about-page" class="hidden flex-grow container mx-auto px-4 pb-20 max-w-3xl transition-all duration-500 ease-in-out opacity-0 translate-y-10">
+        <!-- === ABOUT US PAGE SECTION (Hidden by default) === -->
+<div id="about-page" class="hidden flex-grow container mx-auto px-4 pb-20 max-w-3xl transition-all duration-500 ease-in-out opacity-0 translate-y-10">
         <header class="text-center py-16 px-4">
             <div class="serif-font always-serif text-3xl md:text-5xl mb-3 gold-text tracking-wider font-bold">FrameByKaram</div>
             <p class="text-stone-400 max-w-xl mx-auto text-lg font-light" data-i18n="about_subtitle">
