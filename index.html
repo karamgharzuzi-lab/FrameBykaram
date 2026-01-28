@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -928,16 +927,34 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- 1 Picture (Empty for now) -->
         <button
-            type="button"
-            class="option-card rounded-md p-4 md:p-6 text-left relative flex items-center justify-between"
-            onclick="toggleMountCategory('mount-1pic')"
-            aria-expanded="false"
-            aria-controls="mount-1pic"
-        >
-            <span class="text-base md:text-lg serif-font" style="font-family: inherit;">1 Picture</span>
-            <i data-lucide="chevron-down" id="arrow-mount-1pic" class="dropdown-arrow w-5 h-5 text-stone-500"></i>
-        </button>
+    type="button"
+    class="option-card rounded-md p-4 md:p-6 text-left relative flex items-center justify-between"
+    onclick="toggleMountCategory('mount-1pic')"
+    aria-expanded="false"
+    aria-controls="mount-1pic"
+>
+    <div class="flex flex-col items-center gap-4 w-full">
+        
+        <!-- Title -->
+        <span class="text-base md:text-lg serif-font text-center" style="font-family: inherit;">
+            1 Picture
+        </span>
 
+        <!-- Preview Image -->
+        <div class="w-full max-w-md h-32 md:h-40 rounded-lg overflow-hidden border border-stone-700 shadow-md flex items-center justify-center">
+            <img
+                src="1pic-preview.jpg"
+                alt="1 Picture Preview"
+                class="w-full h-full object-cover mount-img-full"
+                onerror="this.style.display='none';"
+            >
+        </div>
+
+    </div>
+
+    <!-- Arrow -->
+    <i data-lucide="chevron-down" id="arrow-mount-1pic" class="dropdown-arrow w-5 h-5 text-stone-500"></i>
+</button>
         <!-- 3 in 1 Picture -->
         <button
             type="button"
@@ -946,14 +963,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             aria-expanded="false"
             aria-controls="mount-3in1"
         >
-   <div class="flex flex-col items-center gap-4 w-full">
+            <div class="flex flex-col items-center gap-4 w-full">
     
-    <!-- Title (Top) -->
+    <!-- Title -->
     <span class="text-base md:text-lg serif-font text-center" style="font-family: inherit;">
         3 in 1 Picture
     </span>
 
-    <!-- Larger Preview Image (Below Title) -->
+    <!-- Preview Image -->
     <div class="w-full max-w-md h-32 md:h-40 rounded-lg overflow-hidden border border-stone-700 shadow-md flex items-center justify-center">
         <img
             src="3in1-preview.jpg"
@@ -964,7 +981,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </div>
 
 </div>
-
 <!-- Arrow -->
 <i data-lucide="chevron-down" id="arrow-mount-3in1" class="dropdown-arrow w-5 h-5 text-stone-500"></i>
         </button>
