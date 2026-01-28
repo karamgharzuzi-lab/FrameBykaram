@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -945,21 +946,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             aria-expanded="false"
             aria-controls="mount-3in1"
         >
-            <div class="flex items-center gap-4">
-    <!-- Preview Image -->
-    <div class="w-16 h-16 md:w-20 md:h-20 rounded-md overflow-hidden border border-stone-700 shadow-md flex-shrink-0">
+   <div class="flex flex-col items-center gap-4 w-full">
+    
+    <!-- Title (Top) -->
+    <span class="text-base md:text-lg serif-font text-center" style="font-family: inherit;">
+        3 in 1 Picture
+    </span>
+
+    <!-- Larger Preview Image (Below Title) -->
+    <div class="w-full max-w-md h-32 md:h-40 rounded-lg overflow-hidden border border-stone-700 shadow-md flex items-center justify-center">
         <img
             src="3in1-preview.jpg"
             alt="3 in 1 Picture Preview"
-            class="w-full h-full object-cover"
+            class="w-full h-full object-cover mount-img-full"
             onerror="this.style.display='none';"
         >
     </div>
 
-    <!-- Title -->
-    <span class="text-base md:text-lg serif-font" style="font-family: inherit;">
-        3 in 1 Picture
-    </span>
 </div>
 
 <!-- Arrow -->
