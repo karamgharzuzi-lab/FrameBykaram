@@ -1671,6 +1671,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         /* --- Selection & Form Logic --- */
 function toggleMountCategory(panelId) {
+    // Keep the page from "jumping/flashing" to the top/nav area on toggle
+    const scrollY = window.scrollY;
+
+    // Remove focus from the clicked button (prevents browser focus-scroll behavior)
+    try {
+        if (document.activeElement) document.activeElement.blur();
+    } catch (e) {}
+
     const panel = document.getElementById(panelId);
     if (!panel) return;
 
@@ -1693,6 +1701,11 @@ function toggleMountCategory(panelId) {
     // Update aria-expanded on the button controlling this panel
     const btn = document.querySelector(`button[aria-controls="${panelId}"]`);
     if (btn) btn.setAttribute('aria-expanded', isOpening ? 'true' : 'false');
+
+    // Restore scroll position after DOM changes (prevents the "flash/jump")
+    requestAnimationFrame(() => {
+        window.scrollTo(0, scrollY);
+    });
 }
         const selections = {
             frame: null,
@@ -1930,5 +1943,6 @@ Please confirm availability. Thank you!
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 </html>
+
 
 
