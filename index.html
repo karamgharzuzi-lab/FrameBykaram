@@ -1840,12 +1840,13 @@ function toggleMountCategory(panelId) {
                 div.onclick = function() {
                     selectedDate = new Date(year, month, d);
                     
-                    // Format for display (DD/MM/YYYY)
-                    const displayStr = `${d.toString().padStart(2, '0')}/${(month+1).toString().padStart(2, '0')}/${year}`;
-                    const label = document.getElementById('dateDisplay');
-                    label.innerText = displayStr;
-                    label.classList.remove('text-stone-400');
-                    label.classList.add('text-stone-200');
+                    // Format for display (DD Mon YYYY)
+const monthShort = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const displayStr = `${d.toString().padStart(2, '0')} ${monthShort[month]} ${year}`;
+const label = document.getElementById('dateDisplay');
+label.innerText = displayStr;
+label.classList.remove('text-stone-400');
+label.classList.add('text-stone-200');
 
                     // Format for Hidden Input (YYYY-MM-DD) for WhatsApp
                     const isoStr = `${year}-${(month+1).toString().padStart(2, '0')}-${d.toString().padStart(2, '0')}`;
@@ -1943,6 +1944,7 @@ Please confirm availability. Thank you!
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 </html>
+
 
 
 
