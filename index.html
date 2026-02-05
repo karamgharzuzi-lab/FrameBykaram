@@ -1888,6 +1888,17 @@ label.classList.add('text-stone-200');
             const name = document.getElementById('name').value;
             const phone = document.getElementById('phone').value;
             const date = document.getElementById('date').value;
+<!-- INSERT THIS (immediately AFTER the line above): -->
+// Format date for WhatsApp as: "05 Feb 2026"
+let dateWhatsapp = date;
+if (date) {
+    const [y, m, d] = date.split('-'); // YYYY-MM-DD
+    const monthShort = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    const mm = parseInt(m, 10);
+    if (!isNaN(mm) && mm >= 1 && mm <= 12) {
+        dateWhatsapp = `${d} ${monthShort[mm - 1]} ${y}`;
+    }
+}
             const email = document.getElementById('email').value;
             const location = document.getElementById('location').value;
             const eventType = document.getElementById('eventType').value;
@@ -1914,7 +1925,7 @@ label.classList.add('text-stone-200');
 
 👤 *Name:* ${name}
 📱 *Phone:* ${phone}
-📅 *Date:* ${date}
+📅 *Date:* ${dateWhatsapp}
 📧 *Email:* ${email}
 📍 *Location:* ${location}
 🎉 *Event Type:* ${eventType}
@@ -1944,7 +1955,6 @@ Please confirm availability. Thank you!
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 </html>
-
 
 
 
