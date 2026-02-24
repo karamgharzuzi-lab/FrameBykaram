@@ -535,17 +535,22 @@
         0 0 12px rgba(122, 23, 38, 0.35),
         0 0 20px rgba(122, 23, 38, 0.2);
 }
-    </style>
-</head>
-    <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KN9PBXP7');</script>
-<!-- End Google Tag Manager -->
-<!-- Added 'relative' to body ensures the absolute frame stretches to the full height of the content -->
+</style>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KN9PBXP7');</script>
+    </head>
 <body class="min-h-screen flex flex-col relative" lang="en">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KN9PBXP7"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    ```
+
+* **Then, scroll to the very bottom of your document and DELETE these lines:**
+```html
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KN9PBXP7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <!-- Intro Animation Screen (Hidden by default to prevent reappearing on reload) -->
     <div id="intro-screen" class="fixed inset-0 z-[10000] hidden items-center justify-center bg-black transition-opacity duration-1000">
@@ -986,10 +991,58 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </button>
     </div>
 
-    <!-- Collapsible Panel: 1 Picture (Empty) -->
-    <div id="mount-1pic" class="hidden">
-        <!-- Empty by request -->
+    <!-- Collapsible Panel: 1 Picture -->
+<div id="mount-1pic" class="hidden">
+    <div class="grid grid-cols-2 gap-4">
+
+        <!-- Luxury White -->
+        <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Luxury White')">
+            <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg overflow-hidden border-2 border-stone-300 shadow-lg flex items-center justify-center">
+                
+                <!-- Enlarge Button -->
+                <button type="button" onclick="event.stopPropagation(); openLightbox('mount-luxury-white.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+                    <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+                </button>
+
+                <img 
+                    src="mount-luxury-white.jpg" 
+                    alt="Luxury White Mount"
+                    class="w-full h-full object-cover"
+                    onerror="this.style.display='none'; this.parentElement.classList.add('bg-stone-100');"
+                >
+            </div>
+
+            <h3 class="text-base md:text-lg" data-i18n="mount_luxury_white">Luxury White</h3>
+            <div id="check-cardboard-Luxury White" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
+                <i data-lucide="check-circle"></i>
+            </div>
+        </div>
+
+        <!-- Natural Kraft XL -->
+        <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Natural Kraft XL')">
+            <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg overflow-hidden border-2 border-[#a38865] shadow-lg flex items-center justify-center">
+                
+                <!-- Enlarge Button -->
+                <button type="button" onclick="event.stopPropagation(); openLightbox('mount-kraft-xl.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+                    <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+                </button>
+
+                <img 
+                    src="mount-kraft-xl.jpg" 
+                    alt="Natural Kraft XL Mount"
+                    class="w-full h-full object-cover"
+                    onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-[#e6ceaa]','via-[#d2b48c]','to-[#ba9e76]');"
+                >
+            </div>
+
+            <h3 class="text-base md:text-lg" data-i18n="mount_kraft_xl">Natural Kraft XL</h3>
+            <div id="check-cardboard-Natural Kraft XL" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
+                <i data-lucide="check-circle"></i>
+            </div>
+        </div>
+
     </div>
+</div>
 
     <!-- Collapsible Panel: 3 in 1 Picture (All existing colors moved here) -->
     <div id="mount-3in1" class="hidden">
@@ -1231,8 +1284,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     SOON
 </div>
         </header>
-                </p>
-</header>
 </div>
 
         <!-- === ABOUT US PAGE SECTION (Hidden by default) === -->
@@ -1450,6 +1501,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 mount_pure_white: "Pure White",
                 mount_white_gold: "White & Gold",
                 mount_kraft: "Natural Kraft",
+                mount_luxury_white: "Luxury White",
+                mount_kraft_xl: "Natural Kraft XL",
                 check_gallery_teaser: "Check the gallery before you Start",
                 // Event Type Translations
                 label_event_type: "Event Type",
@@ -1518,6 +1571,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           mount_pure_white: "לבן טהור",
          mount_white_gold: "לבן וזהב",
                 mount_kraft: "קרפט טבעי",
+         mount_luxury_white: "לבן יוקרתי",
+         mount_kraft_xl: "קרפט טבעי XL",
           mount_black: "שחור יוקרתי",
           mount_wine_red: "אדום יין קלאסי",
                 check_gallery_teaser: "הציצו בגלריה לפני שמתחילים",
@@ -1588,6 +1643,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           mount_pure_white: "أبيض نقي",
           mount_white_gold: "أبيض وذهبي",
                 mount_kraft: "كرافت طبيعي",
+mount_luxury_white: "أبيض فاخر",
+mount_kraft_xl: "كرافت طبيعي XL",
           mount_black: "أسود فاخر",
           mount_wine_red: "أحمر نبيذي كلاسيكي",
                 check_gallery_teaser: "تحقق من المعرض قبل البدء",
@@ -1671,43 +1728,60 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         /* --- Selection & Form Logic --- */
 function toggleMountCategory(panelId) {
-    // Keep the page from "jumping/flashing" to the top/nav area on toggle
+    // Keep the page from jumping
     const scrollY = window.scrollY;
 
-    // Remove focus from the clicked button (prevents browser focus-scroll behavior)
-    try {
-        if (document.activeElement) document.activeElement.blur();
-    } catch (e) {}
+    // Remove focus from clicked button (prevents weird scroll in some browsers)
+    try { document.activeElement && document.activeElement.blur(); } catch (e) {}
+
+    // These are the ONLY two mount panels you have
+    const panels = ['mount-1pic', 'mount-3in1'];
 
     const panel = document.getElementById(panelId);
     if (!panel) return;
 
-    const isOpening = panel.classList.contains('hidden');
+    const isOpening = panel.classList.contains('hidden'); // if hidden -> we are opening it
 
-    // Toggle panel visibility
-    panel.classList.toggle('hidden');
+    // 1) If opening this panel, close the other one automatically
+    if (isOpening) {
+        panels.forEach(otherId => {
+            if (otherId === panelId) return;
 
-    // Rotate arrow if exists
-    const arrowId = `arrow-${panelId}`;
-    const arrow = document.getElementById(arrowId);
-    if (arrow) {
-        if (isOpening) {
-            arrow.classList.add('rotate');
-        } else {
-            arrow.classList.remove('rotate');
-        }
+            const otherPanel = document.getElementById(otherId);
+            if (!otherPanel) return;
+
+            // Close the other panel
+            otherPanel.classList.add('hidden');
+
+            // Reset the other arrow
+            const otherArrow = document.getElementById(`arrow-${otherId}`);
+            if (otherArrow) otherArrow.classList.remove('rotate');
+
+            // Reset the other aria-expanded
+            const otherBtn = document.querySelector(`button[aria-controls="${otherId}"]`);
+            if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+        });
     }
 
-    // Update aria-expanded on the button controlling this panel
+    // 2) Toggle current panel
+    panel.classList.toggle('hidden');
+
+    // 3) Rotate current arrow
+    const arrow = document.getElementById(`arrow-${panelId}`);
+    if (arrow) {
+        if (isOpening) arrow.classList.add('rotate');
+        else arrow.classList.remove('rotate');
+    }
+
+    // 4) Update aria-expanded for current button
     const btn = document.querySelector(`button[aria-controls="${panelId}"]`);
     if (btn) btn.setAttribute('aria-expanded', isOpening ? 'true' : 'false');
 
-    // Restore scroll position after DOM changes (prevents the "flash/jump")
+    // 5) Restore scroll position
     requestAnimationFrame(() => {
         window.scrollTo(0, scrollY);
     });
-}
-        const selections = {
+}        const selections = {
             frame: null,
             rope: null,
             carpet: null, // Added carpet
@@ -1802,10 +1876,11 @@ if (activeCheckmark) {
             const year = currentDate.getFullYear();
             const month = currentDate.getMonth();
             
-            // Update Header
-            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            document.getElementById('currentMonthYear').innerText = `${monthNames[month]} ${year}`;
-            
+// Update Header (Now supports Arabic and Hebrew automatically)
+            const dateObj = new Date(year, month);
+            const formatter = new Intl.DateTimeFormat(currentLang, { month: 'long' });
+            const localizedMonthName = formatter.format(dateObj);
+            document.getElementById('currentMonthYear').innerText = `${localizedMonthName} ${year}`;            
             const daysContainer = document.getElementById('calendarDays');
             daysContainer.innerHTML = '';
 
@@ -1894,7 +1969,6 @@ label.classList.add('text-stone-200');
             const name = document.getElementById('name').value;
             const phone = document.getElementById('phone').value;
             const date = document.getElementById('date').value;
-<!-- INSERT THIS (immediately AFTER the line above): -->
 // Format date for WhatsApp as: "05 Feb 2026"
 let dateWhatsapp = date;
 if (date) {
@@ -1917,7 +1991,7 @@ if (date) {
                 alert(translations[currentLang].alert_contact);
                 return;
             }
-            if (!frame || !rope || !cardboard) {
+if (!frame || !rope || !carpet || !cardboard) {
                 alert(translations[currentLang].alert_select);
                 return;
             }
