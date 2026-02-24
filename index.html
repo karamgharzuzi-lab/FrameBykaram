@@ -1719,19 +1719,25 @@ function toggleMountCategory(panelId) {
             document.getElementById(`${category}Selection`).value = value;
 
             const inputField = document.getElementById(`${category}Selection`);
-            const container = inputField.previousElementSibling;
-            
-            Array.from(container.children).forEach(child => {
-                child.classList.remove('selected');
-                const checkmark = child.querySelector(`[id^="check-${category}"]`);
-                if(checkmark) checkmark.classList.add('hidden');
-            });
 
-            const activeCheckmark = document.getElementById(`check-${category}-${value}`);
-            if (activeCheckmark) {
-                activeCheckmark.classList.remove('hidden');
-                activeCheckmark.parentElement.classList.add('selected');
-            }
+// 1) Clear previous selection for this category (works even inside nested panels)
+document.querySelectorAll(`.option-card.selected`).forEach(card => {
+    const check = card.querySelector(`[id^="check-${category}-"]`);
+    if (check) {
+        card.classList.remove('selected');
+        check.classList.add('hidden');
+    }
+});
+
+// 2) Save the new selection
+inputField.value = value;
+
+// 3) Mark the new one as selected
+const activeCheckmark = document.getElementById(`check-${category}-${value}`);
+if (activeCheckmark) {
+    activeCheckmark.classList.remove('hidden');
+    activeCheckmark.parentElement.classList.add('selected');
+}
         }
 
         /* --- Custom Dropdown Logic --- */
@@ -1955,6 +1961,3 @@ Please confirm availability. Thank you!
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 </html>
-
-
-
