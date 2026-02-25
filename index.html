@@ -18,6 +18,25 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
+/* --- Smooth Collapse Animation for Mount Panels --- */
+.collapse-panel {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-6px);
+  overflow: hidden;
+  pointer-events: none;
+
+  transition:
+    max-height 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 260ms ease,
+    transform 260ms ease;
+}
+
+.collapse-panel.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
         /* === BASE THEME VARIABLES (Dark Default) === */
         :root {
             --bg-body: #1a1a1a;
@@ -951,7 +970,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   </button>
 
   <!-- 1 Picture (Panel) -->
-  <div id="mount-1pic" class="hidden">
+  <div id="mount-1pic" class="collapse-panel">
     <div class="grid grid-cols-2 gap-4">
 
       <!-- Luxury White -->
@@ -1028,7 +1047,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   </button>
 
   <!-- 3 in 1 Picture (Panel) -->
-  <div id="mount-3in1" class="hidden">
+  <div id="mount-3in1" class="collapse-panel">
     <div class="grid grid-cols-2 gap-4">
 
       <!-- White -->
@@ -1341,6 +1360,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </footer>
 
     <script>
+function refreshOpenMountPanels() {
+  ['mount-1pic', 'mount-3in1'].forEach(id => {
+    const p = document.getElementById(id);
+    if (p && p.classList.contains('open')) {
+      p.style.maxHeight = p.scrollHeight + 'px';
+    }
+  });
+}
+
+// Update height after images load (prevents cut-off)
+window.addEventListener('load', () => {
+  setTimeout(refreshOpenMountPanels, 50);
+});
         /* --- Intro Animation Logic (Forced Play) --- */
         (function manageIntro() {
             const intro = document.getElementById('intro-screen');
@@ -1720,92 +1752,60 @@ mount_kraft_xl: "كرافت طبيعي XL",
 
         /* --- Selection & Form Logic --- */
 function toggleMountCategory(panelId) {
-    // Keep the page from jumping
-    const scrollY = window.scrollY;
+  const scrollY = window.scrollY;
+  try { document.activeElement && document.activeElement.blur(); } catch (e) {}
 
-    // Remove focus from clicked button (prevents weird scroll in some browsers)
-    try { document.activeElement && document.activeElement.blur(); } catch (e) {}
+  const panels = ['mount-1pic', 'mount-3in1'];
+  const panel = document.getElementById(panelId);
+  if (!panel) return;
 
-    // These are the ONLY two mount panels you have
-    const panels = ['mount-1pic', 'mount-3in1'];
+  const isOpening = !panel.classList.contains('open');
 
-    const panel = document.getElementById(panelId);
-    if (!panel) return;
+  // Close other panel if opening this one
+  if (isOpening) {
+    panels.forEach(otherId => {
+      if (otherId === panelId) return;
 
-    const isOpening = panel.classList.contains('hidden'); // if hidden -> we are opening it
+      const otherPanel = document.getElementById(otherId);
+      if (!otherPanel) return;
 
-    // 1) If opening this panel, close the other one automatically
-    if (isOpening) {
-        panels.forEach(otherId => {
-            if (otherId === panelId) return;
+      otherPanel.classList.remove('open');
+      otherPanel.style.maxHeight = '0px';
 
-            const otherPanel = document.getElementById(otherId);
-            if (!otherPanel) return;
+      const otherArrow = document.getElementById(`arrow-${otherId}`);
+      if (otherArrow) otherArrow.classList.remove('rotate');
 
-            // Close the other panel
-            otherPanel.classList.add('hidden');
-
-            // Reset the other arrow
-            const otherArrow = document.getElementById(`arrow-${otherId}`);
-            if (otherArrow) otherArrow.classList.remove('rotate');
-
-            // Reset the other aria-expanded
-            const otherBtn = document.querySelector(`button[aria-controls="${otherId}"]`);
-            if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
-        });
-    }
-
-    // 2) Toggle current panel
-    panel.classList.toggle('hidden');
-
-    // 3) Rotate current arrow
-    const arrow = document.getElementById(`arrow-${panelId}`);
-    if (arrow) {
-        if (isOpening) arrow.classList.add('rotate');
-        else arrow.classList.remove('rotate');
-    }
-
-    // 4) Update aria-expanded for current button
-    const btn = document.querySelector(`button[aria-controls="${panelId}"]`);
-    if (btn) btn.setAttribute('aria-expanded', isOpening ? 'true' : 'false');
-
-    // 5) Restore scroll position
-    requestAnimationFrame(() => {
-        window.scrollTo(0, scrollY);
+      const otherBtn = document.querySelector(`button[aria-controls="${otherId}"]`);
+      if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
     });
-}        const selections = {
-            frame: null,
-            rope: null,
-            carpet: null, // Added carpet
-            cardboard: null
-        };
+  }
 
-        function selectOption(category, value) {
-            selections[category] = value;
-            document.getElementById(`${category}Selection`).value = value;
+  // Toggle current panel
+  if (isOpening) {
+    panel.classList.add('open');
 
-            const inputField = document.getElementById(`${category}Selection`);
+    // Important: set maxHeight to content height so it animates
+    panel.style.maxHeight = panel.scrollHeight + 'px';
 
-// 1) Clear previous selection for this category (works even inside nested panels)
-document.querySelectorAll(`.option-card.selected`).forEach(card => {
-    const check = card.querySelector(`[id^="check-${category}-"]`);
-    if (check) {
-        card.classList.remove('selected');
-        check.classList.add('hidden');
-    }
-});
+    const arrow = document.getElementById(`arrow-${panelId}`);
+    if (arrow) arrow.classList.add('rotate');
 
-// 2) Save the new selection
-inputField.value = value;
+    const btn = document.querySelector(`button[aria-controls="${panelId}"]`);
+    if (btn) btn.setAttribute('aria-expanded', 'true');
+  } else {
+    panel.classList.remove('open');
+    panel.style.maxHeight = '0px';
 
-// 3) Mark the new one as selected
-const activeCheckmark = document.getElementById(`check-${category}-${value}`);
-if (activeCheckmark) {
-    activeCheckmark.classList.remove('hidden');
-    activeCheckmark.parentElement.classList.add('selected');
+    const arrow = document.getElementById(`arrow-${panelId}`);
+    if (arrow) arrow.classList.remove('rotate');
+
+    const btn = document.querySelector(`button[aria-controls="${panelId}"]`);
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+  }
+
+  // Keep scroll stable
+  requestAnimationFrame(() => window.scrollTo(0, scrollY));
 }
-        }
-
         /* --- Custom Dropdown Logic --- */
         function toggleDropdown() {
             const dropdown = document.getElementById('eventTypeDropdown');
