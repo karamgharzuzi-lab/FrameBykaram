@@ -535,22 +535,17 @@
         0 0 12px rgba(122, 23, 38, 0.35),
         0 0 20px rgba(122, 23, 38, 0.2);
 }
-</style>
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-KN9PBXP7');</script>
-    </head>
+    </style>
+</head>
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KN9PBXP7');</script>
+<!-- End Google Tag Manager -->
+<!-- Added 'relative' to body ensures the absolute frame stretches to the full height of the content -->
 <body class="min-h-screen flex flex-col relative" lang="en">
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KN9PBXP7"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    ```
-
-* **Then, scroll to the very bottom of your document and DELETE these lines:**
-```html
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KN9PBXP7"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <!-- Intro Animation Screen (Hidden by default to prevent reappearing on reload) -->
     <div id="intro-screen" class="fixed inset-0 z-[10000] hidden items-center justify-center bg-black transition-opacity duration-1000">
@@ -928,255 +923,250 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 
 <!-- Photo Mount Categories -->
 <div class="space-y-4">
-    <!-- Category Buttons -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- 1 Picture (Empty for now) -->
-        <button
+
+  <!-- 1 Picture (Button) -->
+  <button
     type="button"
-    class="option-card rounded-md p-4 md:p-6 text-left relative flex items-center justify-between"
+    class="option-card rounded-md p-4 md:p-6 text-left relative flex items-center justify-between w-full"
     onclick="toggleMountCategory('mount-1pic')"
     aria-expanded="false"
     aria-controls="mount-1pic"
->
+  >
     <div class="flex flex-col items-center gap-4 w-full">
-        
-        <!-- Title -->
-        <span class="text-base md:text-lg serif-font text-center" style="font-family: inherit;">
-            1 Picture
-        </span>
+      <span class="text-base md:text-lg serif-font text-center" style="font-family: inherit;">
+        1 Picture
+      </span>
 
-        <!-- Preview Image -->
-        <div class="w-full max-w-md h-32 md:h-40 rounded-lg overflow-hidden border border-stone-700 shadow-md flex items-center justify-center">
-            <img
-                src="1pic-preview.jpg"
-                alt="1 Picture Preview"
-                class="w-full h-full object-cover mount-img-full"
-                onerror="this.style.display='none';"
-            >
-        </div>
-
-    </div>
-
-    <!-- Arrow -->
-    <i data-lucide="chevron-down" id="arrow-mount-1pic" class="dropdown-arrow w-5 h-5 text-stone-500"></i>
-</button>
-        <!-- 3 in 1 Picture -->
-        <button
-            type="button"
-            class="option-card rounded-md p-4 md:p-6 text-left relative flex items-center justify-between"
-            onclick="toggleMountCategory('mount-3in1')"
-            aria-expanded="false"
-            aria-controls="mount-3in1"
-        >
-            <div class="flex flex-col items-center gap-4 w-full">
-    
-    <!-- Title -->
-    <span class="text-base md:text-lg serif-font text-center" style="font-family: inherit;">
-        3 in 1 Picture
-    </span>
-
-    <!-- Preview Image -->
-    <div class="w-full max-w-md h-32 md:h-40 rounded-lg overflow-hidden border border-stone-700 shadow-md flex items-center justify-center">
+      <div class="w-full max-w-md h-32 md:h-40 rounded-lg overflow-hidden border border-stone-700 shadow-md flex items-center justify-center">
         <img
-            src="3in1-preview.jpg"
-            alt="3 in 1 Picture Preview"
-            class="w-full h-full object-cover mount-img-full"
-            onerror="this.style.display='none';"
+          src="1pic-preview.jpg"
+          alt="1 Picture Preview"
+          class="w-full h-full object-cover mount-img-full"
+          onerror="this.style.display='none';"
         >
+      </div>
     </div>
 
-</div>
-<!-- Arrow -->
-<i data-lucide="chevron-down" id="arrow-mount-3in1" class="dropdown-arrow w-5 h-5 text-stone-500"></i>
-        </button>
-    </div>
+    <i data-lucide="chevron-down" id="arrow-mount-1pic" class="dropdown-arrow w-5 h-5 text-stone-500"></i>
+  </button>
 
-    <!-- Collapsible Panel: 1 Picture -->
-<div id="mount-1pic" class="hidden">
+  <!-- 1 Picture (Panel) -->
+  <div id="mount-1pic" class="hidden">
     <div class="grid grid-cols-2 gap-4">
 
-        <!-- Luxury White -->
-        <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Luxury White')">
-            <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg overflow-hidden border-2 border-stone-300 shadow-lg flex items-center justify-center">
-                
-                <!-- Enlarge Button -->
-                <button type="button" onclick="event.stopPropagation(); openLightbox('mount-luxury-white.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-                    <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-                </button>
+      <!-- Luxury White -->
+      <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Luxury White')">
+        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg overflow-hidden border-2 border-stone-300 shadow-lg flex items-center justify-center">
 
-                <img 
-                    src="mount-luxury-white.jpg" 
-                    alt="Luxury White Mount"
-                    class="w-full h-full object-cover"
-                    onerror="this.style.display='none'; this.parentElement.classList.add('bg-stone-100');"
-                >
-            </div>
+          <button type="button" onclick="event.stopPropagation(); openLightbox('mount-luxury-white.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+            <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+          </button>
 
-            <h3 class="text-base md:text-lg" data-i18n="mount_luxury_white">Luxury White</h3>
-            <div id="check-cardboard-Luxury White" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
-                <i data-lucide="check-circle"></i>
-            </div>
+          <img
+            src="mount-luxury-white.jpg"
+            alt="Luxury White Mount"
+            class="w-full h-full object-cover"
+            onerror="this.style.display='none'; this.parentElement.classList.add('bg-stone-100');"
+          >
         </div>
 
-        <!-- Natural Kraft XL -->
-        <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Natural Kraft XL')">
-            <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg overflow-hidden border-2 border-[#a38865] shadow-lg flex items-center justify-center">
-                
-                <!-- Enlarge Button -->
-                <button type="button" onclick="event.stopPropagation(); openLightbox('mount-kraft-xl.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-                    <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-                </button>
-
-                <img 
-                    src="mount-kraft-xl.jpg" 
-                    alt="Natural Kraft XL Mount"
-                    class="w-full h-full object-cover"
-                    onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-[#e6ceaa]','via-[#d2b48c]','to-[#ba9e76]');"
-                >
-            </div>
-
-            <h3 class="text-base md:text-lg" data-i18n="mount_kraft_xl">Natural Kraft XL</h3>
-            <div id="check-cardboard-Natural Kraft XL" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
-                <i data-lucide="check-circle"></i>
-            </div>
+        <h3 class="text-base md:text-lg" data-i18n="mount_luxury_white">Luxury White</h3>
+        <div id="check-cardboard-Luxury White" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
+          <i data-lucide="check-circle"></i>
         </div>
+      </div>
+
+      <!-- Natural Kraft XL -->
+      <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Natural Kraft XL')">
+        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg overflow-hidden border-2 border-[#a38865] shadow-lg flex items-center justify-center">
+
+          <button type="button" onclick="event.stopPropagation(); openLightbox('mount-kraft-xl.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+            <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+          </button>
+
+          <img
+            src="mount-kraft-xl.jpg"
+            alt="Natural Kraft XL Mount"
+            class="w-full h-full object-cover"
+            onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-[#e6ceaa]','via-[#d2b48c]','to-[#ba9e76]');"
+          >
+        </div>
+
+        <h3 class="text-base md:text-lg" data-i18n="mount_kraft_xl">Natural Kraft XL</h3>
+        <div id="check-cardboard-Natural Kraft XL" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
+          <i data-lucide="check-circle"></i>
+        </div>
+      </div>
 
     </div>
-</div>
+  </div>
 
-    <!-- Collapsible Panel: 3 in 1 Picture (All existing colors moved here) -->
-    <div id="mount-3in1" class="hidden">
-        <div class="grid grid-cols-2 gap-4">
+  <!-- 3 in 1 Picture (Button) -->
+  <button
+    type="button"
+    class="option-card rounded-md p-4 md:p-6 text-left relative flex items-center justify-between w-full"
+    onclick="toggleMountCategory('mount-3in1')"
+    aria-expanded="false"
+    aria-controls="mount-3in1"
+  >
+    <div class="flex flex-col items-center gap-4 w-full">
+      <span class="text-base md:text-lg serif-font text-center" style="font-family: inherit;">
+        3 in 1 Picture
+      </span>
 
-            <!-- White -->
-            <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'White')">
-                <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-white via-gray-50 to-gray-200 border-2 border-gray-200 shadow-lg flex items-center justify-center overflow-hidden">
-                    <!-- Enlarge Button -->
-                    <button type="button" onclick="event.stopPropagation(); openLightbox('mount-white.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-                        <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-                    </button>
-
-                    <!-- Image with CSS Fallback -->
-                    <img 
-                        src="mount-white.jpg" 
-                        alt="Classic White Mount"
-                        class="w-full h-full object-cover"
-                        onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br', 'from-white', 'via-gray-50', 'to-gray-200'); this.parentElement.innerHTML += '<div class=\'w-3/4 h-3/4 border border-gray-200/50 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2\'></div>';"
-                    >
-                </div>
-                <h3 class="text-base md:text-lg" data-i18n="mount_white">Monochrome</h3>
-                <div id="check-cardboard-White" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3"><i data-lucide="check-circle"></i></div>
-            </div>
-
-            <!-- Pure White -->
-            <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Pure White')">
-                <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-[#ffffff] via-[#f8f8f8] to-[#eeeeee] border-2 border-[#e5e7eb] shadow-lg flex items-center justify-center overflow-hidden">
-                    
-                    <!-- Enlarge Button -->
-                    <button type="button" onclick="event.stopPropagation(); openLightbox('mount-pure-white.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-                        <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-                    </button>
-
-                    <img
-                        src="mount-pure-white.jpg"
-                        alt="Pure White Mount"
-                        class="w-full h-full object-cover"
-                        onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-[#ffffff]','via-[#f8f8f8]','to-[#eeeeee]');"
-                    >
-                </div>
-
-                <h3 class="text-base md:text-lg" data-i18n="mount_pure_white">Pure White</h3>
-                <div id="check-cardboard-Pure White" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
-                    <i data-lucide="check-circle"></i>
-                </div>
-            </div>
-
-            <!-- White & Gold -->
-            <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'White & Gold')">
-                <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-[#ffffff] via-[#faf7f0] to-[#f1e6cc] border-2 border-[#bf953f] shadow-lg flex items-center justify-center overflow-hidden">
-                    
-                    <!-- Enlarge Button -->
-                    <button type="button" onclick="event.stopPropagation(); openLightbox('mount-white-gold.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-                        <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-                    </button>
-
-                    <img
-                        src="mount-white-gold.jpg"
-                        alt="White & Gold Mount"
-                        class="w-full h-full object-cover"
-                        onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-[#ffffff]','via-[#faf7f0]','to-[#f1e6cc]');"
-                    >
-                </div>
-
-                <h3 class="text-base md:text-lg" data-i18n="mount_white_gold">White & Gold</h3>
-                <div id="check-cardboard-White & Gold" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
-                    <i data-lucide="check-circle"></i>
-                </div>
-            </div>
-
-            <!-- Kraft / Cardboard Color -->
-            <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Natural Kraft')">
-                <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-[#e6ceaa] via-[#d2b48c] to-[#ba9e76] border-2 border-[#a38865] shadow-lg flex items-center justify-center overflow-hidden">
-                     <!-- Enlarge Button -->
-                    <button type="button" onclick="event.stopPropagation(); openLightbox('mount-kraft.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-                        <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-                    </button>
-
-                    <!-- Image with CSS Fallback -->
-                    <img 
-                        src="mount-kraft.jpg" 
-                        alt="Natural Kraft Mount"
-                        class="w-full h-full object-cover"
-                        onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br', 'from-[#e6ceaa]', 'via-[#d2b48c]', 'to-[#ba9e76]'); this.parentElement.innerHTML += '<div class=\'w-3/4 h-3/4 border border-[#a38865]/30 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2\'></div>';"
-                    >
-                </div>
-                <h3 class="text-base md:text-lg" data-i18n="mount_kraft">Natural Kraft</h3>
-                <div id="check-cardboard-Natural Kraft" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3"><i data-lucide="check-circle"></i></div>
-            </div>
-
-            <!-- Luxury Black -->
-            <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Luxury Black')">
-                <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-[#0a0a0a] via-[#111111] to-[#000000] border-2 border-[#2a2a2a] shadow-lg flex items-center justify-center overflow-hidden">
-                    <!-- Enlarge Button -->
-                    <button type="button" onclick="event.stopPropagation(); openLightbox('mount-black.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-                        <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-                    </button>
-
-                    <!-- Image with CSS Fallback -->
-                    <img
-                        src="mount-black.jpg"
-                        alt="Luxury Black Mount"
-                        class="w-full h-full object-cover"
-                        onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br', 'from-[#0a0a0a]', 'via-[#111111]', 'to-[#000000]'); this.parentElement.innerHTML += '<div class=\'w-3/4 h-3/4 border border-[#2a2a2a]/60 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2\'></div>';"
-                    >
-                </div>
-                <h3 class="text-base md:text-lg" data-i18n="mount_black">Luxury Black</h3>
-                <div id="check-cardboard-Luxury Black" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3"><i data-lucide="check-circle"></i></div>
-            </div>
-
-            <!-- Classic Wine Red -->
-            <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Classic Wine Red')">
-                <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-[#5b0f1a] via-[#7a1726] to-[#3a0a11] border-2 border-[#8b1d2f] shadow-lg flex items-center justify-center overflow-hidden">
-                    <!-- Enlarge Button -->
-                    <button type="button" onclick="event.stopPropagation(); openLightbox('mount-wine-red.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-                        <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-                    </button>
-
-                    <!-- Image with CSS Fallback -->
-                    <img
-                        src="mount-wine-red.jpg"
-                        alt="Classic Wine Red Mount"
-                        class="w-full h-full object-cover"
-                        onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br', 'from-[#5b0f1a]', 'via-[#7a1726]', 'to-[#3a0a11]'); this.parentElement.innerHTML += '<div class=\'w-3/4 h-3/4 border border-[#8b1d2f]/40 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2\'></div>';"
-                    >
-                </div>
-                <span class="special-edition-wine">Special Order</span>
-                <h3 class="text-base md:text-lg" data-i18n="mount_wine_red">Classic Wine Red</h3>
-                <div id="check-cardboard-Classic Wine Red" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3"><i data-lucide="check-circle"></i></div>
-            </div>
-
-        </div>
+      <div class="w-full max-w-md h-32 md:h-40 rounded-lg overflow-hidden border border-stone-700 shadow-md flex items-center justify-center">
+        <img
+          src="3in1-preview.jpg"
+          alt="3 in 1 Picture Preview"
+          class="w-full h-full object-cover mount-img-full"
+          onerror="this.style.display='none';"
+        >
+      </div>
     </div>
+
+    <i data-lucide="chevron-down" id="arrow-mount-3in1" class="dropdown-arrow w-5 h-5 text-stone-500"></i>
+  </button>
+
+  <!-- 3 in 1 Picture (Panel) -->
+  <div id="mount-3in1" class="hidden">
+    <div class="grid grid-cols-2 gap-4">
+
+      <!-- White -->
+      <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'White')">
+        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-white via-gray-50 to-gray-200 border-2 border-gray-200 shadow-lg flex items-center justify-center overflow-hidden">
+
+          <button type="button" onclick="event.stopPropagation(); openLightbox('mount-white.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+            <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+          </button>
+
+          <img
+            src="mount-white.jpg"
+            alt="Classic White Mount"
+            class="w-full h-full object-cover"
+            onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br', 'from-white', 'via-gray-50', 'to-gray-200'); this.parentElement.innerHTML += '<div class=\'w-3/4 h-3/4 border border-gray-200/50 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2\'></div>';"
+          >
+        </div>
+
+        <h3 class="text-base md:text-lg" data-i18n="mount_white">Monochrome</h3>
+        <div id="check-cardboard-White" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
+          <i data-lucide="check-circle"></i>
+        </div>
+      </div>
+
+      <!-- Pure White -->
+      <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Pure White')">
+        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-[#ffffff] via-[#f8f8f8] to-[#eeeeee] border-2 border-[#e5e7eb] shadow-lg flex items-center justify-center overflow-hidden">
+
+          <button type="button" onclick="event.stopPropagation(); openLightbox('mount-pure-white.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+            <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+          </button>
+
+          <img
+            src="mount-pure-white.jpg"
+            alt="Pure White Mount"
+            class="w-full h-full object-cover"
+            onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-[#ffffff]','via-[#f8f8f8]','to-[#eeeeee]');"
+          >
+        </div>
+
+        <h3 class="text-base md:text-lg" data-i18n="mount_pure_white">Pure White</h3>
+        <div id="check-cardboard-Pure White" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
+          <i data-lucide="check-circle"></i>
+        </div>
+      </div>
+
+      <!-- White & Gold -->
+      <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'White & Gold')">
+        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-[#ffffff] via-[#faf7f0] to-[#f1e6cc] border-2 border-[#bf953f] shadow-lg flex items-center justify-center overflow-hidden">
+
+          <button type="button" onclick="event.stopPropagation(); openLightbox('mount-white-gold.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+            <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+          </button>
+
+          <img
+            src="mount-white-gold.jpg"
+            alt="White & Gold Mount"
+            class="w-full h-full object-cover"
+            onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-[#ffffff]','via-[#faf7f0]','to-[#f1e6cc]');"
+          >
+        </div>
+
+        <h3 class="text-base md:text-lg" data-i18n="mount_white_gold">White & Gold</h3>
+        <div id="check-cardboard-White & Gold" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
+          <i data-lucide="check-circle"></i>
+        </div>
+      </div>
+
+      <!-- Natural Kraft -->
+      <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Natural Kraft')">
+        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-[#e6ceaa] via-[#d2b48c] to-[#ba9e76] border-2 border-[#a38865] shadow-lg flex items-center justify-center overflow-hidden">
+
+          <button type="button" onclick="event.stopPropagation(); openLightbox('mount-kraft.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+            <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+          </button>
+
+          <img
+            src="mount-kraft.jpg"
+            alt="Natural Kraft Mount"
+            class="w-full h-full object-cover"
+            onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br', 'from-[#e6ceaa]', 'via-[#d2b48c]', 'to-[#ba9e76]'); this.parentElement.innerHTML += '<div class=\'w-3/4 h-3/4 border border-[#a38865]/30 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2\'></div>';"
+          >
+        </div>
+
+        <h3 class="text-base md:text-lg" data-i18n="mount_kraft">Natural Kraft</h3>
+        <div id="check-cardboard-Natural Kraft" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
+          <i data-lucide="check-circle"></i>
+        </div>
+      </div>
+
+      <!-- Luxury Black -->
+      <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Luxury Black')">
+        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-[#0a0a0a] via-[#111111] to-[#000000] border-2 border-[#2a2a2a] shadow-lg flex items-center justify-center overflow-hidden">
+
+          <button type="button" onclick="event.stopPropagation(); openLightbox('mount-black.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+            <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+          </button>
+
+          <img
+            src="mount-black.jpg"
+            alt="Luxury Black Mount"
+            class="w-full h-full object-cover"
+            onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br', 'from-[#0a0a0a]', 'via-[#111111]', 'to-[#000000]'); this.parentElement.innerHTML += '<div class=\'w-3/4 h-3/4 border border-[#2a2a2a]/60 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2\'></div>';"
+          >
+        </div>
+
+        <h3 class="text-base md:text-lg" data-i18n="mount_black">Luxury Black</h3>
+        <div id="check-cardboard-Luxury Black" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
+          <i data-lucide="check-circle"></i>
+        </div>
+      </div>
+
+      <!-- Classic Wine Red -->
+      <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Classic Wine Red')">
+        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-[#5b0f1a] via-[#7a1726] to-[#3a0a11] border-2 border-[#8b1d2f] shadow-lg flex items-center justify-center overflow-hidden">
+
+          <button type="button" onclick="event.stopPropagation(); openLightbox('mount-wine-red.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+            <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+          </button>
+
+          <img
+            src="mount-wine-red.jpg"
+            alt="Classic Wine Red Mount"
+            class="w-full h-full object-cover"
+            onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br', 'from-[#5b0f1a]', 'via-[#7a1726]', 'to-[#3a0a11]'); this.parentElement.innerHTML += '<div class=\'w-3/4 h-3/4 border border-[#8b1d2f]/40 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2\'></div>';"
+          >
+        </div>
+
+        <span class="special-edition-wine">Special Order</span>
+        <h3 class="text-base md:text-lg" data-i18n="mount_wine_red">Classic Wine Red</h3>
+        <div id="check-cardboard-Classic Wine Red" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
+          <i data-lucide="check-circle"></i>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div>
 
 <input type="hidden" id="cardboardSelection" required>
@@ -1284,6 +1274,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     SOON
 </div>
         </header>
+                </p>
+</header>
 </div>
 
         <!-- === ABOUT US PAGE SECTION (Hidden by default) === -->
@@ -1876,11 +1868,10 @@ if (activeCheckmark) {
             const year = currentDate.getFullYear();
             const month = currentDate.getMonth();
             
-// Update Header (Now supports Arabic and Hebrew automatically)
-            const dateObj = new Date(year, month);
-            const formatter = new Intl.DateTimeFormat(currentLang, { month: 'long' });
-            const localizedMonthName = formatter.format(dateObj);
-            document.getElementById('currentMonthYear').innerText = `${localizedMonthName} ${year}`;            
+            // Update Header
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            document.getElementById('currentMonthYear').innerText = `${monthNames[month]} ${year}`;
+            
             const daysContainer = document.getElementById('calendarDays');
             daysContainer.innerHTML = '';
 
@@ -1991,7 +1982,7 @@ if (date) {
                 alert(translations[currentLang].alert_contact);
                 return;
             }
-if (!frame || !rope || !carpet || !cardboard) {
+            if (!frame || !rope || !cardboard) {
                 alert(translations[currentLang].alert_select);
                 return;
             }
