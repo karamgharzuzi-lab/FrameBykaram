@@ -1,1798 +1,1722 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luxe Mirror Booth | Reservation</title>
-        <!-- PWA -->
-    <link rel="manifest" href="manifest.webmanifest">
-    <meta name="theme-color" content="#1a1a1a">
-    <link rel="apple-touch-icon" href="icon-192.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luxe Mirror Booth | Reservation</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1a1a1a">
+<link rel="apple-touch-icon" href="icon-192.png">
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Fonts: Playfair/Lato (English), Rubik (Hebrew), Cairo (Arabic) -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&family=Rubik:wght@300;400;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <style>
-        /* === BASE THEME VARIABLES (Dark Default) === */
-        :root {
-            --bg-body: #1a1a1a;
-            --text-main: #e7e5e4;
-            --text-muted: #a8a29e;
-            --border-color: rgba(231, 229, 228, 0.2);
-            --nav-bg: rgba(26, 26, 26, 0.9);
-            --input-bg: rgba(255, 255, 255, 0.1);
-            --card-border: rgba(231, 229, 228, 0.2);
-            --card-hover: rgba(231, 229, 228, 0.05);
-            --section-bg: #1c1917; /* stone-900 equivalent */
-            --mount-preview-bg: #e5e7eb; /* gray-200 */
-        }
+<script src="https://cdn.tailwindcss.com"></script>
 
-        /* === LIGHT THEME OVERRIDES === */
-        body.light-theme {
-            --bg-body: #f8f5e1;
-            --text-main: #4a3f35;
-            --text-muted: #78716c;
-            --border-color: rgba(74, 63, 53, 0.15);
-            --nav-bg: #f8f5e1; /* Set to solid body color match */
-            --input-bg: rgba(255, 255, 255, 0.5);
-            --card-border: rgba(74, 63, 53, 0.15);
-            --card-hover: rgba(74, 63, 53, 0.05);
-            --section-bg: #f0ede0;
-            --mount-preview-bg: #f5f5f4; /* stone-100 */
-        }
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&family=Rubik:wght@300;400;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-        /* Apply Variables */
-        body {
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            transition: background-color 0.5s ease, color 0.5s ease;
-        }
+<script src="https://unpkg.com/lucide@latest"></script>
 
-        /* Language Specific Fonts */
-        body[lang="en"] { font-family: 'Lato', sans-serif; }
-        body[lang="he"] { font-family: 'Rubik', sans-serif; }
-        body[lang="ar"] { font-family: 'Cairo', sans-serif; }
-        
-        /* Headings */
-        h1, h2, h3, .serif-font {
-            font-family: 'Playfair Display', serif;
-        }
-        
-        /* Exclude elements with '.always-serif' from being forced to bold/inherit font in non-English modes */
-        body:not([lang="en"]) h1:not(.always-serif), 
-        body:not([lang="en"]) h2:not(.always-serif), 
-        body:not([lang="en"]) h3:not(.always-serif), 
-        body:not([lang="en"]) .serif-font:not(.always-serif) {
-            font-family: inherit; /* Use main font for titles in He/Ar as Playfair is Latin only */
-            font-weight: 700;
-        }
+<style>
+/* === BASE THEME VARIABLES (Dark Default) === */
+:root {
+--bg-body: #1a1a1a;
+--text-main: #e7e5e4;
+--text-muted: #a8a29e;
+--border-color: rgba(231, 229, 228, 0.2);
+--nav-bg: rgba(26, 26, 26, 0.9);
+--input-bg: rgba(255, 255, 255, 0.1);
+--card-border: rgba(231, 229, 228, 0.2);
+--card-hover: rgba(231, 229, 228, 0.05);
+--section-bg: #1c1917; /* stone-900 equivalent */
+--mount-preview-bg: #e5e7eb; /* gray-200 */
+}
 
-        /* Force English Serif Font (Playfair) regardless of language setting */
-        .always-serif {
-            font-family: 'Playfair Display', serif !important;
-        }
+/* === LIGHT THEME OVERRIDES === */
+body.light-theme {
+--bg-body: #f8f5e1;
+--text-main: #4a3f35;
+--text-muted: #78716c;
+--border-color: rgba(74, 63, 53, 0.15);
+--nav-bg: #f8f5e1; /* Set to solid body color match */
+--input-bg: rgba(255, 255, 255, 0.5);
+--card-border: rgba(74, 63, 53, 0.15);
+--card-hover: rgba(74, 63, 53, 0.05);
+--section-bg: #f0ede0;
+--mount-preview-bg: #f5f5f4; /* stone-100 */
+}
 
-        .gold-text {
-            /* Updated to match the button's rich metallic gradient */
-            background: linear-gradient(to right, #8a6236, #bf953f, #fcf6ba, #b38728, #aa771c, #8a6236);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            transition: background-position 0.5s ease;
-        }
-        
-        /* Shimmer effect on hover */
-        .gold-text:hover {
-            background-position: right center;
-        }
+/* Apply Variables */
+body {
+background-color: var(--bg-body);
+color: var(--text-main);
+transition: background-color 0.5s ease, color 0.5s ease;
+}
 
-        .gold-border {
-            border: 1px solid #bf953f;
-        }
+/* Language Specific Fonts */
+body[lang="en"] { font-family: 'Lato', sans-serif; }
+body[lang="he"] { font-family: 'Rubik', sans-serif; }
+body[lang="ar"] { font-family: 'Cairo', sans-serif; }
 
-        .gold-btn {
-            /* Luxury Metallic Gradient with Shimmer Potential */
-            background: linear-gradient(to right, #8a6236, #bf953f, #fcf6ba, #b38728, #aa771c, #8a6236);
-            background-size: 200% auto;
-            color: white;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.5); /* Ensures readability on gold */
-            border: 1px solid rgba(255,255,255,0.2);
-            transition: all 0.5s ease;
-        }
-        .gold-btn:hover {
-            background-position: right center; /* Animates the gradient for a shimmer effect */
-            transform: translateY(-2px);
-            box-shadow: 0 0 25px rgba(191, 149, 63, 0.6);
-        }
+/* Headings */
+h1, h2, h3, .serif-font {
+font-family: 'Playfair Display', serif;
+}
 
-        /* Component Styling using Variables */
-        nav {
-            background-color: var(--nav-bg) !important;
-            border-bottom-color: var(--border-color) !important;
-            transition: background-color 0.5s ease, border-color 0.5s ease;
-        }
+/* Exclude elements with '.always-serif' from being forced to bold/inherit font in non-English modes */
+body:not([lang="en"]) h1:not(.always-serif),
+body:not([lang="en"]) h2:not(.always-serif),
+body:not([lang="en"]) h3:not(.always-serif),
+body:not([lang="en"]) .serif-font:not(.always-serif) {
+font-family: inherit; /* Use main font for titles in He/Ar as Playfair is Latin only */
+font-weight: 700;
+}
 
-        /* Overriding Tailwind Colors via CSS for Theme Support */
-        .text-stone-400 { color: var(--text-muted) !important; }
-        .text-stone-500 { color: var(--text-muted) !important; }
-        .border-stone-800, .border-stone-900\/10 { border-color: var(--border-color) !important; }
-        .bg-stone-900 { background-color: var(--section-bg) !important; }
-        .bg-stone-900\/50 { background-color: var(--section-bg) !important; }
+/* Force English Serif Font (Playfair) regardless of language setting */
+.always-serif {
+font-family: 'Playfair Display', serif !important;
+}
 
-        /* Selection styling */
-        .option-card {
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 1px solid var(--card-border);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .option-card:hover {
-            background-color: var(--card-hover);
-            border-color: #bf953f;
-            box-shadow: 0 0 20px rgba(191, 149, 63, 0.6); /* Golden shine effect */
-        }
-        .option-card.selected {
-            border-color: #bf953f;
-            background-color: rgba(191, 149, 63, 0.1);
-            box-shadow: 0 0 15px rgba(191, 149, 63, 0.2);
-        }
-        
-        /* Custom Input Styling */
-        .lux-input {
-            background: var(--input-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            transition: border-color 0.3s;
-        }
-        .lux-input:focus {
-            outline: none;
-            border-color: #bf953f;
-        }
-        select.lux-input option {
-            background-color: var(--bg-body);
-            color: var(--text-main);
-        }
-        
-        /* Date picker icon adjustment */
-        ::-webkit-calendar-picker-indicator {
-            filter: invert(1);
-            opacity: 0.5;
-            cursor: pointer;
-            transition: opacity 0.3s;
-        }
-        body.light-theme ::-webkit-calendar-picker-indicator {
-            filter: invert(0); /* Make icon dark in light theme */
-        }
-        ::-webkit-calendar-picker-indicator:hover { opacity: 1; }
+.gold-text {
+/* Updated to match the button's rich metallic gradient */
+background: linear-gradient(to right, #8a6236, #bf953f, #fcf6ba, #b38728, #aa771c, #8a6236);
+background-size: 200% auto;
+-webkit-background-clip: text;
+background-clip: text;
+color: transparent;
+transition: background-position 0.5s ease;
+}
 
-        /* Photo Mount Styling */
-        .photo-mount {
-            position: relative;
-            overflow: hidden;
-        }
-        .photo-mount img {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80%;
-            height: 80%;
-            object-fit: cover;
-            border: 1px solid rgba(0,0,0,0.1);
-        }
+/* Shimmer effect on hover */
+.gold-text:hover {
+background-position: right center;
+}
 
-        /* Upload Placeholder Styling */
-        .upload-placeholder {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-color: #1a1a1a;
-            border: 2px dashed #444;
-            color: #888;
-            font-size: 0.8rem;
-            cursor: pointer;
-        }
-        .upload-placeholder:hover {
-            border-color: #bf953f;
-            color: #bf953f;
-        }
-        
-        /* Language Toggle Button */
-        .lang-btn {
-            padding: 4px 10px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            color: var(--text-muted);
-            font-size: 0.75rem;
-            letter-spacing: 0.05em;
-        }
-        .lang-btn:hover {
-            color: #bf953f;
-            background-color: rgba(191, 149, 63, 0.1);
-        }
-        .lang-btn.active {
-            background: linear-gradient(to right, #bf953f, #b38728);
-            color: white;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(191, 149, 63, 0.3);
-        }
+.gold-border {
+border: 1px solid #bf953f;
+}
 
-        /* Navigation Link Styles */
-        .nav-link {
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .nav-link:hover {
-            color: #bf953f;
-            text-shadow: 0 0 5px rgba(191, 149, 63, 0.3);
-        }
-        .nav-link.active {
-            color: #bf953f;
-            font-weight: bold;
-            border-bottom: 2px solid #bf953f;
-            text-shadow: 0 0 12px rgba(191, 149, 63, 0.6);
-        }
+.gold-btn {
+/* Luxury Metallic Gradient with Shimmer Potential */
+background: linear-gradient(to right, #8a6236, #bf953f, #fcf6ba, #b38728, #aa771c, #8a6236);
+background-size: 200% auto;
+color: white;
+text-shadow: 0 1px 2px rgba(0,0,0,0.5); /* Ensures readability on gold */
+border: 1px solid rgba(255,255,255,0.2);
+transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, background-position 0.5s ease;
+will-change: transform, box-shadow;
+}
+.gold-btn:hover {
+background-position: right center; /* Animates the gradient for a shimmer effect */
+transform: translateY(-2px);
+box-shadow: 0 0 25px rgba(191, 149, 63, 0.6);
+}
 
-        /* Preview Area Styles */
-        .preview-stage {
-            background: radial-gradient(circle at center, #2a2a2a 0%, #000000 100%);
-            position: relative;
-            overflow: hidden;
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
-        }
-        
-        /* Gallery Styles */
-        .gallery-img { transition: transform 0.5s ease; }
-        .gallery-item:hover .gallery-img { transform: scale(1.05); }
+/* Component Styling using Variables */
+nav {
+background-color: var(--nav-bg) !important;
+border-bottom-color: var(--border-color) !important;
+transition: background-color 0.5s ease, border-color 0.5s ease;
+}
 
-        /* Custom Dropdown Animation Styles */
-        .custom-dropdown-menu {
-            transform-origin: top;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px) scale(0.95);
-            background-color: var(--nav-bg);
-            border: 1px solid var(--border-color);
-            backdrop-filter: blur(10px);
-        }
-        
-        .custom-dropdown-menu.open {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0) scale(1);
-        }
+/* Overriding Tailwind Colors via CSS for Theme Support */
+.text-stone-400 { color: var(--text-muted) !important; }
+.text-stone-500 { color: var(--text-muted) !important; }
+.border-stone-800, .border-stone-900\/10 { border-color: var(--border-color) !important; }
+.bg-stone-900 { background-color: var(--section-bg) !important; }
+.bg-stone-900\/50 { background-color: var(--section-bg) !important; }
 
-        .dropdown-arrow {
-            transition: transform 0.3s ease;
-        }
-        .dropdown-arrow.rotate {
-            transform: rotate(180deg);
-        }
+/* Selection styling */
+.option-card {
+transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, background-color 0.4s ease;
+will-change: transform, box-shadow;
+cursor: pointer;
+border: 1px solid var(--card-border);
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+.option-card:hover {
+background-color: var(--card-hover);
+border-color: #bf953f;
+box-shadow: 0 0 20px rgba(191, 149, 63, 0.6); /* Golden shine effect */
+}
+.option-card.selected {
+border-color: #bf953f;
+background-color: rgba(191, 149, 63, 0.1);
+box-shadow: 0 0 15px rgba(191, 149, 63, 0.2);
+}
 
-        /* --- Custom Calendar Styles --- */
-        .calendar-popup {
-            transform-origin: top;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px) scale(0.95);
-            background-color: var(--nav-bg);
-            border: 1px solid var(--border-color);
-            backdrop-filter: blur(10px);
-            padding: 1rem;
-            width: 100%;
-            min-width: 280px;
-            z-index: 50;
-        }
-        
-        .calendar-popup.open {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0) scale(1);
-        }
+/* Custom Input Styling */
+.lux-input {
+background: var(--input-bg);
+border: 1px solid var(--border-color);
+color: var(--text-main);
+transition: border-color 0.3s;
+}
+.lux-input:focus {
+outline: none;
+border-color: #bf953f;
+}
+select.lux-input option {
+background-color: var(--bg-body);
+color: var(--text-main);
+}
 
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            color: #bf953f; /* Gold */
-            font-weight: bold;
-            font-family: 'Playfair Display', serif;
-        }
+/* Date picker icon adjustment */
+::-webkit-calendar-picker-indicator {
+filter: invert(1);
+opacity: 0.5;
+cursor: pointer;
+transition: opacity 0.3s;
+}
+body.light-theme ::-webkit-calendar-picker-indicator {
+filter: invert(0); /* Make icon dark in light theme */
+}
+::-webkit-calendar-picker-indicator:hover { opacity: 1; }
 
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 0.25rem;
-            text-align: center;
-        }
+/* Photo Mount Styling */
+.photo-mount {
+position: relative;
+overflow: hidden;
+}
+.photo-mount img {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+width: 80%;
+height: 80%;
+object-fit: cover;
+border: 1px solid rgba(0,0,0,0.1);
+}
 
-        .calendar-day-name {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-        }
+/* Upload Placeholder Styling */
+.upload-placeholder {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+background-color: #1a1a1a;
+border: 2px dashed #444;
+color: #888;
+font-size: 0.8rem;
+cursor: pointer;
+}
+.upload-placeholder:hover {
+border-color: #bf953f;
+color: #bf953f;
+}
 
-        .calendar-day {
-            padding: 0.5rem;
-            font-size: 0.9rem;
-            cursor: pointer;
-            border-radius: 0.25rem;
-            transition: all 0.2s;
-            color: var(--text-main);
-        }
+/* Language Toggle Button */
+.lang-btn {
+padding: 4px 10px;
+border-radius: 4px;
+transition: all 0.3s ease;
+color: var(--text-muted);
+font-size: 0.75rem;
+letter-spacing: 0.05em;
+}
+.lang-btn:hover {
+color: #bf953f;
+background-color: rgba(191, 149, 63, 0.1);
+}
+.lang-btn.active {
+background: linear-gradient(to right, #bf953f, #b38728);
+color: white;
+font-weight: bold;
+box-shadow: 0 4px 10px rgba(191, 149, 63, 0.3);
+}
 
-        .calendar-day:hover:not(.empty) {
-            background-color: rgba(191, 149, 63, 0.2);
-            color: #bf953f;
-        }
+/* Navigation Link Styles */
+.nav-link {
+cursor: pointer;
+transition: all 0.3s ease;
+}
+.nav-link:hover {
+color: #bf953f;
+text-shadow: 0 0 5px rgba(191, 149, 63, 0.3);
+}
+.nav-link.active {
+color: #bf953f;
+font-weight: bold;
+border-bottom: 2px solid #bf953f;
+text-shadow: 0 0 12px rgba(191, 149, 63, 0.6);
+}
 
-        .calendar-day.selected {
-            background: linear-gradient(to right, #bf953f, #b38728);
-            color: white;
-        }
+/* Preview Area Styles */
+.preview-stage {
+background: radial-gradient(circle at center, #2a2a2a 0%, #000000 100%);
+position: relative;
+overflow: hidden;
+box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+}
 
-        .calendar-day.empty {
-            cursor: default;
-        }
+/* Gallery Styles */
+.gallery-img { transition: transform 0.5s ease; }
+.gallery-item:hover .gallery-img { transform: scale(1.05); }
 
-        /* Luxury Page Frame - Fixed CSS Only Version */
-        .page-frame {
-            /* CRITICAL: Keep as absolute so it scrolls WITH the page content. Do not change to fixed. */
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 9999;
-            pointer-events: none;
-            
-            /* Outer Gold Border */
-            border: 1px solid #bf953f;
-            
-            /* Inner Glow for Depth */
-            box-shadow: inset 0 0 20px rgba(191, 149, 63, 0.05);
-        }
+/* Custom Dropdown Animation Styles */
+.custom-dropdown-menu {
+transform-origin: top;
+transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, visibility 0.4s ease;
+will-change: transform, opacity;
+opacity: 0;
+visibility: hidden;
+transform: translateY(-10px) scale(0.95);
+background-color: var(--nav-bg);
+border: 1px solid var(--border-color);
+backdrop-filter: blur(10px);
+}
 
-        /* Inner Thin Line for Detail */
-        .page-frame::after {
-            content: '';
-            position: absolute;
-            top: 6px;
-            left: 6px;
-            right: 6px;
-            bottom: 6px;
-            border: 1px solid rgba(191, 149, 63, 0.2);
-        }
+.custom-dropdown-menu.open {
+opacity: 1;
+visibility: visible;
+transform: translateY(0) scale(1);
+}
 
-        /* Intro Animation Styles */
-        @keyframes logoReveal {
-            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        @keyframes lineExpand {
-            0% { width: 0; opacity: 0; }
-            50% { width: 60%; opacity: 1; margin: 1rem auto; }
-            100% { width: 40%; opacity: 0.8; margin: 1rem auto; }
-        }
-        .animate-logo-reveal {
-            animation: logoReveal 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-            animation-delay: 0.5s; /* Slight delay before start */
-        }
-        .animate-line-expand {
-            animation: lineExpand 1.5s ease-out forwards;
-            animation-delay: 1.2s; /* Start expanding after logo appears */
-        }
+.dropdown-arrow {
+transition: transform 0.3s ease;
+}
+.dropdown-arrow.rotate {
+transform: rotate(180deg);
+}
 
-        /* Static Luxury Link Style (Replaces strong animation) */
-        .luxury-link-static {
-             transition: all 0.3s ease;
-             /* Static elegant shadow instead of pulsing */
-             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); 
-        }
-        .luxury-link-static:hover {
-             /* Subtle glow only on hover */
-             filter: drop-shadow(0 0 8px rgba(191, 149, 63, 0.5));
-             transform: translateY(-1px);
-        }
+/* --- Custom Calendar Styles --- */
+.calendar-popup {
+transform-origin: top;
+transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, visibility 0.4s ease;
+will-change: transform, opacity;
+opacity: 0;
+visibility: hidden;
+transform: translateY(-10px) scale(0.95);
+background-color: var(--nav-bg);
+border: 1px solid var(--border-color);
+backdrop-filter: blur(10px);
+padding: 1rem;
+width: 100%;
+min-width: 280px;
+z-index: 50;
+}
 
-        /* Custom Scrollbar Styling */
-        ::-webkit-scrollbar {
-            width: 12px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-body);
-        }
-        ::-webkit-scrollbar-thumb {
-            background-color: #bf953f; /* Gold handle */
-            border-radius: 6px;
-            border: 3px solid var(--bg-body); /* Creates padding around handle */
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background-color: #d4af37; /* Lighter gold on hover */
-        }
-        
-        /* Lightbox Styles */
-        #lightbox {
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-        #lightbox-img {
-            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-            transform: scale(0.9);
-        }
-        #lightbox.open #lightbox-img {
-            transform: scale(1);
-        }
-        @keyframes softGoldTextGlow {
-    0% {
-        text-shadow:
-            0 0 6px rgba(191,149,63,0.4),
-            0 0 12px rgba(191,149,63,0.2);
-        color: #bf953f;
-    }
-    50% {
-        text-shadow:
-            0 0 10px rgba(252,246,186,0.9),
-            0 0 22px rgba(191,149,63,0.6);
-        color: #fcf6ba;
-    }
-    100% {
-        text-shadow:
-            0 0 6px rgba(191,149,63,0.4),
-            0 0 12px rgba(191,149,63,0.2);
-        color: #bf953f;
-    }
+.calendar-popup.open {
+opacity: 1;
+visibility: visible;
+transform: translateY(0) scale(1);
+}
+
+.calendar-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 1rem;
+color: #bf953f; /* Gold */
+font-weight: bold;
+font-family: 'Playfair Display', serif;
+}
+
+.calendar-grid {
+display: grid;
+grid-template-columns: repeat(7, 1fr);
+gap: 0.25rem;
+text-align: center;
+}
+
+.calendar-day-name {
+font-size: 0.75rem;
+color: var(--text-muted);
+margin-bottom: 0.5rem;
+}
+
+.calendar-day {
+padding: 0.5rem;
+font-size: 0.9rem;
+cursor: pointer;
+border-radius: 0.25rem;
+transition: all 0.2s;
+color: var(--text-main);
+}
+
+.calendar-day:hover:not(.empty) {
+background-color: rgba(191, 149, 63, 0.2);
+color: #bf953f;
+}
+
+.calendar-day.selected {
+background: linear-gradient(to right, #bf953f, #b38728);
+color: white;
+}
+
+.calendar-day.empty {
+cursor: default;
+}
+
+/* Luxury Page Frame - Fixed CSS Only Version */
+.page-frame {
+/* CRITICAL: Keep as absolute so it scrolls WITH the page content. Do not change to fixed. */
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+z-index: 9999;
+pointer-events: none;
+
+/* Outer Gold Border */
+border: 1px solid #bf953f;
+
+/* Inner Glow for Depth */
+box-shadow: inset 0 0 20px rgba(191, 149, 63, 0.05);
+}
+
+/* Inner Thin Line for Detail */
+.page-frame::after {
+content: '';
+position: absolute;
+top: 6px;
+left: 6px;
+right: 6px;
+bottom: 6px;
+border: 1px solid rgba(191, 149, 63, 0.2);
+}
+
+/* Intro Animation Styles */
+@keyframes logoReveal {
+0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes lineExpand {
+0% { width: 0; opacity: 0; }
+50% { width: 60%; opacity: 1; margin: 1rem auto; }
+100% { width: 40%; opacity: 0.8; margin: 1rem auto; }
+}
+.animate-logo-reveal {
+animation: logoReveal 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+animation-delay: 0.5s; /* Slight delay before start */
+}
+.animate-line-expand {
+animation: lineExpand 1.5s ease-out forwards;
+animation-delay: 1.2s; /* Start expanding after logo appears */
+}
+
+/* Static Luxury Link Style (Replaces strong animation) */
+.luxury-link-static {
+transition: all 0.3s ease;
+/* Static elegant shadow instead of pulsing */
+filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+.luxury-link-static:hover {
+/* Subtle glow only on hover */
+filter: drop-shadow(0 0 8px rgba(191, 149, 63, 0.5));
+transform: translateY(-1px);
+}
+
+/* Custom Scrollbar Styling */
+::-webkit-scrollbar {
+width: 12px;
+}
+::-webkit-scrollbar-track {
+background: var(--bg-body);
+}
+::-webkit-scrollbar-thumb {
+background-color: #bf953f; /* Gold handle */
+border-radius: 6px;
+border: 3px solid var(--bg-body); /* Creates padding around handle */
+}
+::-webkit-scrollbar-thumb:hover {
+background-color: #d4af37; /* Lighter gold on hover */
+}
+
+/* Lightbox Styles */
+#lightbox {
+transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+#lightbox-img {
+transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+transform: scale(0.9);
+}
+#lightbox.open #lightbox-img {
+transform: scale(1);
+}
+@keyframes softGoldTextGlow {
+0% {
+text-shadow:
+0 0 6px rgba(191,149,63,0.4),
+0 0 12px rgba(191,149,63,0.2);
+color: #bf953f;
+}
+50% {
+text-shadow:
+0 0 10px rgba(252,246,186,0.9),
+0 0 22px rgba(191,149,63,0.6);
+color: #fcf6ba;
+}
+100% {
+text-shadow:
+0 0 6px rgba(191,149,63,0.4),
+0 0 12px rgba(191,149,63,0.2);
+color: #bf953f;
+}
 }
 
 .gallery-text-cta {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    animation: softGoldTextGlow 2.8s ease-in-out infinite;
+background: none;
+border: none;
+padding: 0;
+cursor: pointer;
+animation: softGoldTextGlow 2.8s ease-in-out infinite;
 }
 /* --- Rope section polish --- */
 .rope-grid {
-  gap: 1.25rem; /* nicer spacing */
+gap: 1.25rem; /* nicer spacing */
 }
 
 .option-card {
-  border-radius: 14px;
-  padding: 1.25rem;
-  border: 1px solid rgba(231,229,228,0.14);
-  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.12));
-  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
-  min-height: 240px; /* keeps cards same height */
-  justify-content: space-between;
+border-radius: 14px;
+padding: 1.25rem;
+border: 1px solid rgba(231,229,228,0.14);
+background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.12));
+box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+min-height: 240px; /* keeps cards same height */
+justify-content: space-between;
 }
 
 .option-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(191,149,63,0.65);
-  box-shadow: 0 0 0 1px rgba(191,149,63,0.25), 0 22px 55px rgba(0,0,0,0.45);
+transform: translateY(-4px);
+border-color: rgba(191,149,63,0.65);
+box-shadow: 0 0 0 1px rgba(191,149,63,0.25), 0 22px 55px rgba(0,0,0,0.45);
 }
 
 .option-card.selected {
-  border-color: rgba(191,149,63,0.95);
-  background: radial-gradient(circle at 50% 30%, rgba(191,149,63,0.20), rgba(0,0,0,0.10));
-  box-shadow: 0 0 0 1px rgba(252,246,186,0.25), 0 0 28px rgba(191,149,63,0.25);
+border-color: rgba(191,149,63,0.95);
+background: radial-gradient(circle at 50% 30%, rgba(191,149,63,0.20), rgba(0,0,0,0.10));
+box-shadow: 0 0 0 1px rgba(252,246,186,0.25), 0 0 28px rgba(191,149,63,0.25);
 }
 
 .option-card .aspect-square {
-  border-radius: 12px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(231,229,228,0.10);
-  display: grid;
-  place-items: center;
-  overflow: hidden;
+border-radius: 12px;
+background: rgba(255,255,255,0.03);
+border: 1px solid rgba(231,229,228,0.10);
+display: grid;
+place-items: center;
+overflow: hidden;
 }
 
 .option-card img {
-  width: 82%;
-  height: 82%;
-  object-fit: contain;
-  filter: drop-shadow(0 10px 18px rgba(0,0,0,0.35));
-  transform: translateZ(0);
+width: 82%;
+height: 82%;
+object-fit: contain;
+filter: drop-shadow(0 10px 18px rgba(0,0,0,0.35));
+transform: translateZ(0);
 }
 
 .option-card h3 {
-  margin-top: 0.9rem;
-  font-size: 1.05rem;
-  line-height: 1.25;
-  letter-spacing: 0.02em;
+margin-top: 0.9rem;
+font-size: 1.05rem;
+line-height: 1.25;
+letter-spacing: 0.02em;
 }
 
 /* check icon badge */
 .option-card [id^="check-rope-"] {
-  background: rgba(0,0,0,0.55);
-  border: 1px solid rgba(191,149,63,0.55);
-  border-radius: 999px;
-  padding: 6px;
-  box-shadow: 0 0 18px rgba(191,149,63,0.25);
+background: rgba(0,0,0,0.55);
+border: 1px solid rgba(191,149,63,0.55);
+border-radius: 999px;
+padding: 6px;
+box-shadow: 0 0 18px rgba(191,149,63,0.25);
 }
 /* Special Edition – Luxury Wine Red Label */
 .special-edition-wine {
-    font-size: 0.7rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: #7a1726;
-    margin-bottom: 0.35rem;
-    display: inline-block;
-    font-weight: 600;
-    text-shadow:
-        0 0 6px rgba(122, 23, 38, 0.55),
-        0 0 12px rgba(122, 23, 38, 0.35),
-        0 0 20px rgba(122, 23, 38, 0.2);
+font-size: 0.7rem;
+letter-spacing: 0.18em;
+text-transform: uppercase;
+color: #7a1726;
+margin-bottom: 0.35rem;
+display: inline-block;
+font-weight: 600;
+text-shadow:
+0 0 6px rgba(122, 23, 38, 0.55),
+0 0 12px rgba(122, 23, 38, 0.35),
+0 0 20px rgba(122, 23, 38, 0.2);
 }
-    </style>
+/* --- Premium Scroll Reveal Animations --- */
+.reveal-hidden {
+opacity: 0;
+transform: translateY(30px);
+transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+will-change: opacity, transform;
+}
+.reveal-visible {
+opacity: 1;
+transform: translateY(0);
+}
+</style>
 </head>
-    <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-KN9PBXP7');</script>
-<!-- End Google Tag Manager -->
-<!-- Added 'relative' to body ensures the absolute frame stretches to the full height of the content -->
 <body class="min-h-screen flex flex-col relative" lang="en">
 
-    <!-- Intro Animation Screen (Hidden by default to prevent reappearing on reload) -->
-    <div id="intro-screen" class="fixed inset-0 z-[10000] hidden items-center justify-center bg-black transition-opacity duration-1000">
-        <div class="text-center w-full px-4">
-            
-            <!-- UPDATED: Tries to load logo.jpg first. If missing, shows text. -->
-            <img 
-    src="logo.png"
-    alt="FrameByKaram Logo" 
-    class="mx-auto w-52 md:w-80 object-contain opacity-0 animate-logo-reveal mb-6"
-    onerror="this.style.display='none'; document.getElementById('fallback-logo-text').classList.remove('hidden');"
+<div id="intro-screen" class="fixed inset-0 z-[10000] hidden items-center justify-center bg-black transition-opacity duration-1000">
+<div class="text-center w-full px-4">
+
+<img
+src="logo.png"
+alt="FrameByKaram Logo"
+class="mx-auto w-52 md:w-80 object-contain opacity-0 animate-logo-reveal mb-6"
+onerror="this.style.display='none'; document.getElementById('fallback-logo-text').classList.remove('hidden');"
 />
-            <!-- Fallback Text (Hidden by default, shows if image fails) -->
-            <div id="fallback-logo-text" class="hidden serif-font always-serif text-4xl md:text-7xl gold-text tracking-widest opacity-0 animate-logo-reveal font-bold">
-                FrameByKaram
-            </div>
-
-            <div class="mt-4 h-0.5 bg-gradient-to-r from-transparent via-[#bf953f] to-transparent w-0 mx-auto animate-line-expand"></div>
-        </div>
-    </div>
-
-    <!-- Design Frame -->
-    <div class="page-frame"></div>
-    
-    <!-- LIGHTBOX OVERLAY -->
-    <div id="lightbox" class="fixed inset-0 z-[10001] bg-black/95 backdrop-blur-md invisible opacity-0 flex items-center justify-center p-4" onclick="closeLightbox()">
-        <div class="relative max-w-5xl max-h-full">
-            <!-- Close Button -->
-            <button onclick="closeLightbox()" class="absolute -top-12 right-0 md:-right-12 text-stone-400 hover:text-[#bf953f] transition-colors duration-300">
-                <i data-lucide="x" class="w-8 h-8"></i>
-            </button>
-            
-            <!-- The Image -->
-            <img id="lightbox-img" src="" class="max-w-full max-h-[85vh] object-contain border border-[#bf953f] shadow-[0_0_50px_rgba(191,149,63,0.2)] rounded-sm" onclick="event.stopPropagation()">
-        </div>
-    </div>
-
-    <!-- Navbar (Mobile Optimized) -->
-    <nav class="w-full py-4 px-4 md:py-6 md:px-12 border-b border-stone-800 fixed top-0 backdrop-blur-sm z-50 bg-[#1a1a1a]/95">
-        <!-- Changed to flex-col on mobile to stack items, row on desktop -->
-        <div class="flex flex-col-reverse md:flex-row items-center justify-center md:justify-end gap-4 md:gap-8">
-            
-            <!-- Nav Links (Now Visible on Mobile) -->
-            <div class="flex space-x-6 rtl:space-x-reverse text-xs md:text-sm uppercase tracking-widest text-stone-400">
-                <span class="nav-link active" onclick="showPage('booking')" data-page="booking" data-i18n="nav_reserve">Reserve</span>
-                <span class="nav-link" onclick="showPage('gallery')" data-page="gallery" data-i18n="nav_gallery">Gallery</span>
-                <span class="nav-link" onclick="showPage('about')" data-page="about" data-i18n="nav_about">Contact Us</span>
-            </div>
-
-            <!-- Language & Theme Switcher -->
-            <div class="flex items-center gap-3 text-xs uppercase tracking-widest md:border-l md:border-stone-900/20 md:pl-4 rtl:border-l-0 rtl:border-r rtl:pl-0 rtl:pr-4">
-                <button onclick="toggleTheme()" class="text-stone-400 hover:text-[#bf953f] transition-colors" title="Toggle Theme">
-                    <i data-lucide="sun" id="theme-icon-sun" class="hidden w-4 h-4"></i>
-                    <i data-lucide="moon" id="theme-icon-moon" class="w-4 h-4"></i>
-                </button>
-                <div class="w-px h-4 bg-stone-800"></div>
-                <button onclick="setLanguage('en')" class="lang-btn active" id="lang-en">EN</button>
-                <button onclick="setLanguage('he')" class="lang-btn" id="lang-he">HE</button>
-                <button onclick="setLanguage('ar')" class="lang-btn" id="lang-ar">AR</button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Spacer for Fixed Navbar (Increased height for mobile stack) -->
-    <div class="h-32 md:h-24"></div>
-
-    <!-- === BOOKING PAGE SECTION === -->
-    <div id="booking-page" class="transition-all duration-500 ease-in-out opacity-100 translate-y-0">
-        <!-- Hero / Intro -->
-        <header class="text-center py-16 px-4">
-            <!-- 1. Bigger MIRROR BOOTH -->
-            <div class="serif-font always-serif text-3xl md:text-5xl mb-2 gold-text tracking-wider">MIRROR BOOTH</div>
-            
-            <!-- 2. Smaller Title -->
-            <h1 class="text-xl md:text-3xl mb-0 italic always-serif" data-i18n="hero_title">Reflect Your Elegance</h1>
-            
-            <!-- 4. Golden Divider Line -->
-            <div class="w-24 md:w-32 h-px bg-gradient-to-r from-transparent via-[#bf953f] to-transparent mx-auto my-6 opacity-70"></div>
-            
-            <!-- 3. Smaller Description -->
-            <p class="text-stone-400 max-w-xl mx-auto text-sm md:text-base font-light" data-i18n="hero_subtitle">
-                Customize your premium photo experience. Select your finishes below to request a reservation.
-            </p>
-        </header>
-
-        <!-- Booking Form Container -->
-        <main class="flex-grow container mx-auto px-4 pb-20 max-w-3xl">
-            
-            <form id="bookingForm" onsubmit="event.preventDefault(); sendToWhatsApp();">
-                
-	            <!-- Step 2: Mirror Frame -->
-            <section class="mb-8 md:mb-12">
-                <h2 class="text-xl md:text-2xl mb-4 md:mb-6 border-b border-stone-800 pb-2" data-i18n="step2_title">Mirror Frame</h2>
-                <p class="text-sm text-stone-400 mb-4" data-i18n="step2_desc">Choose the frame finish for the mirror.</p>
-                    
-                    <!-- Changed grid to support 3 items -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <!-- Gold Option -->
-                        <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('frame', 'Vintage Gold')">
-                            <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3">
-                                <!-- Enlarge Button (Fixed Position: Inside the box) -->
-                                <button type="button" onclick="event.stopPropagation(); openLightbox('royal-gold.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-                                    <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-                                </button>
-                                
-                                <img 
-                                    src="royal-gold.jpg" 
-                                    id="img-gold-frame"
-                                    alt="Vintage Gold Frame" 
-                                    class="w-full h-full rounded-lg object-cover border-2 border-yellow-800 shadow-lg"
-                                    onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#bf953f';" 
-                                >
-                            </div>
-                            <h3 class="text-base md:text-lg" data-i18n="frame_gold">Vintage Gold</h3>
-                            <div id="check-frame-Vintage Gold" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
-                        </div>
-
-                        <!-- Silver Option -->
-                        <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('frame', 'Vintage Silver')">
-                            <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3">
-                                <!-- Enlarge Button -->
-                                <button type="button" onclick="event.stopPropagation(); openLightbox('vintage-silver.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-                                    <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-                                </button>
-                                
-                                <img 
-                                    src="vintage-silver.jpg" 
-                                    id="img-silver-frame"
-                                    alt="Vintage Silver Frame" 
-                                    class="w-full h-full rounded-lg object-cover border-2 border-gray-400 shadow-lg"
-                                    onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#9ca3af';" 
-                                >
-                            </div>
-                            <h3 class="text-base md:text-lg" data-i18n="frame_silver">Vintage Silver</h3>
-                            <div id="check-frame-Vintage Silver" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
-                        </div>
-
-                        <!-- No Frame Option -->
-                        <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('frame', 'None')">
-                            <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 overflow-hidden rounded-lg border-2 border-stone-600 shadow-lg group">
-    
-    <!-- Enlarge Button -->
-    <button
-        type="button"
-        onclick="event.stopPropagation(); openLightbox('mirror-no-frame.jpg')"
-        class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg"
-        title="Enlarge Image"
-    >
-        <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-    </button>
-
-    <!-- Frameless Mirror Image -->
-    <img
-        src="mirror-no-frame.jpg"
-        alt="Mirror Without Frame"
-        class="w-full h-full object-cover"
-        onerror="this.style.display='none'; this.parentElement.classList.add('bg-stone-800/50');"
-    >
+<div id="fallback-logo-text" class="hidden serif-font always-serif text-4xl md:text-7xl gold-text tracking-widest opacity-0 animate-logo-reveal font-bold">
+FrameByKaram
 </div>
-                            <h3 class="text-base md:text-lg" data-i18n="frame_none">No Frame</h3>
-                            <div id="check-frame-None" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
-                        </div>
-                    </div>
-                    <input type="hidden" id="frameSelection" required>
-                </section>
 
-                <!-- Step 3: Velvet Rope -->
-                <section class="mb-8 md:mb-12">
-                    <h2 class="text-xl md:text-2xl mb-4 md:mb-6 border-b border-stone-800 pb-2" data-i18n="step3_title">Velvet Rope / Twisted Rope</h2>
-                    <p class="text-sm text-stone-400 mb-4" data-i18n="step3_desc">Select the color of the velvet crowd control ropes.</p>
-                    
-                    <!-- Changed grid to support 5 items (auto-flow) -->
+<div class="mt-4 h-0.5 bg-gradient-to-r from-transparent via-[#bf953f] to-transparent w-0 mx-auto animate-line-expand"></div>
+</div>
+</div>
+
+<div class="page-frame"></div>
+
+<div id="lightbox" class="fixed inset-0 z-[10001] bg-black/95 backdrop-blur-md invisible opacity-0 flex items-center justify-center p-4" onclick="closeLightbox()">
+<div class="relative max-w-5xl max-h-full">
+<button onclick="closeLightbox()" class="absolute -top-12 right-0 md:-right-12 text-stone-400 hover:text-[#bf953f] transition-colors duration-300">
+<i data-lucide="x" class="w-8 h-8"></i>
+</button>
+
+<img id="lightbox-img" src="" class="max-w-full max-h-[85vh] object-contain border border-[#bf953f] shadow-[0_0_50px_rgba(191,149,63,0.2)] rounded-sm" onclick="event.stopPropagation()">
+</div>
+</div>
+
+<nav class="w-full py-4 px-4 md:py-6 md:px-12 border-b border-stone-800 fixed top-0 backdrop-blur-sm z-50 bg-[#1a1a1a]/95">
+<div class="flex flex-col-reverse md:flex-row items-center justify-center md:justify-end gap-4 md:gap-8">
+
+<div class="flex space-x-6 rtl:space-x-reverse text-xs md:text-sm uppercase tracking-widest text-stone-400">
+<span class="nav-link active" onclick="showPage('booking')" data-page="booking" data-i18n="nav_reserve">Reserve</span>
+<span class="nav-link" onclick="showPage('gallery')" data-page="gallery" data-i18n="nav_gallery">Gallery</span>
+<span class="nav-link" onclick="showPage('about')" data-page="about" data-i18n="nav_about">Contact Us</span>
+</div>
+
+<div class="flex items-center gap-3 text-xs uppercase tracking-widest md:border-l md:border-stone-900/20 md:pl-4 rtl:border-l-0 rtl:border-r rtl:pl-0 rtl:pr-4">
+<button onclick="toggleTheme()" class="text-stone-400 hover:text-[#bf953f] transition-colors" title="Toggle Theme">
+<i data-lucide="sun" id="theme-icon-sun" class="hidden w-4 h-4"></i>
+<i data-lucide="moon" id="theme-icon-moon" class="w-4 h-4"></i>
+</button>
+<div class="w-px h-4 bg-stone-800"></div>
+<button onclick="setLanguage('en')" class="lang-btn active" id="lang-en">EN</button>
+<button onclick="setLanguage('he')" class="lang-btn" id="lang-he">HE</button>
+<button onclick="setLanguage('ar')" class="lang-btn" id="lang-ar">AR</button>
+</div>
+</div>
+</nav>
+
+<div class="h-32 md:h-24"></div>
+
+<div id="booking-page" class="transition-all duration-500 ease-in-out opacity-100 translate-y-0">
+<header class="text-center py-16 px-4">
+<div class="serif-font always-serif text-3xl md:text-5xl mb-2 gold-text tracking-wider">MIRROR BOOTH</div>
+
+<h1 class="text-xl md:text-3xl mb-0 italic always-serif" data-i18n="hero_title">Reflect Your Elegance</h1>
+
+<div class="w-24 md:w-32 h-px bg-gradient-to-r from-transparent via-[#bf953f] to-transparent mx-auto my-6 opacity-70"></div>
+
+<p class="text-stone-400 max-w-xl mx-auto text-sm md:text-base font-light" data-i18n="hero_subtitle">
+Customize your premium photo experience. Select your finishes below to request a reservation.
+</p>
+</header>
+
+<main class="flex-grow container mx-auto px-4 pb-20 max-w-3xl">
+
+<form id="bookingForm" onsubmit="event.preventDefault(); sendToWhatsApp();">
+
+<section class="mb-8 md:mb-12">
+<h2 class="text-xl md:text-2xl mb-4 md:mb-6 border-b border-stone-800 pb-2" data-i18n="step2_title">Mirror Frame</h2>
+<p class="text-sm text-stone-400 mb-4" data-i18n="step2_desc">Choose the frame finish for the mirror.</p>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('frame', 'Vintage Gold')">
+<div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3">
+<button type="button" onclick="event.stopPropagation(); openLightbox('royal-gold.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+<i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+</button>
+
+<img
+src="royal-gold.jpg"
+id="img-gold-frame"
+alt="Vintage Gold Frame"
+class="w-full h-full rounded-lg object-cover border-2 border-yellow-800 shadow-lg"
+onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#bf953f';"
+>
+</div>
+<h3 class="text-base md:text-lg" data-i18n="frame_gold">Vintage Gold</h3>
+<div id="check-frame-Vintage Gold" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
+</div>
+
+<div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('frame', 'Vintage Silver')">
+<div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3">
+<button type="button" onclick="event.stopPropagation(); openLightbox('vintage-silver.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+<i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+</button>
+
+<img
+src="vintage-silver.jpg"
+id="img-silver-frame"
+alt="Vintage Silver Frame"
+class="w-full h-full rounded-lg object-cover border-2 border-gray-400 shadow-lg"
+onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#9ca3af';"
+>
+</div>
+<h3 class="text-base md:text-lg" data-i18n="frame_silver">Vintage Silver</h3>
+<div id="check-frame-Vintage Silver" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
+</div>
+
+<div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('frame', 'None')">
+<div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 overflow-hidden rounded-lg border-2 border-stone-600 shadow-lg group">
+
+<button
+type="button"
+onclick="event.stopPropagation(); openLightbox('mirror-no-frame.jpg')"
+class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg"
+title="Enlarge Image"
+>
+<i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+</button>
+
+<img
+src="mirror-no-frame.jpg"
+alt="Mirror Without Frame"
+class="w-full h-full object-cover"
+onerror="this.style.display='none'; this.parentElement.classList.add('bg-stone-800/50');"
+>
+</div>
+<h3 class="text-base md:text-lg" data-i18n="frame_none">No Frame</h3>
+<div id="check-frame-None" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
+</div>
+</div>
+<input type="hidden" id="frameSelection" required>
+</section>
+
+<section class="mb-8 md:mb-12">
+<h2 class="text-xl md:text-2xl mb-4 md:mb-6 border-b border-stone-800 pb-2" data-i18n="step3_title">Velvet Rope / Twisted Rope</h2>
+<p class="text-sm text-stone-400 mb-4" data-i18n="step3_desc">Select the color of the velvet crowd control ropes.</p>
+
 <div class="rope-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                        <!-- Red -->
-                        <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'Red')">
+<div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'Red')">
 <div class="relative w-full max-w-[12rem] md:max-w-[14rem] aspect-square mx-auto mb-4 flex items-center justify-center overflow-hidden">
-                                <!-- Enlarge Button (Fixed Position: Inside the box) -->
-                                <button type="button" onclick="event.stopPropagation(); openLightbox('red-rope.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-                                    <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-                                </button>
-                                <img 
-                                    src="red-rope.jpg" 
-                                    id="img-red-rope"
-                                    alt="Red Velvet Rope" 
-                                    class="w-4/5 h-4/5 object-contain drop-shadow-md"
-                                    onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#7f1d1d';"
-                                >
-                            </div>
-                            <h3 class="text-base md:text-lg" data-i18n="rope_red">Red Velvet</h3>
-                            <div id="check-rope-Red" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
-                        </div>
-
-                        <!-- Twisted Pink -->
-                        <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'Twisted Pink')">
-<div class="relative w-full max-w-[12rem] md:max-w-[14rem] aspect-square mx-auto mb-4 flex items-center justify-center overflow-hidden">
-                                 <!-- Enlarge Button (Fixed Position: Inside the box) -->
-                                <button type="button" onclick="event.stopPropagation(); openLightbox('twisted-pink.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-                                    <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-                                </button>
-                                 <img 
-                                    src="twisted-pink.jpg" 
-                                    id="img-pink-rope"
-                                    alt="Twisted Pink Rope" 
-                                    class="w-4/5 h-4/5 object-contain drop-shadow-md"
-                                    onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#f472b6';"
-                                >
-                            </div>
-                            <h3 class="text-base md:text-lg" data-i18n="rope_twisted_pink">Twisted Pink</h3>
-                            <div id="check-rope-Twisted Pink" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
-                        </div>
-
-                        <!-- Twisted White -->
-                        <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'Twisted White')">
-<div class="relative w-full max-w-[12rem] md:max-w-[14rem] aspect-square mx-auto mb-4 flex items-center justify-center overflow-hidden">
-                                 <!-- Enlarge Button (Fixed Position: Inside the box) -->
-                                <button type="button" onclick="event.stopPropagation(); openLightbox('twisted-white.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-                                    <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-                                </button>
-                                 <img 
-                                    src="twisted-white.jpg" 
-                                    id="img-white-rope"
-                                    alt="Twisted White Rope" 
-                                    class="w-4/5 h-4/5 object-contain drop-shadow-md"
-                                    onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#e5e7eb';"
-                                >
-                            </div>
-                            <h3 class="text-base md:text-lg" data-i18n="rope_twisted_white">Twisted White</h3>
-                            <div id="check-rope-Twisted White" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
-                        </div>
-
-                        <!-- Twisted Gold -->
-                        <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'Twisted Gold')">
-<div class="relative w-full max-w-[12rem] md:max-w-[14rem] aspect-square mx-auto mb-4 flex items-center justify-center overflow-hidden">
-                                 <!-- Enlarge Button (Fixed Position: Inside the box) -->
-                                <button type="button" onclick="event.stopPropagation(); openLightbox('twisted-gold.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-                                    <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-                                </button>
-                                 <img 
-                                    src="twisted-gold.jpg" 
-                                    id="img-gold-rope"
-                                    alt="Twisted Gold Rope" 
-                                    class="w-4/5 h-4/5 object-contain drop-shadow-md"
-                                    onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#ca8a04';"
-                                >
-                            </div>
-                            <h3 class="text-base md:text-lg" data-i18n="rope_twisted_gold">Twisted Gold</h3>
-                            <div id="check-rope-Twisted Gold" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
-                        </div>
-
-                        <!-- No Rope Option -->
-                        <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'None')">
-<div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 flex items-center justify-center overflow-hidden">
-                                 <i data-lucide="ban" class="w-10 h-10 text-stone-500"></i>
-                            </div>
-                            <h3 class="text-base md:text-lg" data-i18n="rope_none">No Rope</h3>
-                            <div id="check-rope-None" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
-                        </div>
-                    </div>
-                    <input type="hidden" id="ropeSelection" required>
-            </section>
-
-            <!-- NEW Carpet Section -->
-            <section class="mb-8 md:mb-12">
-                <h2 class="text-xl md:text-2xl mb-4 md:mb-6 border-b border-stone-800 pb-2" data-i18n="step_carpet_title">Carpet</h2>
-                <p class="text-sm text-stone-400 mb-4" data-i18n="step_carpet_desc">Select the carpet color for your event.</p>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <!-- Red Carpet -->
-                    <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('carpet', 'Red')">
-                        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3">
-                            <!-- Enlarge Button -->
-                            <button type="button" onclick="event.stopPropagation(); openLightbox('carpet-red.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-                                <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-                            </button>
-                            
-                            <img 
-                                src="carpet-red.jpg" 
-                                onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#7f1d1d';" 
-                                id="img-carpet-red"
-                                alt="Red Carpet" 
-                                class="w-full h-full rounded-lg object-cover border-2 border-red-900 shadow-lg"
-                            >
-                             <div class="absolute inset-0 flex items-center justify-center -z-10 bg-stone-800/50 rounded-lg">
-                                <i data-lucide="image" class="w-8 h-8 text-stone-600"></i>
-                            </div>
-                        </div>
-                        <h3 class="text-base md:text-lg" data-i18n="carpet_red">Red Carpet</h3>
-                        <div id="check-carpet-Red" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
-                    </div>
-
-                    <!-- Beige Carpet -->
-                    <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('carpet', 'Beige')">
-                        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3">
-                            <!-- Enlarge Button -->
-                            <button type="button" onclick="event.stopPropagation(); openLightbox('carpet-beige.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-                                <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-                            </button>
-
-                            <img 
-                                src="carpet-beige.jpg" 
-                                onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#d4c4a8';"
-                                id="img-carpet-beige"
-                                alt="Beige Carpet" 
-                                class="w-full h-full rounded-lg object-cover border-2 border-[#bfa880] shadow-lg"
-                            >
-                             <div class="absolute inset-0 flex items-center justify-center -z-10 bg-stone-800/50 rounded-lg">
-                                <i data-lucide="image" class="w-8 h-8 text-stone-600"></i>
-                            </div>
-                        </div>
-                        <h3 class="text-base md:text-lg" data-i18n="carpet_beige">Beige Carpet</h3>
-                        <div id="check-carpet-Beige" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
-                    </div>
-<!-- White Carpet -->
-<div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('carpet', 'White')">
-    <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3">
-        <!-- Enlarge Button -->
-        <button
-            type="button"
-            onclick="event.stopPropagation(); openLightbox('carpet-white.jpg')"
-            class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg"
-            title="Enlarge Image"
-        >
-            <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-        </button>
-
-        <img
-            src="carpet-white.jpg"
-            id="img-carpet-white"
-            alt="White Carpet"
-            class="w-full h-full rounded-lg object-cover border-2 border-stone-300 shadow-lg"
-            onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#f5f5f4';"
-        >
-
-        <div class="absolute inset-0 flex items-center justify-center -z-10 bg-stone-800/50 rounded-lg">
-            <i data-lucide="image" class="w-8 h-8 text-stone-600"></i>
-        </div>
-    </div>
-
-    <h3 class="text-base md:text-lg" data-i18n="carpet_white">White Carpet</h3>
-
-    <div id="check-carpet-White" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500">
-        <i data-lucide="check-circle"></i>
-    </div>
+<button type="button" onclick="event.stopPropagation(); openLightbox('red-rope.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+<i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+</button>
+<img
+src="red-rope.jpg"
+id="img-red-rope"
+alt="Red Velvet Rope"
+class="w-4/5 h-4/5 object-contain drop-shadow-md"
+onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#7f1d1d';"
+>
 </div>
-                    <!-- Pink Carpet -->
-                    <div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('carpet', 'Pink')">
-                        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3">
-                            <!-- Enlarge Button -->
-                            <button type="button" onclick="event.stopPropagation(); openLightbox('carpet-pink.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-                                <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-                            </button>
+<h3 class="text-base md:text-lg" data-i18n="rope_red">Red Velvet</h3>
+<div id="check-rope-Red" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
+</div>
 
-                            <img 
-                                src="carpet-pink.jpg" 
-                                onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#fbcfe8';"
-                                id="img-carpet-pink"
-                                alt="Pink Carpet" 
-                                class="w-full h-full rounded-lg object-cover border-2 border-pink-300 shadow-lg"
-                            >
-                             <div class="absolute inset-0 flex items-center justify-center -z-10 bg-stone-800/50 rounded-lg">
-                                <i data-lucide="image" class="w-8 h-8 text-stone-600"></i>
-                            </div>
-                        </div>
-                        <h3 class="text-base md:text-lg" data-i18n="carpet_pink">Pink Carpet</h3>
-                        <div id="check-carpet-Pink" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
-                    </div>
-                </div>
-                <input type="hidden" id="carpetSelection" required>
-            </section>
+<div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'Twisted Pink')">
+<div class="relative w-full max-w-[12rem] md:max-w-[14rem] aspect-square mx-auto mb-4 flex items-center justify-center overflow-hidden">
+<button type="button" onclick="event.stopPropagation(); openLightbox('twisted-pink.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+<i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+</button>
+<img
+src="twisted-pink.jpg"
+id="img-pink-rope"
+alt="Twisted Pink Rope"
+class="w-4/5 h-4/5 object-contain drop-shadow-md"
+onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#f472b6';"
+>
+</div>
+<h3 class="text-base md:text-lg" data-i18n="rope_twisted_pink">Twisted Pink</h3>
+<div id="check-rope-Twisted Pink" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
+</div>
 
-            <!-- Step 4: Cardboard / Photo Mount -->
-            <section class="mb-8 md:mb-12">
-                <h2 class="text-xl md:text-2xl mb-4 md:mb-6 border-b border-stone-800 pb-2" data-i18n="step4_title">Photo Mount</h2>
-                <p class="text-sm text-stone-400 mb-4" data-i18n="step4_desc">The cardboard frame attached to final printed photos.</p>
-                
-<!-- Photo Mount Categories -->
+<div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'Twisted White')">
+<div class="relative w-full max-w-[12rem] md:max-w-[14rem] aspect-square mx-auto mb-4 flex items-center justify-center overflow-hidden">
+<button type="button" onclick="event.stopPropagation(); openLightbox('twisted-white.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+<i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+</button>
+<img
+src="twisted-white.jpg"
+id="img-white-rope"
+alt="Twisted White Rope"
+class="w-4/5 h-4/5 object-contain drop-shadow-md"
+onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#e5e7eb';"
+>
+</div>
+<h3 class="text-base md:text-lg" data-i18n="rope_twisted_white">Twisted White</h3>
+<div id="check-rope-Twisted White" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
+</div>
+
+<div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'Twisted Gold')">
+<div class="relative w-full max-w-[12rem] md:max-w-[14rem] aspect-square mx-auto mb-4 flex items-center justify-center overflow-hidden">
+<button type="button" onclick="event.stopPropagation(); openLightbox('twisted-gold.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+<i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+</button>
+<img
+src="twisted-gold.jpg"
+id="img-gold-rope"
+alt="Twisted Gold Rope"
+class="w-4/5 h-4/5 object-contain drop-shadow-md"
+onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#ca8a04';"
+>
+</div>
+<h3 class="text-base md:text-lg" data-i18n="rope_twisted_gold">Twisted Gold</h3>
+<div id="check-rope-Twisted Gold" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
+</div>
+
+<div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('rope', 'None')">
+<div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 flex items-center justify-center overflow-hidden">
+<i data-lucide="ban" class="w-10 h-10 text-stone-500"></i>
+</div>
+<h3 class="text-base md:text-lg" data-i18n="rope_none">No Rope</h3>
+<div id="check-rope-None" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
+</div>
+</div>
+<input type="hidden" id="ropeSelection" required>
+</section>
+
+<section class="mb-8 md:mb-12">
+<h2 class="text-xl md:text-2xl mb-4 md:mb-6 border-b border-stone-800 pb-2" data-i18n="step_carpet_title">Carpet</h2>
+<p class="text-sm text-stone-400 mb-4" data-i18n="step_carpet_desc">Select the carpet color for your event.</p>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('carpet', 'Red')">
+<div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3">
+<button type="button" onclick="event.stopPropagation(); openLightbox('carpet-red.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+<i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+</button>
+
+<img
+src="carpet-red.jpg"
+onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#7f1d1d';"
+id="img-carpet-red"
+alt="Red Carpet"
+class="w-full h-full rounded-lg object-cover border-2 border-red-900 shadow-lg"
+>
+<div class="absolute inset-0 flex items-center justify-center -z-10 bg-stone-800/50 rounded-lg">
+<i data-lucide="image" class="w-8 h-8 text-stone-600"></i>
+</div>
+</div>
+<h3 class="text-base md:text-lg" data-i18n="carpet_red">Red Carpet</h3>
+<div id="check-carpet-Red" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
+</div>
+
+<div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('carpet', 'Beige')">
+<div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3">
+<button type="button" onclick="event.stopPropagation(); openLightbox('carpet-beige.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+<i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+</button>
+
+<img
+src="carpet-beige.jpg"
+onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#d4c4a8';"
+id="img-carpet-beige"
+alt="Beige Carpet"
+class="w-full h-full rounded-lg object-cover border-2 border-[#bfa880] shadow-lg"
+>
+<div class="absolute inset-0 flex items-center justify-center -z-10 bg-stone-800/50 rounded-lg">
+<i data-lucide="image" class="w-8 h-8 text-stone-600"></i>
+</div>
+</div>
+<h3 class="text-base md:text-lg" data-i18n="carpet_beige">Beige Carpet</h3>
+<div id="check-carpet-Beige" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
+</div>
+<div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('carpet', 'White')">
+<div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3">
+<button
+type="button"
+onclick="event.stopPropagation(); openLightbox('carpet-white.jpg')"
+class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg"
+title="Enlarge Image"
+>
+<i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+</button>
+
+<img
+src="carpet-white.jpg"
+id="img-carpet-white"
+alt="White Carpet"
+class="w-full h-full rounded-lg object-cover border-2 border-stone-300 shadow-lg"
+onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#f5f5f4';"
+>
+
+<div class="absolute inset-0 flex items-center justify-center -z-10 bg-stone-800/50 rounded-lg">
+<i data-lucide="image" class="w-8 h-8 text-stone-600"></i>
+</div>
+</div>
+
+<h3 class="text-base md:text-lg" data-i18n="carpet_white">White Carpet</h3>
+
+<div id="check-carpet-White" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500">
+<i data-lucide="check-circle"></i>
+</div>
+</div>
+<div class="option-card rounded-md p-4 md:p-6 text-center relative group" onclick="selectOption('carpet', 'Pink')">
+<div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3">
+<button type="button" onclick="event.stopPropagation(); openLightbox('carpet-pink.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+<i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+</button>
+
+<img
+src="carpet-pink.jpg"
+onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#fbcfe8';"
+id="img-carpet-pink"
+alt="Pink Carpet"
+class="w-full h-full rounded-lg object-cover border-2 border-pink-300 shadow-lg"
+>
+<div class="absolute inset-0 flex items-center justify-center -z-10 bg-stone-800/50 rounded-lg">
+<i data-lucide="image" class="w-8 h-8 text-stone-600"></i>
+</div>
+</div>
+<h3 class="text-base md:text-lg" data-i18n="carpet_pink">Pink Carpet</h3>
+<div id="check-carpet-Pink" class="hidden absolute top-3 right-3 rtl:right-auto rtl:left-3 text-yellow-500"><i data-lucide="check-circle"></i></div>
+</div>
+</div>
+<input type="hidden" id="carpetSelection" required>
+</section>
+
+<section class="mb-8 md:mb-12">
+<h2 class="text-xl md:text-2xl mb-4 md:mb-6 border-b border-stone-800 pb-2" data-i18n="step4_title">Photo Mount</h2>
+<p class="text-sm text-stone-400 mb-4" data-i18n="step4_desc">The cardboard frame attached to final printed photos.</p>
+
 <div class="space-y-4">
 
-  <!-- 1 Picture (Button) -->
-  <button
-    type="button"
-    class="option-card rounded-md p-4 md:p-6 text-left relative flex items-center justify-between w-full"
-    onclick="toggleMountCategory('mount-1pic')"
-    aria-expanded="false"
-    aria-controls="mount-1pic"
-  >
-    <div class="flex flex-col items-center gap-4 w-full">
-      <span class="text-base md:text-lg serif-font text-center" style="font-family: inherit;">
-        1 Picture
-      </span>
+<button
+type="button"
+class="option-card rounded-md p-4 md:p-6 text-left relative flex items-center justify-between w-full"
+onclick="toggleMountCategory('mount-1pic')"
+aria-expanded="false"
+aria-controls="mount-1pic"
+>
+<div class="flex flex-col items-center gap-4 w-full">
+<span class="text-base md:text-lg serif-font text-center" style="font-family: inherit;">
+1 Picture
+</span>
 
-      <div class="w-full max-w-md h-32 md:h-40 rounded-lg overflow-hidden border border-stone-700 shadow-md flex items-center justify-center">
-        <img
-          src="1pic-preview.jpg"
-          alt="1 Picture Preview"
-          class="w-full h-full object-cover mount-img-full"
-          onerror="this.style.display='none';"
-        >
-      </div>
-    </div>
+<div class="w-full max-w-md h-32 md:h-40 rounded-lg overflow-hidden border border-stone-700 shadow-md flex items-center justify-center">
+<img
+src="1pic-preview.jpg"
+alt="1 Picture Preview"
+class="w-full h-full object-cover mount-img-full"
+onerror="this.style.display='none';"
+>
+</div>
+</div>
 
-    <i data-lucide="chevron-down" id="arrow-mount-1pic" class="dropdown-arrow w-5 h-5 text-stone-500"></i>
-  </button>
+<i data-lucide="chevron-down" id="arrow-mount-1pic" class="dropdown-arrow w-5 h-5 text-stone-500"></i>
+</button>
 
-  <!-- 1 Picture (Panel) -->
-  <div id="mount-1pic" class="hidden">
-    <div class="grid grid-cols-2 gap-4">
+<div id="mount-1pic" class="hidden">
+<div class="grid grid-cols-2 gap-4">
 
-      <!-- Luxury White -->
-      <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Luxury White')">
-        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg overflow-hidden border-2 border-stone-300 shadow-lg flex items-center justify-center">
+<div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Luxury White')">
+<div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg overflow-hidden border-2 border-stone-300 shadow-lg flex items-center justify-center">
 
-          <button type="button" onclick="event.stopPropagation(); openLightbox('mount-luxury-white.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-            <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-          </button>
+<button type="button" onclick="event.stopPropagation(); openLightbox('mount-luxury-white.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+<i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+</button>
 
-          <img
-            src="mount-luxury-white.jpg"
-            alt="Luxury White Mount"
-            class="w-full h-full object-cover"
-            onerror="this.style.display='none'; this.parentElement.classList.add('bg-stone-100');"
-          >
-        </div>
+<img
+src="mount-luxury-white.jpg"
+alt="Luxury White Mount"
+class="w-full h-full object-cover"
+onerror="this.style.display='none'; this.parentElement.classList.add('bg-stone-100');"
+>
+</div>
 
-        <h3 class="text-base md:text-lg" data-i18n="mount_luxury_white">Luxury White</h3>
-        <div id="check-cardboard-Luxury White" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
-          <i data-lucide="check-circle"></i>
-        </div>
-      </div>
+<h3 class="text-base md:text-lg" data-i18n="mount_luxury_white">Luxury White</h3>
+<div id="check-cardboard-Luxury White" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
+<i data-lucide="check-circle"></i>
+</div>
+</div>
 
-      <!-- Natural Kraft XL -->
-      <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Natural Kraft XL')">
-        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg overflow-hidden border-2 border-[#a38865] shadow-lg flex items-center justify-center">
+<div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Natural Kraft XL')">
+<div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg overflow-hidden border-2 border-[#a38865] shadow-lg flex items-center justify-center">
 
-          <button type="button" onclick="event.stopPropagation(); openLightbox('mount-kraft-xl.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-            <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-          </button>
+<button type="button" onclick="event.stopPropagation(); openLightbox('mount-kraft-xl.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+<i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+</button>
 
-          <img
-            src="mount-kraft-xl.jpg"
-            alt="Natural Kraft XL Mount"
-            class="w-full h-full object-cover"
-            onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-[#e6ceaa]','via-[#d2b48c]','to-[#ba9e76]');"
-          >
-        </div>
+<img
+src="mount-kraft-xl.jpg"
+alt="Natural Kraft XL Mount"
+class="w-full h-full object-cover"
+onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-[#e6ceaa]','via-[#d2b48c]','to-[#ba9e76]');"
+>
+</div>
 
-        <h3 class="text-base md:text-lg" data-i18n="mount_kraft_xl">Natural Kraft XL</h3>
-        <div id="check-cardboard-Natural Kraft XL" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
-          <i data-lucide="check-circle"></i>
-        </div>
-      </div>
+<h3 class="text-base md:text-lg" data-i18n="mount_kraft_xl">Natural Kraft XL</h3>
+<div id="check-cardboard-Natural Kraft XL" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
+<i data-lucide="check-circle"></i>
+</div>
+</div>
 
-    </div>
-  </div>
+</div>
+</div>
 
-  <!-- 3 in 1 Picture (Button) -->
-  <button
-    type="button"
-    class="option-card rounded-md p-4 md:p-6 text-left relative flex items-center justify-between w-full"
-    onclick="toggleMountCategory('mount-3in1')"
-    aria-expanded="false"
-    aria-controls="mount-3in1"
-  >
-    <div class="flex flex-col items-center gap-4 w-full">
-      <span class="text-base md:text-lg serif-font text-center" style="font-family: inherit;">
-        3 in 1 Picture
-      </span>
+<button
+type="button"
+class="option-card rounded-md p-4 md:p-6 text-left relative flex items-center justify-between w-full"
+onclick="toggleMountCategory('mount-3in1')"
+aria-expanded="false"
+aria-controls="mount-3in1"
+>
+<div class="flex flex-col items-center gap-4 w-full">
+<span class="text-base md:text-lg serif-font text-center" style="font-family: inherit;">
+3 in 1 Picture
+</span>
 
-      <div class="w-full max-w-md h-32 md:h-40 rounded-lg overflow-hidden border border-stone-700 shadow-md flex items-center justify-center">
-        <img
-          src="3in1-preview.jpg"
-          alt="3 in 1 Picture Preview"
-          class="w-full h-full object-cover mount-img-full"
-          onerror="this.style.display='none';"
-        >
-      </div>
-    </div>
+<div class="w-full max-w-md h-32 md:h-40 rounded-lg overflow-hidden border border-stone-700 shadow-md flex items-center justify-center">
+<img
+src="3in1-preview.jpg"
+alt="3 in 1 Picture Preview"
+class="w-full h-full object-cover mount-img-full"
+onerror="this.style.display='none';"
+>
+</div>
+</div>
 
-    <i data-lucide="chevron-down" id="arrow-mount-3in1" class="dropdown-arrow w-5 h-5 text-stone-500"></i>
-  </button>
+<i data-lucide="chevron-down" id="arrow-mount-3in1" class="dropdown-arrow w-5 h-5 text-stone-500"></i>
+</button>
 
-  <!-- 3 in 1 Picture (Panel) -->
-  <div id="mount-3in1" class="hidden">
-    <div class="grid grid-cols-2 gap-4">
+<div id="mount-3in1" class="hidden">
+<div class="grid grid-cols-2 gap-4">
 
-      <!-- White -->
-      <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'White')">
-        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-white via-gray-50 to-gray-200 border-2 border-gray-200 shadow-lg flex items-center justify-center overflow-hidden">
+<div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'White')">
+<div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-white via-gray-50 to-gray-200 border-2 border-gray-200 shadow-lg flex items-center justify-center overflow-hidden">
 
-          <button type="button" onclick="event.stopPropagation(); openLightbox('mount-white.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-            <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-          </button>
+<button type="button" onclick="event.stopPropagation(); openLightbox('mount-white.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+<i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+</button>
 
-          <img
-            src="mount-white.jpg"
-            alt="Classic White Mount"
-            class="w-full h-full object-cover"
-            onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br', 'from-white', 'via-gray-50', 'to-gray-200'); this.parentElement.innerHTML += '<div class=\'w-3/4 h-3/4 border border-gray-200/50 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2\'></div>';"
-          >
-        </div>
+<img
+src="mount-white.jpg"
+alt="Classic White Mount"
+class="w-full h-full object-cover"
+onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br', 'from-white', 'via-gray-50', 'to-gray-200'); this.parentElement.innerHTML += '<div class=\'w-3/4 h-3/4 border border-gray-200/50 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2\'></div>';"
+>
+</div>
 
-        <h3 class="text-base md:text-lg" data-i18n="mount_white">Monochrome</h3>
-        <div id="check-cardboard-White" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
-          <i data-lucide="check-circle"></i>
-        </div>
-      </div>
+<h3 class="text-base md:text-lg" data-i18n="mount_white">Monochrome</h3>
+<div id="check-cardboard-White" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
+<i data-lucide="check-circle"></i>
+</div>
+</div>
 
-      <!-- Pure White -->
-      <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Pure White')">
-        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-[#ffffff] via-[#f8f8f8] to-[#eeeeee] border-2 border-[#e5e7eb] shadow-lg flex items-center justify-center overflow-hidden">
+<div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Pure White')">
+<div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-[#ffffff] via-[#f8f8f8] to-[#eeeeee] border-2 border-[#e5e7eb] shadow-lg flex items-center justify-center overflow-hidden">
 
-          <button type="button" onclick="event.stopPropagation(); openLightbox('mount-pure-white.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-            <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-          </button>
+<button type="button" onclick="event.stopPropagation(); openLightbox('mount-pure-white.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+<i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+</button>
 
-          <img
-            src="mount-pure-white.jpg"
-            alt="Pure White Mount"
-            class="w-full h-full object-cover"
-            onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-[#ffffff]','via-[#f8f8f8]','to-[#eeeeee]');"
-          >
-        </div>
+<img
+src="mount-pure-white.jpg"
+alt="Pure White Mount"
+class="w-full h-full object-cover"
+onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-[#ffffff]','via-[#f8f8f8]','to-[#eeeeee]');"
+>
+</div>
 
-        <h3 class="text-base md:text-lg" data-i18n="mount_pure_white">Pure White</h3>
-        <div id="check-cardboard-Pure White" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
-          <i data-lucide="check-circle"></i>
-        </div>
-      </div>
+<h3 class="text-base md:text-lg" data-i18n="mount_pure_white">Pure White</h3>
+<div id="check-cardboard-Pure White" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
+<i data-lucide="check-circle"></i>
+</div>
+</div>
 
-      <!-- White & Gold -->
-      <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'White & Gold')">
-        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-[#ffffff] via-[#faf7f0] to-[#f1e6cc] border-2 border-[#bf953f] shadow-lg flex items-center justify-center overflow-hidden">
+<div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'White & Gold')">
+<div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-[#ffffff] via-[#faf7f0] to-[#f1e6cc] border-2 border-[#bf953f] shadow-lg flex items-center justify-center overflow-hidden">
 
-          <button type="button" onclick="event.stopPropagation(); openLightbox('mount-white-gold.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-            <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-          </button>
+<button type="button" onclick="event.stopPropagation(); openLightbox('mount-white-gold.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+<i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+</button>
 
-          <img
-            src="mount-white-gold.jpg"
-            alt="White & Gold Mount"
-            class="w-full h-full object-cover"
-            onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-[#ffffff]','via-[#faf7f0]','to-[#f1e6cc]');"
-          >
-        </div>
+<img
+src="mount-white-gold.jpg"
+alt="White & Gold Mount"
+class="w-full h-full object-cover"
+onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-[#ffffff]','via-[#faf7f0]','to-[#f1e6cc]');"
+>
+</div>
 
-        <h3 class="text-base md:text-lg" data-i18n="mount_white_gold">White & Gold</h3>
-        <div id="check-cardboard-White & Gold" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
-          <i data-lucide="check-circle"></i>
-        </div>
-      </div>
+<h3 class="text-base md:text-lg" data-i18n="mount_white_gold">White & Gold</h3>
+<div id="check-cardboard-White & Gold" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
+<i data-lucide="check-circle"></i>
+</div>
+</div>
 
-      <!-- Natural Kraft -->
-      <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Natural Kraft')">
-        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-[#e6ceaa] via-[#d2b48c] to-[#ba9e76] border-2 border-[#a38865] shadow-lg flex items-center justify-center overflow-hidden">
+<div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Natural Kraft')">
+<div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-[#e6ceaa] via-[#d2b48c] to-[#ba9e76] border-2 border-[#a38865] shadow-lg flex items-center justify-center overflow-hidden">
 
-          <button type="button" onclick="event.stopPropagation(); openLightbox('mount-kraft.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-            <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-          </button>
+<button type="button" onclick="event.stopPropagation(); openLightbox('mount-kraft.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+<i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+</button>
 
-          <img
-            src="mount-kraft.jpg"
-            alt="Natural Kraft Mount"
-            class="w-full h-full object-cover"
-            onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br', 'from-[#e6ceaa]', 'via-[#d2b48c]', 'to-[#ba9e76]'); this.parentElement.innerHTML += '<div class=\'w-3/4 h-3/4 border border-[#a38865]/30 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2\'></div>';"
-          >
-        </div>
+<img
+src="mount-kraft.jpg"
+alt="Natural Kraft Mount"
+class="w-full h-full object-cover"
+onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br', 'from-[#e6ceaa]', 'via-[#d2b48c]', 'to-[#ba9e76]'); this.parentElement.innerHTML += '<div class=\'w-3/4 h-3/4 border border-[#a38865]/30 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2\'></div>';"
+>
+</div>
 
-        <h3 class="text-base md:text-lg" data-i18n="mount_kraft">Natural Kraft</h3>
-        <div id="check-cardboard-Natural Kraft" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
-          <i data-lucide="check-circle"></i>
-        </div>
-      </div>
+<h3 class="text-base md:text-lg" data-i18n="mount_kraft">Natural Kraft</h3>
+<div id="check-cardboard-Natural Kraft" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
+<i data-lucide="check-circle"></i>
+</div>
+</div>
 
-      <!-- Luxury Black -->
-      <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Luxury Black')">
-        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-[#0a0a0a] via-[#111111] to-[#000000] border-2 border-[#2a2a2a] shadow-lg flex items-center justify-center overflow-hidden">
+<div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Luxury Black')">
+<div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-[#0a0a0a] via-[#111111] to-[#000000] border-2 border-[#2a2a2a] shadow-lg flex items-center justify-center overflow-hidden">
 
-          <button type="button" onclick="event.stopPropagation(); openLightbox('mount-black.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-            <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-          </button>
+<button type="button" onclick="event.stopPropagation(); openLightbox('mount-black.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+<i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+</button>
 
-          <img
-            src="mount-black.jpg"
-            alt="Luxury Black Mount"
-            class="w-full h-full object-cover"
-            onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br', 'from-[#0a0a0a]', 'via-[#111111]', 'to-[#000000]'); this.parentElement.innerHTML += '<div class=\'w-3/4 h-3/4 border border-[#2a2a2a]/60 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2\'></div>';"
-          >
-        </div>
+<img
+src="mount-black.jpg"
+alt="Luxury Black Mount"
+class="w-full h-full object-cover"
+onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br', 'from-[#0a0a0a]', 'via-[#111111]', 'to-[#000000]'); this.parentElement.innerHTML += '<div class=\'w-3/4 h-3/4 border border-[#2a2a2a]/60 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2\'></div>';"
+>
+</div>
 
-        <h3 class="text-base md:text-lg" data-i18n="mount_black">Luxury Black</h3>
-        <div id="check-cardboard-Luxury Black" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
-          <i data-lucide="check-circle"></i>
-        </div>
-      </div>
+<h3 class="text-base md:text-lg" data-i18n="mount_black">Luxury Black</h3>
+<div id="check-cardboard-Luxury Black" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
+<i data-lucide="check-circle"></i>
+</div>
+</div>
 
-      <!-- Classic Wine Red -->
-      <div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Classic Wine Red')">
-        <div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-[#5b0f1a] via-[#7a1726] to-[#3a0a11] border-2 border-[#8b1d2f] shadow-lg flex items-center justify-center overflow-hidden">
+<div class="option-card rounded-md p-4 md:p-6 flex items-center justify-between relative group" onclick="selectOption('cardboard', 'Classic Wine Red')">
+<div class="relative w-full max-w-[8rem] md:max-w-[10rem] aspect-square mx-auto mb-3 rounded-lg bg-gradient-to-br from-[#5b0f1a] via-[#7a1726] to-[#3a0a11] border-2 border-[#8b1d2f] shadow-lg flex items-center justify-center overflow-hidden">
 
-          <button type="button" onclick="event.stopPropagation(); openLightbox('mount-wine-red.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
-            <i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
-          </button>
+<button type="button" onclick="event.stopPropagation(); openLightbox('mount-wine-red.jpg')" class="absolute top-2 left-2 z-20 p-2 bg-stone-900/80 text-[#bf953f] rounded-full border border-[#bf953f]/30 hover:bg-[#bf953f] hover:text-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg" title="Enlarge Image">
+<i data-lucide="maximize-2" class="w-3 h-3 md:w-4 md:h-4"></i>
+</button>
 
-          <img
-            src="mount-wine-red.jpg"
-            alt="Classic Wine Red Mount"
-            class="w-full h-full object-cover"
-            onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br', 'from-[#5b0f1a]', 'via-[#7a1726]', 'to-[#3a0a11]'); this.parentElement.innerHTML += '<div class=\'w-3/4 h-3/4 border border-[#8b1d2f]/40 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2\'></div>';"
-          >
-        </div>
+<img
+src="mount-wine-red.jpg"
+alt="Classic Wine Red Mount"
+class="w-full h-full object-cover"
+onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br', 'from-[#5b0f1a]', 'via-[#7a1726]', 'to-[#3a0a11]'); this.parentElement.innerHTML += '<div class=\'w-3/4 h-3/4 border border-[#8b1d2f]/40 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2\'></div>';"
+>
+</div>
 
-        <span class="special-edition-wine">Special Order</span>
-        <h3 class="text-base md:text-lg" data-i18n="mount_wine_red">Classic Wine Red</h3>
-        <div id="check-cardboard-Classic Wine Red" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
-          <i data-lucide="check-circle"></i>
-        </div>
-      </div>
+<span class="special-edition-wine">Special Order</span>
+<h3 class="text-base md:text-lg" data-i18n="mount_wine_red">Classic Wine Red</h3>
+<div id="check-cardboard-Classic Wine Red" class="hidden text-yellow-500 absolute top-3 right-3 rtl:right-auto rtl:left-3">
+<i data-lucide="check-circle"></i>
+</div>
+</div>
 
-    </div>
-  </div>
+</div>
+</div>
 
 </div>
 
 <input type="hidden" id="cardboardSelection" required>
-            </section>
-            <!-- Step 1: Contact Details -->
-            <section class="mb-8 md:mb-12">
-                <h2 class="text-xl md:text-2xl mb-4 md:mb-6 border-b border-stone-800 pb-2" data-i18n="step1_title">Your Details</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                    <div>
-                    <label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_name">Full Name</label>
-                    <!-- Reduced mobile padding: changed p-3 to py-2 px-3 -->
-                    <input required type="text" id="name" placeholder="Your Name" class="lux-input w-full py-2 px-3 md:p-4 rounded-sm text-base" data-i18n-placeholder="placeholder_name">
-                </div>
-                <div>
-                    <label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_phone">Phone Number</label>
-                    <input required type="tel" id="phone" placeholder="050-0000000" class="lux-input w-full p-3 md:p-4 rounded-sm text-base">
-                </div>
-                
-                <!-- Custom Animated Date Picker -->
-                <div class="relative">
-                    <label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_date">Event Date</label>
-                    
-                    <!-- Hidden input to store actual value for WhatsApp/Form -->
-                    <input type="hidden" id="date">
-                    
-                    <!-- Display Input (Click to open calendar) -->
-                    <button type="button" onclick="toggleCalendar()" class="lux-input w-full p-3 md:p-4 rounded-sm flex justify-between items-center text-left cursor-pointer group text-base">
-                        <span id="dateDisplay" class="text-stone-400">Select Date</span>
-                        <i data-lucide="calendar" class="w-4 h-4 text-stone-500 group-hover:text-[#bf953f] transition-colors"></i>
-                    </button>
-
-                    <!-- Calendar Popup -->
-                    <div id="customCalendar" class="calendar-popup absolute left-0 top-full mt-1 rounded-sm shadow-xl">
-                        <div class="calendar-header">
-                            <button type="button" onclick="changeMonth(-1)" class="hover:text-white transition-colors"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
-                            <span id="currentMonthYear">Month Year</span>
-                            <button type="button" onclick="changeMonth(1)" class="hover:text-white transition-colors"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
-                        </div>
-                        <div class="calendar-grid" id="calendarDays">
-                            <!-- JS will populate this -->
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_email">Email Address</label>
-                    <input required type="email" id="email" placeholder="client@example.com" class="lux-input w-full p-3 md:p-4 rounded-sm text-base" data-i18n-placeholder="placeholder_email">
-                </div>
-                
-                <!-- NEW Event Location Field -->
-                <div>
-                    <label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_location">Event Location</label>
-                    <input required type="text" id="location" placeholder="City, Venue name..." class="lux-input w-full py-2 px-3 md:p-4 rounded-sm text-base" data-i18n-placeholder="placeholder_location">
-                </div>
-
-                <!-- ANIMATED Custom Event Type Dropdown -->
-                <div class="relative">
-                    <label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_event_type">Event Type</label>
-                    
-                    <!-- Hidden Input to store the actual value for the form logic -->
-                    <input type="hidden" id="eventType">
-
-                    <!-- Trigger Button -->
-                    <button type="button" onclick="toggleDropdown()" class="lux-input w-full py-2 px-3 md:p-4 rounded-sm flex justify-between items-center text-left cursor-pointer group text-base">
-                        <span id="eventTypeLabel" class="text-stone-400" data-i18n="select_event_type">Select Event Type</span>
-                        <i data-lucide="chevron-down" id="dropdownArrow" class="dropdown-arrow w-4 h-4 text-stone-500 group-hover:text-[#bf953f] transition-colors"></i>
-                    </button>
-
-                    <!-- Dropdown Menu -->
-                    <div id="eventTypeDropdown" class="custom-dropdown-menu absolute z-50 left-0 right-0 top-full mt-1 rounded-sm shadow-xl overflow-hidden w-full">
-                        <ul class="flex flex-col text-stone-400">
-                            <li class="p-3 md:p-4 hover:bg-stone-800/50 hover:text-[#bf953f] cursor-pointer transition-colors border-b border-stone-800/50 last:border-0" onclick="selectEventOption('Wedding', 'event_wedding')" data-i18n="event_wedding">Wedding</li>
-                            <li class="p-3 md:p-4 hover:bg-stone-800/50 hover:text-[#bf953f] cursor-pointer transition-colors border-b border-stone-800/50 last:border-0" onclick="selectEventOption('Engagement', 'event_engagement')" data-i18n="event_engagement">Engagement</li>
-                            <li class="p-3 md:p-4 hover:bg-stone-800/50 hover:text-[#bf953f] cursor-pointer transition-colors border-b border-stone-800/50 last:border-0" onclick="selectEventOption('Birthday', 'event_birthday')" data-i18n="event_birthday">Birthday</li>
-                            <li class="p-3 md:p-4 hover:bg-stone-800/50 hover:text-[#bf953f] cursor-pointer transition-colors border-b border-stone-800/50 last:border-0" onclick="selectEventOption('Corporate', 'event_corporate')" data-i18n="event_corporate">Corporate</li>
-                            <li class="p-3 md:p-4 hover:bg-stone-800/50 hover:text-[#bf953f] cursor-pointer transition-colors" onclick="selectEventOption('Other', 'event_other')" data-i18n="event_other">Other</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-            <!-- Summary & Submit -->
-                <section class="bg-stone-900 border border-stone-800 p-6 md:p-8 rounded-lg text-center">
-                    <h3 class="serif-font text-xl md:text-2xl mb-4 gold-text" style="text-shadow: 0 0 12px rgba(191, 149, 63, 0.6);" data-i18n="summary_title">Ready to Book?</h3>
-                    <p class="text-stone-400 mb-6 text-sm" data-i18n="summary_desc">
-                        Clicking the button below will open WhatsApp with your order details pre-filled.
-                    </p>
-                    <button type="submit" class="gold-btn w-full md:w-auto px-8 md:px-12 py-3 md:py-4 text-base md:text-lg font-bold uppercase tracking-widest rounded-sm" data-i18n="btn_submit">
-                        Get Your Offer
-                    </button>
-                </section>
-
-            </form>
-        </main>
-    </div>
-
-    <!-- === GALLERY PAGE SECTION (Hidden by default) === -->
-    <div id="gallery-page" class="hidden flex-grow container mx-auto px-4 pb-20 max-w-5xl transition-all duration-500 ease-in-out opacity-0 translate-y-10">
-        <header class="text-center py-16 px-4">
-            <h1 class="text-4xl md:text-5xl mb-4 italic" data-i18n="gallery_heading">Moments of Elegance</h1>
-            <p class="text-stone-400 max-w-xl mx-auto text-lg font-light" data-i18n="gallery_subheading">
-                Browse through our collection of past events and mirror experiences.
-            </p>
-<div class="mt-8 text-6xl md:text-8xl italic tracking-widest text-stone-500/60 serif-font always-serif">
-    SOON
+</section>
+<section class="mb-8 md:mb-12">
+<h2 class="text-xl md:text-2xl mb-4 md:mb-6 border-b border-stone-800 pb-2" data-i18n="step1_title">Your Details</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+<div>
+<label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_name">Full Name</label>
+<input required type="text" id="name" placeholder="Your Name" class="lux-input w-full py-2 px-3 md:p-4 rounded-sm text-base" data-i18n-placeholder="placeholder_name">
 </div>
-        </header>
-                </p>
+<div>
+<label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_phone">Phone Number</label>
+<input required type="tel" id="phone" placeholder="050-0000000" class="lux-input w-full p-3 md:p-4 rounded-sm text-base">
+</div>
+
+<div class="relative">
+<label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_date">Event Date</label>
+
+<input type="hidden" id="date">
+
+<button type="button" onclick="toggleCalendar()" class="lux-input w-full p-3 md:p-4 rounded-sm flex justify-between items-center text-left cursor-pointer group text-base">
+<span id="dateDisplay" class="text-stone-400">Select Date</span>
+<i data-lucide="calendar" class="w-4 h-4 text-stone-500 group-hover:text-[#bf953f] transition-colors"></i>
+</button>
+
+<div id="customCalendar" class="calendar-popup absolute left-0 top-full mt-1 rounded-sm shadow-xl">
+<div class="calendar-header">
+<button type="button" onclick="changeMonth(-1)" class="hover:text-white transition-colors"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
+<span id="currentMonthYear">Month Year</span>
+<button type="button" onclick="changeMonth(1)" class="hover:text-white transition-colors"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
+</div>
+<div class="calendar-grid" id="calendarDays">
+</div>
+</div>
+</div>
+
+<div>
+<label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_email">Email Address</label>
+<input required type="email" id="email" placeholder="client@example.com" class="lux-input w-full p-3 md:p-4 rounded-sm text-base" data-i18n-placeholder="placeholder_email">
+</div>
+
+<div>
+<label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_location">Event Location</label>
+<input required type="text" id="location" placeholder="City, Venue name..." class="lux-input w-full py-2 px-3 md:p-4 rounded-sm text-base" data-i18n-placeholder="placeholder_location">
+</div>
+
+<div class="relative">
+<label class="block text-xs uppercase tracking-wider text-stone-400 mb-2" data-i18n="label_event_type">Event Type</label>
+
+<input type="hidden" id="eventType">
+
+<button type="button" onclick="toggleDropdown()" class="lux-input w-full py-2 px-3 md:p-4 rounded-sm flex justify-between items-center text-left cursor-pointer group text-base">
+<span id="eventTypeLabel" class="text-stone-400" data-i18n="select_event_type">Select Event Type</span>
+<i data-lucide="chevron-down" id="dropdownArrow" class="dropdown-arrow w-4 h-4 text-stone-500 group-hover:text-[#bf953f] transition-colors"></i>
+</button>
+
+<div id="eventTypeDropdown" class="custom-dropdown-menu absolute z-50 left-0 right-0 top-full mt-1 rounded-sm shadow-xl overflow-hidden w-full">
+<ul class="flex flex-col text-stone-400">
+<li class="p-3 md:p-4 hover:bg-stone-800/50 hover:text-[#bf953f] cursor-pointer transition-colors border-b border-stone-800/50 last:border-0" onclick="selectEventOption('Wedding', 'event_wedding')" data-i18n="event_wedding">Wedding</li>
+<li class="p-3 md:p-4 hover:bg-stone-800/50 hover:text-[#bf953f] cursor-pointer transition-colors border-b border-stone-800/50 last:border-0" onclick="selectEventOption('Engagement', 'event_engagement')" data-i18n="event_engagement">Engagement</li>
+<li class="p-3 md:p-4 hover:bg-stone-800/50 hover:text-[#bf953f] cursor-pointer transition-colors border-b border-stone-800/50 last:border-0" onclick="selectEventOption('Birthday', 'event_birthday')" data-i18n="event_birthday">Birthday</li>
+<li class="p-3 md:p-4 hover:bg-stone-800/50 hover:text-[#bf953f] cursor-pointer transition-colors border-b border-stone-800/50 last:border-0" onclick="selectEventOption('Corporate', 'event_corporate')" data-i18n="event_corporate">Corporate</li>
+<li class="p-3 md:p-4 hover:bg-stone-800/50 hover:text-[#bf953f] cursor-pointer transition-colors" onclick="selectEventOption('Other', 'event_other')" data-i18n="event_other">Other</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-stone-900 border border-stone-800 p-6 md:p-8 rounded-lg text-center">
+<h3 class="serif-font text-xl md:text-2xl mb-4 gold-text" style="text-shadow: 0 0 12px rgba(191, 149, 63, 0.6);" data-i18n="summary_title">Ready to Book?</h3>
+<p class="text-stone-400 mb-6 text-sm" data-i18n="summary_desc">
+Clicking the button below will open WhatsApp with your order details pre-filled.
+</p>
+<button type="submit" class="gold-btn w-full md:w-auto px-8 md:px-12 py-3 md:py-4 text-base md:text-lg font-bold uppercase tracking-widest rounded-sm" data-i18n="btn_submit">
+Get Your Offer
+</button>
+</section>
+
+</form>
+</main>
+</div>
+
+<div id="gallery-page" class="hidden flex-grow container mx-auto px-4 pb-20 max-w-5xl transition-all duration-500 ease-in-out opacity-0 translate-y-10">
+<header class="text-center py-16 px-4">
+<h1 class="text-4xl md:text-5xl mb-4 italic" data-i18n="gallery_heading">Moments of Elegance</h1>
+<p class="text-stone-400 max-w-xl mx-auto text-lg font-light" data-i18n="gallery_subheading">
+Browse through our collection of past events and mirror experiences.
+</p>
+<div class="mt-8 text-6xl md:text-8xl italic tracking-widest text-stone-500/60 serif-font always-serif">
+SOON
+</div>
+</header>
+</p>
 </header>
 </div>
 
-        <!-- === ABOUT US PAGE SECTION (Hidden by default) === -->
 <div id="about-page" class="hidden flex-grow container mx-auto px-4 pb-20 max-w-3xl transition-all duration-500 ease-in-out opacity-0 translate-y-10">
-        <header class="text-center py-16 px-4">
-            <div class="serif-font always-serif text-3xl md:text-5xl mb-3 gold-text tracking-wider font-bold">FrameByKaram</div>
-            <p class="text-stone-400 max-w-xl mx-auto text-lg font-light" data-i18n="about_subtitle">
-                Capturing elegance, one reflection at a time.
-            </p>
-        </header>
+<header class="text-center py-16 px-4">
+<div class="serif-font always-serif text-3xl md:text-5xl mb-3 gold-text tracking-wider font-bold">FrameByKaram</div>
+<p class="text-stone-400 max-w-xl mx-auto text-lg font-light" data-i18n="about_subtitle">
+Capturing elegance, one reflection at a time.
+</p>
+</header>
 
-        <div class="bg-stone-900 border border-stone-800 p-8 rounded-lg shadow-xl text-center space-y-8">
-            
-            <!-- Description -->
-            <div>
-                <h3 class="serif-font text-2xl mb-4 gold-text" data-i18n="about_heading">Our Story</h3>
-                <p class="text-stone-400 leading-relaxed text-sm md:text-base" data-i18n="about_text">
-                    We specialize in bringing a touch of luxury to your most cherished moments. Our vintage-styled mirror photo booths are more than just cameras; they are interactive experiences designed to reflect the beauty of your event.
-                </p>
-            </div>
+<div class="bg-stone-900 border border-stone-800 p-8 rounded-lg shadow-xl text-center space-y-8">
 
-            <div class="w-full h-px bg-stone-800"></div>
+<div>
+<h3 class="serif-font text-2xl mb-4 gold-text" data-i18n="about_heading">Our Story</h3>
+<p class="text-stone-400 leading-relaxed text-sm md:text-base" data-i18n="about_text">
+We specialize in bringing a touch of luxury to your most cherished moments.
+Our vintage-styled mirror photo booths are more than just cameras;
+they are interactive experiences designed to reflect the beauty of your event.
+</p>
+</div>
 
-            <!-- Contact Info -->
-            <div class="flex flex-col items-center gap-6">
-                
-                <!-- Phone -->
-                <div class="flex flex-col items-center gap-2">
-                    <span class="text-xs uppercase tracking-widest text-stone-500" data-i18n="label_phone">Contact Us</span>
-                    <!-- Updated href to international format to ensure dialer opens correctly -->
-                    <!-- Removed target="_top" to prevent page reload -->
-                    <!-- Changed text-stone-200 to text-[var(--text-main)] for theme adaptability -->
-                    <a href="tel:+972524040714" class="text-2xl md:text-3xl font-light text-[var(--text-main)] hover:text-[#bf953f] transition-colors font-serif tracking-wide">
-                        052-404-0714
-                    </a>
-                </div>
+<div class="w-full h-px bg-stone-800"></div>
 
-                <!-- Instagram -->
-                <div class="flex flex-col items-center gap-3 mt-4">
-                    <span class="text-xs uppercase tracking-widest text-stone-500" data-i18n="label_follow">Follow Us</span>
-                    <!-- Circular Gold Instagram Button -->
-                    <!-- Added 'relative z-20' to ensure it sits above other layers on mobile -->
-                    <a href="https://www.instagram.com/framebykaram?igsh=MXJrYXcxdmd6ZmJjZw==" target="_blank" class="group relative z-20 flex items-center justify-center w-16 h-16 rounded-full border-2 border-[#bf953f] hover:bg-[#bf953f]/10 transition-all duration-300">
-                        <i data-lucide="instagram" class="w-8 h-8 text-[#bf953f] transition-transform duration-300 group-hover:scale-110"></i>
-                        <!-- Glow effect -->
-                        <div class="absolute inset-0 rounded-full shadow-[0_0_15px_rgba(191,149,63,0.3)] group-hover:shadow-[0_0_25px_rgba(191,149,63,0.6)] transition-shadow duration-300"></div>
-                    </a>
-                </div>
+<div class="flex flex-col items-center gap-6">
 
-            </div>
-        </div>
-        
-        <div class="text-center mt-12">
-            <button onclick="showPage('booking')" class="text-stone-500 hover:text-[#bf953f] transition-colors text-sm uppercase tracking-widest">
-                <i data-lucide="arrow-left" class="w-4 h-4 inline-block mr-1 align-middle rtl:rotate-180"></i>
-                <span data-i18n="back_to_booking">Back to Reservation</span>
-            </button>
-        </div>
-    </div>
+<div class="flex flex-col items-center gap-2">
+<span class="text-xs uppercase tracking-widest text-stone-500" data-i18n="label_phone">Contact Us</span>
+<a href="tel:+972524040714" class="text-2xl md:text-3xl font-light text-[var(--text-main)] hover:text-[#bf953f] transition-colors font-serif tracking-wide">
+052-404-0714
+</a>
+</div>
 
-    <footer class="text-center py-8 text-xs text-stone-500 border-t border-stone-800" data-i18n="footer">
-        &copy; 2025 Mirror Booth Experience. All rights reserved.
-    </footer>
+<div class="flex flex-col items-center gap-3 mt-4">
+<span class="text-xs uppercase tracking-widest text-stone-500" data-i18n="label_follow">Follow Us</span>
+<a href="https://www.instagram.com/framebykaram?igsh=MXJrYXcxdmd6ZmJjZw==" target="_blank" class="group relative z-20 flex items-center justify-center w-16 h-16 rounded-full border-2 border-[#bf953f] hover:bg-[#bf953f]/10 transition-all duration-300">
+<i data-lucide="instagram" class="w-8 h-8 text-[#bf953f] transition-transform duration-300 group-hover:scale-110"></i>
+<div class="absolute inset-0 rounded-full shadow-[0_0_15px_rgba(191,149,63,0.3)] group-hover:shadow-[0_0_25px_rgba(191,149,63,0.6)] transition-shadow duration-300"></div>
+</a>
+</div>
 
-    <script>
-        /* --- Intro Animation Logic (Forced Play) --- */
-        (function manageIntro() {
-            const intro = document.getElementById('intro-screen');
-            
-            if (intro) {
-                // 1. IMMEDIATE REVEAL: Force the intro to be visible
-                intro.classList.remove('hidden');
-                intro.classList.add('flex');
-                
-                // 2. Wait 3 seconds for animation to play, then fade out
-                setTimeout(() => {
-                    intro.style.transition = "opacity 1s ease";
-                    intro.style.opacity = "0";
-                    intro.style.pointerEvents = "none";
-                    
-                    // 3. Remove from DOM after fade is complete to free up resources
-                    setTimeout(() => {
-                        if (intro.parentNode) intro.parentNode.removeChild(intro);
-                    }, 1000);
-                }, 3000);
-            }
-        })();
+</div>
+</div>
 
-        // Initialize Icons (Wrapped to prevent blocking)
-        try {
-            lucide.createIcons();
-        } catch (e) {
-            console.warn("Icon load failed", e);
-        }
+<div class="text-center mt-12">
+<button onclick="showPage('booking')" class="text-stone-500 hover:text-[#bf953f] transition-colors text-sm uppercase tracking-widest">
+<i data-lucide="arrow-left" class="w-4 h-4 inline-block mr-1 align-middle rtl:rotate-180"></i>
+<span data-i18n="back_to_booking">Back to Reservation</span>
+</button>
+</div>
+</div>
 
-        /* --- Theme Switcher --- */
-        let currentTheme = 'dark';
-        
-        function toggleTheme() {
-            const body = document.body;
-            const sunIcon = document.getElementById('theme-icon-sun');
-            const moonIcon = document.getElementById('theme-icon-moon');
-            
-            if (currentTheme === 'dark') {
-                body.classList.add('light-theme');
-                currentTheme = 'light';
-                sunIcon.classList.remove('hidden');
-                moonIcon.classList.add('hidden');
-            } else {
-                body.classList.remove('light-theme');
-                currentTheme = 'dark';
-                sunIcon.classList.add('hidden');
-                moonIcon.classList.remove('hidden');
-            }
-        }
+<footer class="text-center py-8 text-xs text-stone-500 border-t border-stone-800" data-i18n="footer">
+&copy; 2025 Mirror Booth Experience. All rights reserved.
+</footer>
 
-        /* --- Page Navigation with Animation --- */
-        function showPage(pageId) {
-            const pages = ['booking', 'gallery', 'about'];
-            const pageElements = {
-                booking: document.getElementById('booking-page'),
-                gallery: document.getElementById('gallery-page'),
-                about: document.getElementById('about-page')
-            };
-            
-            // Find currently active page
-            let activePageId = Object.keys(pageElements).find(key => !pageElements[key].classList.contains('hidden'));
-            
-            // If already on the requested page, do nothing
-            if (activePageId === pageId) return;
+<script>
+/* --- Intro Animation Logic (Forced Play) --- */
+(function manageIntro() {
+const intro = document.getElementById('intro-screen');
 
-            const pageToHide = pageElements[activePageId];
-            const pageToShow = pageElements[pageId];
+if (intro) {
+// 1. IMMEDIATE REVEAL: Force the intro to be visible
+intro.classList.remove('hidden');
+intro.classList.add('flex');
 
-            // Update Nav State
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-                if(link.dataset.page === pageId) link.classList.add('active');
-            });
+// 2. Wait 3 seconds for animation to play, then fade out
+setTimeout(() => {
+intro.style.transition = "opacity 1s ease";
+intro.style.opacity = "0";
+intro.style.pointerEvents = "none";
 
-            // Animate Out
-            pageToHide.classList.remove('opacity-100', 'translate-y-0');
-            pageToHide.classList.add('opacity-0', 'translate-y-10');
+// 3. Remove from DOM after fade is complete to free up resources
+setTimeout(() => {
+if (intro.parentNode) intro.parentNode.removeChild(intro);
+}, 1000);
+}, 3000);
+}
+})();
 
-            setTimeout(() => {
-                pageToHide.classList.add('hidden');
-                
-                // Prepare New Page
-                pageToShow.classList.remove('hidden');
-                pageToShow.classList.add('opacity-0', 'translate-y-10');
-                pageToShow.classList.remove('opacity-100', 'translate-y-0');
+// Initialize Icons (Wrapped to prevent blocking)
+try {
+lucide.createIcons();
+} catch (e) {
+console.warn("Icon load failed", e);
+}
 
-                void pageToShow.offsetWidth; // Force Reflow
+/* --- Theme Switcher --- */
+let currentTheme = 'dark';
 
-                // Animate In
-                pageToShow.classList.remove('opacity-0', 'translate-y-10');
-                pageToShow.classList.add('opacity-100', 'translate-y-0');
-                
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 500);
-        }
+function toggleTheme() {
+const body = document.body;
+const sunIcon = document.getElementById('theme-icon-sun');
+const moonIcon = document.getElementById('theme-icon-moon');
 
-        /* --- API Configuration --- */
-        const apiKey = ""; // API Key provided by environment
+if (currentTheme === 'dark') {
+body.classList.add('light-theme');
+currentTheme = 'light';
+sunIcon.classList.remove('hidden');
+moonIcon.classList.add('hidden');
+} else {
+body.classList.remove('light-theme');
+currentTheme = 'dark';
+sunIcon.classList.add('hidden');
+moonIcon.classList.remove('hidden');
+}
+}
 
-        /* --- Localization System --- */
-        
-        const translations = {
-            en: {
-                title: "MIRROR BOOTH",
-                nav_experience: "Experience",
-                nav_gallery: "Gallery",
-                nav_reserve: "Reserve",
-                nav_about: "Contact Us",
-                hero_title: "Reflect Your Elegance",
-                hero_subtitle: "Customize your premium photo experience. Select your finishes below to request a reservation.",
-                gallery_heading: "Moments of Elegance",
-                gallery_subheading: "Browse through our collection of past events and mirror experiences.",
-                // About Us Translations
-                about_subtitle: "Capturing elegance, one reflection at a time.",
-                about_heading: "Our Story",
-                about_text: "We specialize in bringing a touch of luxury to your most cherished moments. Our vintage-styled mirror photo booths are more than just cameras; they are interactive experiences designed to reflect the beauty of your event.",
-                label_follow: "Follow Us",
-                back_to_booking: "Back to Reservation",
-                
-                step1_title: "Your Details",
-                label_name: "Full Name",
-                label_phone: "Phone Number",
-                label_date: "Event Date",
-                label_email: "Email Address",
-                label_location: "Event Location",
-                placeholder_location: "City, Venue name...",
-                step2_title: "Mirror Frame",
-                step2_desc: "Choose the frame finish for the mirror.",
-                frame_gold: "Vintage Gold",
-                frame_silver: "Vintage Silver",
-                frame_none: "No Frame",
-                step3_title: "Velvet Rope / Twisted Rope",
-                step3_desc: "Select the color of the velvet crowd control ropes.",
-                rope_red: "Red Velvet",
-                rope_twisted_pink: "Twisted Pink",
-                rope_twisted_white: "Twisted White",
-                rope_twisted_gold: "Twisted Gold",
-                rope_none: "No Rope",
-                // Carpet Translations
-                step_carpet_title: "Carpet",
-                step_carpet_desc: "Select the carpet color for your event.",
-                carpet_red: "Red Carpet",
-                carpet_beige: "Beige Carpet",
-                carpet_white: "White Carpet",
-                carpet_pink: "Pink Carpet",
-                step4_title: "Photo Mount",
-                step4_desc: "The cardboard frame attached to final printed photos.",
-                mount_white: "Monochrome",
-                mount_pure_white: "Pure White",
-                mount_white_gold: "White & Gold",
-                mount_kraft: "Natural Kraft",
-                mount_luxury_white: "Luxury White",
-                mount_kraft_xl: "Natural Kraft XL",
-                check_gallery_teaser: "Check the gallery before you Start",
-                // Event Type Translations
-                label_event_type: "Event Type",
-                select_event_type: "Select Event Type",
-                event_wedding: "Wedding",
-                event_engagement: "Engagement",
-                event_birthday: "Birthday",
-                event_corporate: "Corporate",
-                event_other: "Other",
-                summary_title: "Ready to Book?",
-                summary_desc: "Clicking the button below will open WhatsApp with your order details pre-filled.",
-                btn_submit: "Get Your Offer",
-                btn_book_experience: "Book This Experience",
-                alert_contact: "Please fill in all contact details.",
-                alert_select: "Please select an option for Frame, Rope, and Photo Mount.",
-                placeholder_name: "Your Name",
-                placeholder_email: "client@example.com",
-                footer: "© 2025 Mirror Booth Experience. All rights reserved."
-            },
-            he: {
-                title: "מירור בות׳",
-                nav_experience: "חוויה",
-                nav_gallery: "גלריה",
-                nav_reserve: "הזמנה",
-                nav_about: "צור קשר",
-                hero_title: "Reflect Your Elegance",
-                hero_subtitle: "התאם אישית את חווית הצילום שלך. בחר את הגימורים למטה לבקשת הזמנה.",
-                gallery_heading: "רגעים של אלגנטיות",
-                gallery_subheading: "עיינו באוסף האירועים והחוויות שלנו.",
-                // About Us HE
-                about_subtitle: "לוכדים אלגנטיות, בכל השתקפות.",
-                about_heading: "הסיפור שלנו",
-                about_text: "אנו מתמחים בהבאת מגע של יוקרה לרגעים היקרים ביותר שלכם. עמדות הצילום בסגנון וינטג' שלנו הן יותר מסתם מצלמות; הן חוויה אינטראקטיבית המעוצבת לשקף את יופי האירוע שלכם.",
-                label_follow: "עקבו אחרינו",
-                back_to_booking: "חזרה להזמנה",
+/* --- Page Navigation with Animation --- */
+function showPage(pageId) {
+const pages = ['booking', 'gallery', 'about'];
+const pageElements = {
+booking: document.getElementById('booking-page'),
+gallery: document.getElementById('gallery-page'),
+about: document.getElementById('about-page')
+};
 
-                step1_title: "פרטים אישיים",
-                label_name: "שם מלא",
-                label_phone: "מספר טלפון",
-                label_date: "תאריך האירוע",
-                label_email: "כתובת אימייל",
-                label_location: "מיקום האירוע",
-                placeholder_location: "עיר, אולם וכו'",
-                step2_title: "מסגרת המראה",
-                step2_desc: "בחר את גימור המסגרת למראה.",
-                frame_gold: "זהב וינטג׳",
-                frame_silver: "כסף וינטג׳",
-                frame_none: "ללא מסגרת",
-                step3_title: "חבל קטיפה / חבל שזור",
-                step3_desc: "בחר את צבע חבלי הקטיפה לתיחום.",
-                rope_red: "קטיפה אדומה",
-                rope_twisted_pink: "חבל שזור ורוד",
-                rope_twisted_white: "חבל שזור לבן",
-                rope_twisted_gold: "חבל שזור זהב",
-                rope_none: "ללא חבל",
-                // Carpet Translations HE
-                step_carpet_title: "שטיח",
-                step_carpet_desc: "בחר את צבע השטיח לאירוע.",
-                carpet_red: "שטיח אדום",
-                carpet_beige: "שטיח בז׳",
-         carpet_white: "שטיח לבן",
-                carpet_pink: "שטיח ורוד",
-                step4_title: "מסגרת תמונה",
-                step4_desc: "מסגרת הקרטון המצורפת לתמונות המודפסות.",
-                mount_white: "מונוכרום",
-          mount_pure_white: "לבן טהור",
-         mount_white_gold: "לבן וזהב",
-                mount_kraft: "קרפט טבעי",
-         mount_luxury_white: "לבן יוקרתי",
-         mount_kraft_xl: "קרפט טבעי XL",
-          mount_black: "שחור יוקרתי",
-          mount_wine_red: "אדום יין קלאסי",
-                check_gallery_teaser: "הציצו בגלריה לפני שמתחילים",
-                // Event Type Translations HE
-                label_event_type: "סוג אירוע",
-                select_event_type: "בחר סוג אירוע",
-                event_wedding: "חתונה",
-                event_engagement: "אירוסין",
-                event_birthday: "יום הולדת",
-                event_corporate: "אירוע עסקי",
-                event_other: "אחר",
-                summary_title: "מוכנים להזמין?",
-                summary_desc: "לחיצה על הכפתור למטה תפתח את וואטסאפ עם פרטי ההזמנה שלך.",
-                btn_submit: "קבל הצעת מחיר",
-                btn_book_experience: "הזמן חוויה זו",
-                alert_contact: "נא למלא את כל פרטי הקשר.",
-                alert_select: "נא לבחור אפשרות למסגרת, חבל ומסגרת תמונה.",
-                placeholder_name: "השם שלך",
-                placeholder_email: "client@example.com",
-                footer: "© 2025 Mirror Booth Experience. כל הזכויות שמורות."
-            },
-            ar: {
-                title: "مرآة التصوير",
-                nav_experience: "تجارب",
-                nav_gallery: "معرض",
-                nav_reserve: "حجز",
-                nav_about: "اتصل بنا",
-                hero_title: "Reflect Your Elegance",
-                hero_subtitle: "صمم تجربة التصوير الخاصة بك. اختر التشطيبات أدناه لطلب الحجز.",
-                gallery_heading: "لحظات من الأناقة",
-                gallery_subheading: "تصفح مجموعتنا من الأحداث السابقة وتجارب المرآة.",
-                // About Us AR
-                about_subtitle: "نلتقط الأناقة، انعكاساً تلو الآخر.",
-                about_heading: "قصتنا",
-                about_text: "نحن متخصصون في إضفاء لمسة من الفخامة على لحظاتكم الثمينة. أكشاك التصوير ذات الطراز العتيق لدينا هي أكثر من مجرد كاميرات؛ إنها تجارب تفاعلية مصممة لتعكس جمال مناسبتكم.",
-                label_follow: "تابعنا",
-                back_to_booking: "العودة للحجز",
+// Find currently active page
+let activePageId = Object.keys(pageElements).find(key => !pageElements[key].classList.contains('hidden'));
 
-                step1_title: "التفاصيل الخاصة بك",
-                label_name: "الاسم الكامل",
-                label_phone: "رقم الهاتف",
-                label_date: "تاريخ المناسبة",
-                label_email: "البريد الإلكتروني",
-                label_location: "موقع المناسبة",
-                placeholder_location: "المدينة، القاعة، إلخ",
-                step2_title: "إطار المرآة",
-                step2_desc: "اختر تشطيب إطار المرآة.",
-                frame_gold: "ذهب عتيق",
-                frame_silver: "فضة عتيقة",
-                frame_none: "بدون إطار",
-                step3_title: "حبل المخمل / حبل مجدول",
-                step3_desc: "اختر لون حبال المخمل.",
-                rope_red: "مخمل أحمر",
-                rope_twisted_pink: "حبل مجدول وردي",
-                rope_twisted_white: "حبل مجدول أبيض",
-                rope_twisted_gold: "حبل مجدول ذهبي",
-                rope_none: "بدون حبل",
-                // Carpet Translations AR
-                step_carpet_title: "سجاد",
-                step_carpet_desc: "اختر لون السجاد للمناسبة.",
-                carpet_red: "سجاد أحمر",
-                carpet_beige: "سجاد بيج",
-          carpet_white: "سجاد أبيض",
-                carpet_pink: "سجاد وردي",
-                step4_title: "إطار الصورة",
-                step4_desc: "إطار الكرتون المرفق بالصور المطبوعة.",
-                mount_white: "مونوكروم",
-          mount_pure_white: "أبيض نقي",
-          mount_white_gold: "أبيض وذهبي",
-                mount_kraft: "كرافت طبيعي",
+// If already on the requested page, do nothing
+if (activePageId === pageId) return;
+
+const pageToHide = pageElements[activePageId];
+const pageToShow = pageElements[pageId];
+
+// Update Nav State
+document.querySelectorAll('.nav-link').forEach(link => {
+link.classList.remove('active');
+if(link.dataset.page === pageId) link.classList.add('active');
+});
+
+// Animate Out
+pageToHide.classList.remove('opacity-100', 'translate-y-0');
+pageToHide.classList.add('opacity-0', 'translate-y-10');
+
+setTimeout(() => {
+pageToHide.classList.add('hidden');
+
+// Prepare New Page
+pageToShow.classList.remove('hidden');
+pageToShow.classList.add('opacity-0', 'translate-y-10');
+pageToShow.classList.remove('opacity-100', 'translate-y-0');
+
+void pageToShow.offsetWidth; // Force Reflow
+
+// Animate In
+pageToShow.classList.remove('opacity-0', 'translate-y-10');
+pageToShow.classList.add('opacity-100', 'translate-y-0');
+
+window.scrollTo({ top: 0, behavior: 'smooth' });
+}, 500);
+}
+
+/* --- API Configuration --- */
+const apiKey = ""; // API Key provided by environment
+
+/* --- Localization System --- */
+
+const translations = {
+en: {
+title: "MIRROR BOOTH",
+nav_experience: "Experience",
+nav_gallery: "Gallery",
+nav_reserve: "Reserve",
+nav_about: "Contact Us",
+hero_title: "Reflect Your Elegance",
+hero_subtitle: "Customize your premium photo experience. Select your finishes below to request a reservation.",
+gallery_heading: "Moments of Elegance",
+gallery_subheading: "Browse through our collection of past events and mirror experiences.",
+// About Us Translations
+about_subtitle: "Capturing elegance, one reflection at a time.",
+about_heading: "Our Story",
+about_text: "We specialize in bringing a touch of luxury to your most cherished moments. Our vintage-styled mirror photo booths are more than just cameras; they are interactive experiences designed to reflect the beauty of your event.",
+label_follow: "Follow Us",
+back_to_booking: "Back to Reservation",
+
+step1_title: "Your Details",
+label_name: "Full Name",
+label_phone: "Phone Number",
+label_date: "Event Date",
+label_email: "Email Address",
+label_location: "Event Location",
+placeholder_location: "City, Venue name...",
+step2_title: "Mirror Frame",
+step2_desc: "Choose the frame finish for the mirror.",
+frame_gold: "Vintage Gold",
+frame_silver: "Vintage Silver",
+frame_none: "No Frame",
+step3_title: "Velvet Rope / Twisted Rope",
+step3_desc: "Select the color of the velvet crowd control ropes.",
+rope_red: "Red Velvet",
+rope_twisted_pink: "Twisted Pink",
+rope_twisted_white: "Twisted White",
+rope_twisted_gold: "Twisted Gold",
+rope_none: "No Rope",
+// Carpet Translations
+step_carpet_title: "Carpet",
+step_carpet_desc: "Select the carpet color for your event.",
+carpet_red: "Red Carpet",
+carpet_beige: "Beige Carpet",
+carpet_white: "White Carpet",
+carpet_pink: "Pink Carpet",
+step4_title: "Photo Mount",
+step4_desc: "The cardboard frame attached to final printed photos.",
+mount_white: "Monochrome",
+mount_pure_white: "Pure White",
+mount_white_gold: "White & Gold",
+mount_kraft: "Natural Kraft",
+mount_luxury_white: "Luxury White",
+mount_kraft_xl: "Natural Kraft XL",
+check_gallery_teaser: "Check the gallery before you Start",
+// Event Type Translations
+label_event_type: "Event Type",
+select_event_type: "Select Event Type",
+event_wedding: "Wedding",
+event_engagement: "Engagement",
+event_birthday: "Birthday",
+event_corporate: "Corporate",
+event_other: "Other",
+summary_title: "Ready to Book?",
+summary_desc: "Clicking the button below will open WhatsApp with your order details pre-filled.",
+btn_submit: "Get Your Offer",
+btn_book_experience: "Book This Experience",
+alert_contact: "Please fill in all contact details.",
+alert_select: "Please select an option for Frame, Rope, and Photo Mount.",
+placeholder_name: "Your Name",
+placeholder_email: "client@example.com",
+footer: "© 2025 Mirror Booth Experience. All rights reserved."
+},
+he: {
+title: "מירור בות׳",
+nav_experience: "חוויה",
+nav_gallery: "גלריה",
+nav_reserve: "הזמנה",
+nav_about: "צור קשר",
+hero_title: "Reflect Your Elegance",
+hero_subtitle: "התאם אישית את חווית הצילום שלך. בחר את הגימורים למטה לבקשת הזמנה.",
+gallery_heading: "רגעים של אלגנטיות",
+gallery_subheading: "עיינו באוסף האירועים והחוויות שלנו.",
+// About Us HE
+about_subtitle: "לוכדים אלגנטיות, בכל השתקפות.",
+about_heading: "הסיפור שלנו",
+about_text: "אנו מתמחים בהבאת מגע של יוקרה לרגעים היקרים ביותר שלכם. עמדות הצילום בסגנון וינטג' שלנו הן יותר מסתם מצלמות; הן חוויה אינטראקטיבית המעוצבת לשקף את יופי האירוע שלכם.",
+label_follow: "עקבו אחרינו",
+back_to_booking: "חזרה להזמנה",
+
+step1_title: "פרטים אישיים",
+label_name: "שם מלא",
+label_phone: "מספר טלפון",
+label_date: "תאריך האירוע",
+label_email: "כתובת אימייל",
+label_location: "מיקום האירוע",
+placeholder_location: "עיר, אולם וכו'",
+step2_title: "מסגרת המראה",
+step2_desc: "בחר את גימור המסגרת למראה.",
+frame_gold: "זהב וינטג׳",
+frame_silver: "כסף וינטג׳",
+frame_none: "ללא מסגרת",
+step3_title: "חבל קטיפה / חבל שזור",
+step3_desc: "בחר את צבע חבלי הקטיפה לתיחום.",
+rope_red: "קטיפה אדומה",
+rope_twisted_pink: "חבל שזור ורוד",
+rope_twisted_white: "חבל שזור לבן",
+rope_twisted_gold: "חבל שזור זהב",
+rope_none: "ללא חבל",
+// Carpet Translations HE
+step_carpet_title: "שטיח",
+step_carpet_desc: "בחר את צבע השטיח לאירוע.",
+carpet_red: "שטיח אדום",
+carpet_beige: "שטיח בז׳",
+carpet_white: "שטיח לבן",
+carpet_pink: "שטיח ורוד",
+step4_title: "מסגרת תמונה",
+step4_desc: "מסגרת הקרטון המצורפת לתמונות המודפסות.",
+mount_white: "מונוכרום",
+mount_pure_white: "לבן טהור",
+mount_white_gold: "לבן וזהב",
+mount_kraft: "קרפט טבעי",
+mount_luxury_white: "לבן יוקרתי",
+mount_kraft_xl: "קרפט טבעי XL",
+mount_black: "שחור יוקרתי",
+mount_wine_red: "אדום יין קלאסי",
+check_gallery_teaser: "הציצו בגלריה לפני שמתחילים",
+// Event Type Translations HE
+label_event_type: "סוג אירוע",
+select_event_type: "בחר סוג אירוע",
+event_wedding: "חתונה",
+event_engagement: "אירוסין",
+event_birthday: "יום הולדת",
+event_corporate: "אירוע עסקי",
+event_other: "אחר",
+summary_title: "מוכנים להזמין?",
+summary_desc: "לחיצה על הכפתור למטה תפתח את וואטסאפ עם פרטי ההזמנה שלך.",
+btn_submit: "קבל הצעת מחיר",
+btn_book_experience: "הזמן חוויה זו",
+alert_contact: "נא למלא את כל פרטי הקשר.",
+alert_select: "נא לבחור אפשרות למסגרת, חבל ומסגרת תמונה.",
+placeholder_name: "השם שלך",
+placeholder_email: "client@example.com",
+footer: "© 2025 Mirror Booth Experience. כל הזכויות שמורות."
+},
+ar: {
+title: "مرآة التصوير",
+nav_experience: "تجارب",
+nav_gallery: "معرض",
+nav_reserve: "حجز",
+nav_about: "اتصل بنا",
+hero_title: "Reflect Your Elegance",
+hero_subtitle: "صمم تجربة التصوير الخاصة بك. اختر التشطيبات أدناه لطلب الحجز.",
+gallery_heading: "لحظات من الأناقة",
+gallery_subheading: "تصفح مجموعتنا من الأحداث السابقة وتجارب المرآة.",
+// About Us AR
+about_subtitle: "نلتقط الأناقة، انعكاساً تلو الآخر.",
+about_heading: "قصتنا",
+about_text: "نحن متخصصون في إضفاء لمسة من الفخامة على لحظاتكم الثمينة. أكشاك التصوير ذات الطراز العتيق لدينا هي أكثر من مجرد كاميرات؛ إنها تجارب تفاعلية مصممة لتعكس جمال مناسبتكم.",
+label_follow: "تابعنا",
+back_to_booking: "العودة للحجز",
+
+step1_title: "التفاصيل الخاصة بك",
+label_name: "الاسم الكامل",
+label_phone: "رقم الهاتف",
+label_date: "تاريخ المناسبة",
+label_email: "البريد الإلكتروني",
+label_location: "موقع المناسبة",
+placeholder_location: "المدينة، القاعة، إلخ",
+step2_title: "إطار المرآة",
+step2_desc: "اختر تشطيب إطار المرآة.",
+frame_gold: "ذهب عتيق",
+frame_silver: "فضة عتيقة",
+frame_none: "بدون إطار",
+step3_title: "حبل المخمل / حبل مجدول",
+step3_desc: "اختر لون حبال المخمل.",
+rope_red: "مخمل أحمر",
+rope_twisted_pink: "حبل مجدول وردي",
+rope_twisted_white: "حبل مجدول أبيض",
+rope_twisted_gold: "حبل مجدول ذهبي",
+rope_none: "بدون حبل",
+// Carpet Translations AR
+step_carpet_title: "سجاد",
+step_carpet_desc: "اختر لون السجاد للمناسبة.",
+carpet_red: "سجاد أحمر",
+carpet_beige: "سجاد بيج",
+carpet_white: "سجاد أبيض",
+carpet_pink: "سجاد وردي",
+step4_title: "إطار الصورة",
+step4_desc: "إطار الكرتون المرفق بالصور المطبوعة.",
+mount_white: "مونوكروم",
+mount_pure_white: "أبيض نقي",
+mount_white_gold: "أبيض وذهبي",
+mount_kraft: "كرافت طبيعي",
 mount_luxury_white: "أبيض فاخر",
 mount_kraft_xl: "كرافت طبيعي XL",
-          mount_black: "أسود فاخر",
-          mount_wine_red: "أحمر نبيذي كلاسيكي",
-                check_gallery_teaser: "تحقق من المعرض قبل البدء",
-                // Event Type Translations AR
-                label_event_type: "نوع المناسبة",
-                select_event_type: "اختر نوع المناسبة",
-                event_wedding: "حفل زفاف",
-                event_engagement: "خطوبة",
-                event_birthday: "عيد ميلاد",
-                event_corporate: "مناسبة للشركات",
-                event_other: "آخر",
-                summary_title: "جاهز للحجز؟",
-                summary_desc: "النقر على الزر أدناه سيفتح واتساب مع تفاصيل طلبك.",
-                btn_submit: "احصل على عرض السعر",
-                btn_book_experience: "احجز هذه التجربة",
-                alert_contact: "يرجى ملء جميع تفاصيل الاتصال.",
-                alert_select: "يرجى اختيار إطار، حبل، وإطار للصورة.",
-                placeholder_name: "اسمك",
-                placeholder_email: "client@example.com",
-                footer: "© 2025 تجربة مرآة التصوير. جميع الحقوق محفوظة."
-            }
-        };
+mount_black: "أسود فاخر",
+mount_wine_red: "أحمر نبيذي كلاسيكي",
+check_gallery_teaser: "تحقق من المعرض قبل البدء",
+// Event Type Translations AR
+label_event_type: "نوع المناسبة",
+select_event_type: "اختر نوع المناسبة",
+event_wedding: "حفل زفاف",
+event_engagement: "خطوبة",
+event_birthday: "عيد ميلاد",
+event_corporate: "مناسبة للشركات",
+event_other: "آخر",
+summary_title: "جاهز للحجز؟",
+summary_desc: "النقر على الزر أدناه سيفتح واتساب مع تفاصيل طلبك.",
+btn_submit: "احصل على عرض السعر",
+btn_book_experience: "احجز هذه التجربة",
+alert_contact: "يرجى ملء جميع تفاصيل الاتصال.",
+alert_select: "يرجى اختيار إطار، حبل، وإطار للصورة.",
+placeholder_name: "اسمك",
+placeholder_email: "client@example.com",
+footer: "© 2025 تجربة مرآة التصوير. جميع الحقوق محفوظة."
+}
+};
 
-        let currentLang = 'en';
+let currentLang = 'en';
 
-        function setLanguage(lang) {
-            if (currentLang === lang) return;
+function setLanguage(lang) {
+if (currentLang === lang) return;
 
-            // Identify active content area to animate
-            const pages = ['booking', 'gallery', 'about'];
-            const pageElements = {
-                booking: document.getElementById('booking-page'),
-                gallery: document.getElementById('gallery-page'),
-                about: document.getElementById('about-page')
-            };
-            
-            // Find currently active page
-            let activePageId = Object.keys(pageElements).find(key => !pageElements[key].classList.contains('hidden'));
-            
-            const activePage = pageElements[activePageId];
+// Identify active content area to animate
+const pages = ['booking', 'gallery', 'about'];
+const pageElements = {
+booking: document.getElementById('booking-page'),
+gallery: document.getElementById('gallery-page'),
+about: document.getElementById('about-page')
+};
 
-            // Start Fade Out
-            activePage.classList.remove('opacity-100', 'translate-y-0');
-            activePage.classList.add('opacity-0', 'translate-y-10');
+// Find currently active page
+let activePageId = Object.keys(pageElements).find(key => !pageElements[key].classList.contains('hidden'));
 
-            setTimeout(() => {
-                currentLang = lang;
-                const dir = (lang === 'he' || lang === 'ar') ? 'rtl' : 'ltr';
-                
-                // 1. Set DOM Direction & Lang
-                document.documentElement.setAttribute('dir', dir);
-                document.documentElement.setAttribute('lang', lang);
-                document.body.setAttribute('lang', lang); // For CSS font targeting
+const activePage = pageElements[activePageId];
 
-                // 2. Update Toggle Buttons
-                document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-                document.getElementById(`lang-${lang}`).classList.add('active');
+// Start Fade Out
+activePage.classList.remove('opacity-100', 'translate-y-0');
+activePage.classList.add('opacity-0', 'translate-y-10');
 
-                // 3. Update Text Content
-                document.querySelectorAll('[data-i18n]').forEach(el => {
-                    const key = el.getAttribute('data-i18n');
-                    if (translations[lang][key]) {
-                        el.innerText = translations[lang][key];
-                    }
-                });
+setTimeout(() => {
+currentLang = lang;
+const dir = (lang === 'he' || lang === 'ar') ? 'rtl' : 'ltr';
 
-                // 4. Update Placeholders
-                document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-                    const key = el.getAttribute('data-i18n-placeholder');
-                    if (translations[lang][key]) {
-                        el.placeholder = translations[lang][key];
-                    }
-                });
+// 1. Set DOM Direction & Lang
+document.documentElement.setAttribute('dir', dir);
+document.documentElement.setAttribute('lang', lang);
+document.body.setAttribute('lang', lang); // For CSS font targeting
 
-                // Fade Back In
-                activePage.classList.remove('opacity-0', 'translate-y-10');
-                activePage.classList.add('opacity-100', 'translate-y-0');
+// 2. Update Toggle Buttons
+document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+document.getElementById(`lang-${lang}`).classList.add('active');
 
-            }, 500); // 500ms delay to match transition duration
-        }
+// 3. Update Text Content
+document.querySelectorAll('[data-i18n]').forEach(el => {
+const key = el.getAttribute('data-i18n');
+if (translations[lang][key]) {
+el.innerText = translations[lang][key];
+}
+});
 
-        /* --- Selection & Form Logic --- */
+// 4. Update Placeholders
+document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+const key = el.getAttribute('data-i18n-placeholder');
+if (translations[lang][key]) {
+el.placeholder = translations[lang][key];
+}
+});
+
+// Fade Back In
+activePage.classList.remove('opacity-0', 'translate-y-10');
+activePage.classList.add('opacity-100', 'translate-y-0');
+
+}, 500); // 500ms delay to match transition duration
+}
+
+/* --- Selection & Form Logic --- */
 function toggleMountCategory(panelId) {
-    // Keep the page from jumping
-    const scrollY = window.scrollY;
+// Keep the page from jumping
+const scrollY = window.scrollY;
 
-    // Remove focus from clicked button (prevents weird scroll in some browsers)
-    try { document.activeElement && document.activeElement.blur(); } catch (e) {}
+// Remove focus from clicked button (prevents weird scroll in some browsers)
+try { document.activeElement && document.activeElement.blur(); } catch (e) {}
 
-    // These are the ONLY two mount panels you have
-    const panels = ['mount-1pic', 'mount-3in1'];
+// These are the ONLY two mount panels you have
+const panels = ['mount-1pic', 'mount-3in1'];
 
-    const panel = document.getElementById(panelId);
-    if (!panel) return;
+const panel = document.getElementById(panelId);
+if (!panel) return;
 
-    const isOpening = panel.classList.contains('hidden'); // if hidden -> we are opening it
+const isOpening = panel.classList.contains('hidden'); // if hidden -> we are opening it
 
-    // 1) If opening this panel, close the other one automatically
-    if (isOpening) {
-        panels.forEach(otherId => {
-            if (otherId === panelId) return;
+// 1) If opening this panel, close the other one automatically
+if (isOpening) {
+panels.forEach(otherId => {
+if (otherId === panelId) return;
 
-            const otherPanel = document.getElementById(otherId);
-            if (!otherPanel) return;
+const otherPanel = document.getElementById(otherId);
+if (!otherPanel) return;
 
-            // Close the other panel
-            otherPanel.classList.add('hidden');
+// Close the other panel
+otherPanel.classList.add('hidden');
 
-            // Reset the other arrow
-            const otherArrow = document.getElementById(`arrow-${otherId}`);
-            if (otherArrow) otherArrow.classList.remove('rotate');
+// Reset the other arrow
+const otherArrow = document.getElementById(`arrow-${otherId}`);
+if (otherArrow) otherArrow.classList.remove('rotate');
 
-            // Reset the other aria-expanded
-            const otherBtn = document.querySelector(`button[aria-controls="${otherId}"]`);
-            if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
-        });
-    }
+// Reset the other aria-expanded
+const otherBtn = document.querySelector(`button[aria-controls="${otherId}"]`);
+if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+});
+}
 
-    // 2) Toggle current panel
-    panel.classList.toggle('hidden');
+// 2) Toggle current panel
+panel.classList.toggle('hidden');
 
-    // 3) Rotate current arrow
-    const arrow = document.getElementById(`arrow-${panelId}`);
-    if (arrow) {
-        if (isOpening) arrow.classList.add('rotate');
-        else arrow.classList.remove('rotate');
-    }
+// 3) Rotate current arrow
+const arrow = document.getElementById(`arrow-${panelId}`);
+if (arrow) {
+if (isOpening) arrow.classList.add('rotate');
+else arrow.classList.remove('rotate');
+}
 
-    // 4) Update aria-expanded for current button
-    const btn = document.querySelector(`button[aria-controls="${panelId}"]`);
-    if (btn) btn.setAttribute('aria-expanded', isOpening ? 'true' : 'false');
+// 4) Update aria-expanded for current button
+const btn = document.querySelector(`button[aria-controls="${panelId}"]`);
+if (btn) btn.setAttribute('aria-expanded', isOpening ? 'true' : 'false');
 
-    // 5) Restore scroll position
-    requestAnimationFrame(() => {
-        window.scrollTo(0, scrollY);
-    });
+// 5) Restore scroll position
+requestAnimationFrame(() => {
+window.scrollTo(0, scrollY);
+});
 }        const selections = {
-            frame: null,
-            rope: null,
-            carpet: null, // Added carpet
-            cardboard: null
-        };
+frame: null,
+rope: null,
+carpet: null, // Added carpet
+cardboard: null
+};
 
-        function selectOption(category, value) {
-            selections[category] = value;
-            document.getElementById(`${category}Selection`).value = value;
+function selectOption(category, value) {
+selections[category] = value;
+document.getElementById(`${category}Selection`).value = value;
 
-            const inputField = document.getElementById(`${category}Selection`);
+const inputField = document.getElementById(`${category}Selection`);
 
 // 1) Clear previous selection for this category (works even inside nested panels)
 document.querySelectorAll(`.option-card.selected`).forEach(card => {
-    const check = card.querySelector(`[id^="check-${category}-"]`);
-    if (check) {
-        card.classList.remove('selected');
-        check.classList.add('hidden');
-    }
+const check = card.querySelector(`[id^="check-${category}-"]`);
+if (check) {
+card.classList.remove('selected');
+check.classList.add('hidden');
+}
 });
 
 // 2) Save the new selection
@@ -1801,118 +1725,118 @@ inputField.value = value;
 // 3) Mark the new one as selected
 const activeCheckmark = document.getElementById(`check-${category}-${value}`);
 if (activeCheckmark) {
-    activeCheckmark.classList.remove('hidden');
-    activeCheckmark.parentElement.classList.add('selected');
+activeCheckmark.classList.remove('hidden');
+activeCheckmark.parentElement.classList.add('selected');
 }
-        }
+}
 
-        /* --- Custom Dropdown Logic --- */
-        function toggleDropdown() {
-            const dropdown = document.getElementById('eventTypeDropdown');
-            const arrow = document.getElementById('dropdownArrow');
-            dropdown.classList.toggle('open');
-            arrow.classList.toggle('rotate');
-        }
+/* --- Custom Dropdown Logic --- */
+function toggleDropdown() {
+const dropdown = document.getElementById('eventTypeDropdown');
+const arrow = document.getElementById('dropdownArrow');
+dropdown.classList.toggle('open');
+arrow.classList.toggle('rotate');
+}
 
-        function selectEventOption(value, i18nKey) {
-            // 1. Set hidden input value (for form logic)
-            document.getElementById('eventType').value = value;
-            
-            // 2. Update Label Text & Translation Key
-            const label = document.getElementById('eventTypeLabel');
-            label.setAttribute('data-i18n', i18nKey); // Update key so language switch works
-            label.innerText = translations[currentLang][i18nKey]; // Update visual text immediately
-            label.classList.remove('text-stone-400'); // Make it look selected/active
-            label.classList.add('text-stone-200'); // Brighter color for selected value
+function selectEventOption(value, i18nKey) {
+// 1. Set hidden input value (for form logic)
+document.getElementById('eventType').value = value;
 
-            // 3. Close Dropdown
-            toggleDropdown();
-        }
+// 2. Update Label Text & Translation Key
+const label = document.getElementById('eventTypeLabel');
+label.setAttribute('data-i18n', i18nKey); // Update key so language switch works
+label.innerText = translations[currentLang][i18nKey]; // Update visual text immediately
+label.classList.remove('text-stone-400'); // Make it look selected/active
+label.classList.add('text-stone-200'); // Brighter color for selected value
 
-        // Close dropdown when clicking outside
-        window.addEventListener('click', function(e) {
-            const dropdown = document.getElementById('eventTypeDropdown');
-            const button = document.querySelector('button[onclick="toggleDropdown()"]');
-            
-            if (dropdown && dropdown.classList.contains('open') && !dropdown.contains(e.target) && !button.contains(e.target)) {
-                toggleDropdown();
-            }
+// 3. Close Dropdown
+toggleDropdown();
+}
 
-            // Close Calendar when clicking outside
-            const calendar = document.getElementById('customCalendar');
-            const dateBtn = document.querySelector('button[onclick="toggleCalendar()"]');
-            
-            if (calendar && calendar.classList.contains('open') && !calendar.contains(e.target) && !dateBtn.contains(e.target)) {
-                toggleCalendar();
-            }
-        });
+// Close dropdown when clicking outside
+window.addEventListener('click', function(e) {
+const dropdown = document.getElementById('eventTypeDropdown');
+const button = document.querySelector('button[onclick="toggleDropdown()"]');
 
-        /* --- Custom Calendar Logic --- */
-        let currentDate = new Date();
-        let selectedDate = null;
+if (dropdown && dropdown.classList.contains('open') && !dropdown.contains(e.target) && !button.contains(e.target)) {
+toggleDropdown();
+}
 
-        function toggleCalendar() {
-            const calendar = document.getElementById('customCalendar');
-            calendar.classList.toggle('open');
-            if(calendar.classList.contains('open')) {
-                renderCalendar();
-            }
-        }
+// Close Calendar when clicking outside
+const calendar = document.getElementById('customCalendar');
+const dateBtn = document.querySelector('button[onclick="toggleCalendar()"]');
 
-        function changeMonth(delta) {
-            currentDate.setMonth(currentDate.getMonth() + delta);
-            renderCalendar();
-        }
+if (calendar && calendar.classList.contains('open') && !calendar.contains(e.target) && !dateBtn.contains(e.target)) {
+toggleCalendar();
+}
+});
 
-        function renderCalendar() {
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth();
-            
-            // Update Header
-            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            document.getElementById('currentMonthYear').innerText = `${monthNames[month]} ${year}`;
-            
-            const daysContainer = document.getElementById('calendarDays');
-            daysContainer.innerHTML = '';
+/* --- Custom Calendar Logic --- */
+let currentDate = new Date();
+let selectedDate = null;
 
-            // Day Names
-            const dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-            dayNames.forEach(name => {
-                const div = document.createElement('div');
-                div.className = 'calendar-day-name';
-                div.innerText = name;
-                daysContainer.appendChild(div);
-            });
+function toggleCalendar() {
+const calendar = document.getElementById('customCalendar');
+calendar.classList.toggle('open');
+if(calendar.classList.contains('open')) {
+renderCalendar();
+}
+}
 
-            // Logic for days
-            const firstDay = new Date(year, month, 1).getDay();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
+function changeMonth(delta) {
+currentDate.setMonth(currentDate.getMonth() + delta);
+renderCalendar();
+}
 
-            // Empty slots for previous month
-            for (let i = 0; i < firstDay; i++) {
-                const div = document.createElement('div');
-                div.className = 'calendar-day empty';
-                daysContainer.appendChild(div);
-            }
+function renderCalendar() {
+const year = currentDate.getFullYear();
+const month = currentDate.getMonth();
 
-            // Actual Days
-            for (let d = 1; d <= daysInMonth; d++) {
-                const div = document.createElement('div');
-                div.className = 'calendar-day';
-                div.innerText = d;
-                
-                // Check if this date matches currently selected date
-                if (selectedDate && 
-                    selectedDate.getDate() === d && 
-                    selectedDate.getMonth() === month && 
-                    selectedDate.getFullYear() === year) {
-                    div.classList.add('selected');
-                }
+// Update Header
+const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+document.getElementById('currentMonthYear').innerText = `${monthNames[month]} ${year}`;
 
-                div.onclick = function() {
-                    selectedDate = new Date(year, month, d);
-                    
-                    // Format for display (DD Mon YYYY)
+const daysContainer = document.getElementById('calendarDays');
+daysContainer.innerHTML = '';
+
+// Day Names
+const dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+dayNames.forEach(name => {
+const div = document.createElement('div');
+div.className = 'calendar-day-name';
+div.innerText = name;
+daysContainer.appendChild(div);
+});
+
+// Logic for days
+const firstDay = new Date(year, month, 1).getDay();
+const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+// Empty slots for previous month
+for (let i = 0; i < firstDay; i++) {
+const div = document.createElement('div');
+div.className = 'calendar-day empty';
+daysContainer.appendChild(div);
+}
+
+// Actual Days
+for (let d = 1; d <= daysInMonth; d++) {
+const div = document.createElement('div');
+div.className = 'calendar-day';
+div.innerText = d;
+
+// Check if this date matches currently selected date
+if (selectedDate &&
+selectedDate.getDate() === d &&
+selectedDate.getMonth() === month &&
+selectedDate.getFullYear() === year) {
+div.classList.add('selected');
+}
+
+div.onclick = function() {
+selectedDate = new Date(year, month, d);
+
+// Format for display (DD Mon YYYY)
 const monthShort = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 const displayStr = `${d.toString().padStart(2, '0')} ${monthShort[month]} ${year}`;
 const label = document.getElementById('dateDisplay');
@@ -1920,77 +1844,77 @@ label.innerText = displayStr;
 label.classList.remove('text-stone-400');
 label.classList.add('text-stone-200');
 
-                    // Format for Hidden Input (YYYY-MM-DD) for WhatsApp
-                    const isoStr = `${year}-${(month+1).toString().padStart(2, '0')}-${d.toString().padStart(2, '0')}`;
-                    document.getElementById('date').value = isoStr;
+// Format for Hidden Input (YYYY-MM-DD) for WhatsApp
+const isoStr = `${year}-${(month+1).toString().padStart(2, '0')}-${d.toString().padStart(2, '0')}`;
+document.getElementById('date').value = isoStr;
 
-                    toggleCalendar(); // Close
-                };
+toggleCalendar(); // Close
+};
 
-                daysContainer.appendChild(div);
-            }
-        }
+daysContainer.appendChild(div);
+}
+}
 
-        /* --- Lightbox Functions --- */
-        function openLightbox(imageSrc) {
-            const lightbox = document.getElementById('lightbox');
-            const img = document.getElementById('lightbox-img');
-            
-            img.src = imageSrc;
-            
-            // Reveal
-            lightbox.classList.remove('invisible', 'opacity-0');
-            lightbox.classList.add('visible', 'opacity-100', 'open');
-        }
+/* --- Lightbox Functions --- */
+function openLightbox(imageSrc) {
+const lightbox = document.getElementById('lightbox');
+const img = document.getElementById('lightbox-img');
 
-        function closeLightbox() {
-            const lightbox = document.getElementById('lightbox');
-            
-            // Hide
-            lightbox.classList.remove('visible', 'opacity-100', 'open');
-            lightbox.classList.add('invisible', 'opacity-0');
-            
-            // Clear src after animation to prevent flicker next time
-            setTimeout(() => {
-                document.getElementById('lightbox-img').src = '';
-            }, 500);
-        }
+img.src = imageSrc;
 
-        function sendToWhatsApp() {
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            const date = document.getElementById('date').value;
+// Reveal
+lightbox.classList.remove('invisible', 'opacity-0');
+lightbox.classList.add('visible', 'opacity-100', 'open');
+}
+
+function closeLightbox() {
+const lightbox = document.getElementById('lightbox');
+
+// Hide
+lightbox.classList.remove('visible', 'opacity-100', 'open');
+lightbox.classList.add('invisible', 'opacity-0');
+
+// Clear src after animation to prevent flicker next time
+setTimeout(() => {
+document.getElementById('lightbox-img').src = '';
+}, 500);
+}
+
+function sendToWhatsApp() {
+const name = document.getElementById('name').value;
+const phone = document.getElementById('phone').value;
+const date = document.getElementById('date').value;
 // Format date for WhatsApp as: "05 Feb 2026"
 let dateWhatsapp = date;
 if (date) {
-    const [y, m, d] = date.split('-'); // YYYY-MM-DD
-    const monthShort = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-    const mm = parseInt(m, 10);
-    if (!isNaN(mm) && mm >= 1 && mm <= 12) {
-        dateWhatsapp = `${d} ${monthShort[mm - 1]} ${y}`;
-    }
+const [y, m, d] = date.split('-'); // YYYY-MM-DD
+const monthShort = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const mm = parseInt(m, 10);
+if (!isNaN(mm) && mm >= 1 && mm <= 12) {
+dateWhatsapp = `${d} ${monthShort[mm - 1]} ${y}`;
 }
-            const email = document.getElementById('email').value;
-            const location = document.getElementById('location').value;
-            const eventType = document.getElementById('eventType').value;
-            const frame = selections.frame;
-            const rope = selections.rope;
-            const carpet = selections.carpet;
-            const cardboard = selections.cardboard;
+}
+const email = document.getElementById('email').value;
+const location = document.getElementById('location').value;
+const eventType = document.getElementById('eventType').value;
+const frame = selections.frame;
+const rope = selections.rope;
+const carpet = selections.carpet;
+const cardboard = selections.cardboard;
 
-            if (!name || !phone || !date || !email || !eventType || !location) {
-                alert(translations[currentLang].alert_contact);
-                return;
-            }
-            if (!frame || !rope || !cardboard) {
-                alert(translations[currentLang].alert_select);
-                return;
-            }
+if (!name || !phone || !date || !email || !eventType || !location) {
+alert(translations[currentLang].alert_contact);
+return;
+}
+if (!frame || !rope || !cardboard) {
+alert(translations[currentLang].alert_select);
+return;
+}
 
-            const phoneNumber = "972524040714"; 
+const phoneNumber = "972524040714";
 
-            // We keep the actual message in English for the business owner's consistency
-            const text = `
+// We keep the actual message in English for the business owner's consistency
+const text = `
 *New Mirror Booth Reservation Request* ✨
 (Language: ${currentLang.toUpperCase()})
 
@@ -2008,21 +1932,43 @@ if (date) {
 🖼️ *Mount:* ${cardboard}
 
 Please confirm availability. Thank you!
-            `.trim();
+`.trim();
 
-            const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
-            window.open(url, '_blank');
-        }
-                /* --- PWA Service Worker Register --- */
-        if ("serviceWorker" in navigator) {
-            window.addEventListener("load", () => {
-                navigator.serviceWorker.register("./sw.js").catch(() => {});
-            });
-        }
-    </script>
+const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
+window.open(url, '_blank');
+}
+/* --- PWA Service Worker Register --- */
+if ("serviceWorker" in navigator) {
+window.addEventListener("load", () => {
+navigator.serviceWorker.register("./sw.js").catch(() => {});
+});
+}
+/* --- Premium Scroll Reveal Observer --- */
+document.addEventListener("DOMContentLoaded", () => {
+    // Select elements to animate
+    const elementsToReveal = document.querySelectorAll('section, .option-card');
+    
+    // Set initial hidden state
+    elementsToReveal.forEach(el => el.classList.add('reveal-hidden'));
+
+    const revealOptions = {
+        threshold: 0.1, // Trigger when 10% visible
+        rootMargin: "0px 0px -50px 0px" // Trigger slightly before it hits the bottom
+    };
+
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('reveal-visible');
+                observer.unobserve(entry.target); // Only animate once
+            }
+        });
+    }, revealOptions);
+
+    elementsToReveal.forEach(el => revealObserver.observe(el));
+});
+</script>
 </body>
-    <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KN9PBXP7"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
 </html>
