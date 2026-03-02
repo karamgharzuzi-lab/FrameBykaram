@@ -18,9 +18,7 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 
-<body class="min-h-screen">
-  <div class="luxury-frame"></div>
-
+<body class="bg-[#121212] min-h-screen flex justify-center items-center sm:p-4">
   <div id="intro-overlay" class="intro-overlay hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="intro-title">
     <div class="intro-content">
       <img src="assets/logo.png" alt="Frame by Karam Logo" class="intro-logo" />
@@ -35,64 +33,23 @@
     </div>
   </div>
 
-  <main class="min-h-screen flex flex-col md:flex-row">
+<main class="relative w-full max-w-[430px] h-[100dvh] sm:h-[850px] bg-[#0a0a0a] sm:rounded-[38px] shadow-2xl overflow-hidden flex flex-col mx-auto luxury-frame-container">
+<div class="luxury-frame-inner pointer-events-none absolute inset-0 z-[9000] sm:rounded-[38px]"></div>
 
-    <section class="hidden md:flex md:w-5/12 lg:w-1/2 relative overflow-hidden">
-      <div class="absolute inset-0">
-        <img
-          src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=2000"
-          alt="Event background"
-          class="w-full h-full object-cover opacity-20"
-        />
-        <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-      </div>
+<section class="w-full h-full overflow-y-auto p-5 pb-24 relative z-10 custom-scrollbar">
+<div class="w-full mx-auto relative flex flex-col">
 
-      <div class="relative z-10 p-10 flex flex-col justify-between w-full">
-        <div>
-          <img src="assets/logo.png" alt="Frame by Karam" class="h-32 lg:h-44 object-contain" />
-          <p class="mt-4 text-2xl lg:text-3xl font-semibold gold-text" style="font-family: 'Playfair Display', serif;">
-            Premium MirrorBooth
-          </p>
-          <p class="mt-2 text-white/70 max-w-md">
-            Configure your luxury setup, then send the request on WhatsApp.
-          </p>
-        </div>
+<header class="relative flex flex-col items-center pt-6 pb-4 border-b border-white/10 mb-6">
+<div id="lang-switch" class="absolute top-2 right-0 flex items-center gap-2 z-50"></div>
+<img src="assets/logo.png" alt="Frame by Karam" class="h-20 object-contain" />
+</header>
 
-        <div class="glass rounded-2xl p-4">
-          <div class="flex items-center gap-2 text-white/80">
-            <i data-lucide="instagram" class="w-5 h-5"></i>
-            <a class="underline hover:text-white" href="https://instagram.com/framebykaram" target="_blank" rel="noreferrer">
-              @framebykaram
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
+<div id="step-dots" class="flex items-center justify-between w-full px-2 mb-6"></div>
 
-    <section class="w-full md:w-7/12 lg:w-1/2 p-5 md:p-10">
-      <div class="max-w-3xl mx-auto relative">
-
-        <header class="relative flex items-start md:items-center justify-between gap-3 mb-2 md:mb-0 min-h-[70px]">
-          <div class="flex items-center gap-3 md:hidden pr-12">
-            <img src="assets/logo.png" alt="Frame by Karam" class="h-16 object-contain" />
-            <div class="mt-1">
-              <div class="text-xl md:text-2xl font-semibold gold-text leading-tight" style="font-family: 'Playfair Display', serif;">MirrorBooth</div>
-              <div class="text-[11px] md:text-xs text-white/60 uppercase tracking-widest mt-0.5">Reservation</div>
-            </div>
-          </div>
-          <div id="lang-switch" class="absolute top-0 right-0 md:relative md:top-auto md:right-auto flex flex-col md:flex-row items-center gap-1 md:gap-2 glass rounded-xl md:rounded-2xl p-1 z-50"></div>
-        </header>
-
-        <div class="mt-4 md:mt-6 glass rounded-3xl p-4">
-          <div class="flex items-center justify-between gap-3">
-            <div>
-              <div id="step-title" tabindex="-1" class="text-xl md:text-2xl font-semibold outline-none" style="font-family: 'Playfair Display', serif;"></div>
-              <div id="step-subtitle" class="text-sm text-white/65 mt-1"></div>
-            </div>
-            <div id="step-dots" class="flex items-center gap-2"></div>
-          </div>
-        </div>
+<div class="text-center mb-6">
+<h1 id="step-title" tabindex="-1" class="text-2xl md:text-3xl font-semibold outline-none text-white tracking-wide" style="font-family: 'Playfair Display', serif;"></h1>
+<p id="step-subtitle" class="text-xs text-white/50 mt-2 uppercase tracking-widest"></p>
+</div>
 
         <div id="step-content" class="mt-6"></div>
 
@@ -115,5 +72,6 @@
   <script src="js/app.js"></script>
 </body>
 </html>
+
 
 
