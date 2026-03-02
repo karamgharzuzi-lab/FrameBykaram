@@ -5,18 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Frame by Karam | MirrorBooth Reservation</title>
 
-  <!-- PWA -->
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#050505" />
   <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
 
-  <!-- Tailwind (no build step) -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Fonts (EN/HE/AR) -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&family=Rubik:wght@300;400;600;700&family=Cairo:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <link rel="stylesheet" href="css/style.css" />
@@ -27,7 +23,6 @@
 
   <main class="min-h-screen flex flex-col md:flex-row">
 
-    <!-- Left visual panel (desktop) -->
     <section class="hidden md:flex md:w-5/12 lg:w-1/2 relative overflow-hidden">
       <div class="absolute inset-0">
         <img
@@ -57,31 +52,25 @@
               @framebykaram
             </a>
           </div>
-          <p class="mt-2 text-sm text-white/60">
-            Tip: On GitHub Pages, this works with <span class="text-white/80">zero build steps</span>.
-          </p>
         </div>
       </div>
     </section>
 
-    <!-- App panel -->
     <section class="w-full md:w-7/12 lg:w-1/2 p-5 md:p-10">
       <div class="max-w-3xl mx-auto">
 
-        <!-- Top bar -->
-        <header class="flex items-center justify-between gap-3 relative pr-28 md:pr-0">
+        <header class="flex items-start md:items-center justify-between gap-3">
           <div class="flex items-center gap-3 md:hidden">
-            <img src="assets/logo.png" alt="Frame by Karam" class="h-12 object-contain" />
+            <img src="assets/logo.png" alt="Frame by Karam" class="h-10 object-contain" />
             <div>
-              <div class="text-lg font-semibold gold-text" style="font-family: 'Playfair Display', serif;">MirrorBooth</div>
-              <div class="text-xs text-white/60">Reservation</div>
+              <div class="text-base font-semibold gold-text leading-tight" style="font-family: 'Playfair Display', serif;">MirrorBooth</div>
+              <div class="text-[10px] text-white/60">Reservation</div>
             </div>
           </div>
 
-          <div id="lang-switch" class="ml-auto flex items-center gap-2 glass rounded-2xl p-1"></div>
+          <div id="lang-switch" class="ml-auto flex items-center gap-1 md:gap-2 glass rounded-xl md:rounded-2xl p-1"></div>
         </header>
 
-        <!-- Stepper -->
         <div class="mt-6 glass rounded-3xl p-4">
           <div class="flex items-center justify-between gap-3">
             <div>
@@ -92,10 +81,8 @@
           </div>
         </div>
 
-        <!-- Content -->
         <div id="step-content" class="mt-6"></div>
 
-        <!-- Nav -->
         <div class="mt-6 flex items-center justify-between gap-3">
           <button id="btn-prev" class="px-4 py-3 rounded-2xl glass text-white/90 hover:text-white flex items-center gap-2">
             <i data-lucide="chevron-left" class="w-5 h-5"></i>
@@ -108,7 +95,7 @@
           </button>
         </div>
 
-</div>
+      </div>
     </section>
   </main>
 
