@@ -196,37 +196,49 @@ const state = {
 // INTRO ANIMATION & LOCALSTORAGE LOGIC
 // ----------------------------------------------------
 function initIntro() {
-  const introScreen = document.getElementById('intro-screen');
+  const introOverlay = document.getElementById('intro-overlay');
   const startBtn = document.getElementById('intro-start-btn');
-  if (!introScreen || !startBtn) return;
+  const stepTitle = document.getElementById('step-title');
+  if (!introOverlay || !startBtn) return;
 
   const lastSeen = localStorage.getItem('introSeenAt');
   const now = Date.now();
   const oneDay = 24 * 60 * 60 * 1000;
 
-  // Show if never seen, or seen more than 24 hours ago
+  // Show intro if never seen or if older than 24 hours
   if (!lastSeen || (now - parseInt(lastSeen, 10)) > oneDay) {
-    introScreen.classList.remove('hidden');
-    document.body.style.overflow = 'hidden'; // lock background scrolling
+    introOverlay.classList.remove('hidden');
+    introOverlay.classList.add('intro--visible');
+    introOverlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden'; // Lock background scrolling
 
     // Auto-focus button for accessibility
     setTimeout(() => startBtn.focus(), 100);
 
     const closeIntro = () => {
-      introScreen.classList.add('intro-hide');
-      document.body.style.overflow = ''; // unlock scroll
-      localStorage.setItem('introSeenAt', Date.now().toString());
+      // Trigger the hide animation sequence
+      introOverlay.classList.remove('intro--visible');
+      introOverlay.classList.add('intro--hiding');
       
-      // Physically hide from DOM after CSS transition completes
+      // Clean up after CSS animation ends (1000ms based on keyframes)
       setTimeout(() => {
-        introScreen.style.display = 'none';
-      }, 600); 
+        introOverlay.classList.add('hidden');
+        introOverlay.classList.remove('intro--hiding');
+        introOverlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = ''; // Unlock scroll
+        
+        // Pass focus to the main app so keyboard users aren't lost
+        if (stepTitle) stepTitle.focus();
+      }, 1000);
+
+      // Save user choice to localStorage
+      localStorage.setItem('introSeenAt', Date.now().toString());
     };
 
     // Click trigger
     startBtn.addEventListener('click', closeIntro);
     
-    // Keyboard trigger
+    // Keyboard trigger (Enter/Space)
     startBtn.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -234,16 +246,13 @@ function initIntro() {
       }
     });
 
-    // Trap focus inside the overlay
-    introScreen.addEventListener('keydown', (e) => {
+    // Trap focus inside the overlay while it is visible
+    introOverlay.addEventListener('keydown', (e) => {
       if (e.key === 'Tab') {
         e.preventDefault();
         startBtn.focus();
       }
     });
-  } else {
-    // Hide entirely if within 24 hours
-    introScreen.style.display = 'none';
   }
 }
 
@@ -280,10 +289,10 @@ function getItemName(list, id) {
   return found.name[state.lang] || found.name.en || t("none");
 }
 
-function stepTitle() {
+function stepTitleText() {
   return STEPS[state.step].title[state.lang] || STEPS[state.step].title.en;
 }
-function stepSubtitle() {
+function stepSubtitleText() {
   return STEPS[state.step].subtitle[state.lang] || STEPS[state.step].subtitle.en;
 }
 
@@ -320,8 +329,8 @@ function renderLangSwitch() {
 }
 
 function renderStepper() {
-  document.getElementById("step-title").textContent = stepTitle();
-  document.getElementById("step-subtitle").textContent = stepSubtitle();
+  document.getElementById("step-title").textContent = stepTitleText();
+  document.getElementById("step-subtitle").textContent = stepSubtitleText();
 
   const dots = document.getElementById("step-dots");
   dots.innerHTML = STEPS.map((_, i) => {
@@ -411,7 +420,6 @@ function renderStepContent() {
     root.innerHTML = `
       <div class="grid gap-6">
         ${preview("mount", selected?.image, "selectMountPreview", "aspect-[3/4] max-w-[160px] md:max-w-sm mx-auto w-full", "object-contain", "mount")}
-
         <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-4 gap-2">
           ${MOUNTS.map((m) => cardHTML(m, state.selections.mount, "mount", "aspect-[3/4] sm:aspect-[4/3]", "object-contain", true)).join("")}
         </div>

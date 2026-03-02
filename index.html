@@ -21,12 +21,15 @@
 <body class="min-h-screen">
   <div class="luxury-frame"></div>
 
-  <div id="intro-screen" class="fixed inset-0 z-[10000] bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center hidden">
-    <div class="text-center intro-content px-6">
-      <h1 class="text-4xl md:text-6xl font-semibold gold-text mb-8 leading-tight" style="font-family: 'Playfair Display', serif;">
-        MirrorBooth<br/><span class="text-xl md:text-2xl uppercase tracking-widest text-white/80" style="font-family: 'Inter', sans-serif;">Reservation</span>
+  <div id="intro-overlay" class="intro-overlay hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="intro-title">
+    <div class="intro-content">
+      <img src="assets/logo.png" alt="Frame by Karam Logo" class="intro-logo" />
+      
+      <h1 id="intro-title" class="intro-title" style="font-family: 'Playfair Display', serif;">
+        Mirrorbooth reservation
       </h1>
-      <button id="intro-start-btn" class="px-10 py-4 rounded-full gold-btn font-semibold text-lg md:text-xl transition-transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#D4AF37]/50 shadow-2xl">
+      
+      <button id="intro-start-btn" class="intro-start-btn" aria-label="Start here">
         Start here
       </button>
     </div>
@@ -78,14 +81,13 @@
               <div class="text-[11px] md:text-xs text-white/60 uppercase tracking-widest mt-0.5">Reservation</div>
             </div>
           </div>
-
           <div id="lang-switch" class="absolute top-0 right-0 md:relative md:top-auto md:right-auto flex flex-col md:flex-row items-center gap-1 md:gap-2 glass rounded-xl md:rounded-2xl p-1 z-50"></div>
         </header>
 
         <div class="mt-4 md:mt-6 glass rounded-3xl p-4">
           <div class="flex items-center justify-between gap-3">
             <div>
-              <div id="step-title" class="text-xl md:text-2xl font-semibold" style="font-family: 'Playfair Display', serif;"></div>
+              <div id="step-title" tabindex="-1" class="text-xl md:text-2xl font-semibold outline-none" style="font-family: 'Playfair Display', serif;"></div>
               <div id="step-subtitle" class="text-sm text-white/65 mt-1"></div>
             </div>
             <div id="step-dots" class="flex items-center gap-2"></div>
