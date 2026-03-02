@@ -313,11 +313,11 @@ function renderLangSwitch() {
     { id: "ar", label: "AR" }
   ];
 
-root.innerHTML = buttons.map((b) => `
-<button data-lang="${b.id}" class="px-2 py-1 md:px-3 md:py-2 rounded-lg md:rounded-xl text-[9px] md:text-sm font-semibold w-full text-center ${state.lang===b.id ? "gold-btn" : "text-white/80 hover:text-white"}">
-${b.label}
-</button>
-`).join("");
+  root.innerHTML = buttons.map((b) => `
+    <button data-lang="${b.id}" class="px-3 py-1.5 md:px-3 md:py-2 rounded-lg md:rounded-xl text-[10px] md:text-sm font-semibold w-full text-center ${state.lang===b.id ? "gold-btn" : "text-white/80 hover:text-white"}">
+      ${b.label}
+    </button>
+  `).join("");
 
   root.querySelectorAll("button").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -583,52 +583,27 @@ function safeCreateIcons() {
   try { lucide.createIcons(); } catch (e) {}
 }
 
-function transitionToStep(newStep) {
-const content = document.getElementById("step-content");
-const title = document.getElementById("step-title");
-const subtitle = document.getElementById("step-subtitle");
-
-// Start leaving transition
-content.classList.add("step-leaving");
-title.classList.add("step-leaving");
-subtitle.classList.add("step-leaving");
-
-setTimeout(() => {
-state.step = newStep;
-state.showSuggestions = false;
-renderAll();
-window.scrollTo({ top: 0, behavior: "smooth" });
-
-// Reset leaving, prep entering
-content.classList.remove("step-leaving");
-title.classList.remove("step-leaving");
-subtitle.classList.remove("step-leaving");
-
-content.classList.add("step-entering");
-title.classList.add("step-entering");
-subtitle.classList.add("step-entering");
-
-// Force DOM reflow to apply initial states
-void content.offsetWidth;
-
-// Remove entering to trigger smooth slide-in
-content.classList.remove("step-entering");
-title.classList.remove("step-entering");
-subtitle.classList.remove("step-entering");
-}, 450); // Matches CSS transition duration
-}
-
 function goPrev() {
-if (state.step > 0) transitionToStep(state.step - 1);
+  if (state.step > 0) {
+    state.step -= 1;
+    state.showSuggestions = false;
+    renderAll();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 }
 
 function goNext() {
-if (!isStepValid()) return;
-if (state.step < STEPS.length - 1) {
-transitionToStep(state.step + 1);
-return;
-}
-submitToWhatsApp();
+  if (!isStepValid()) return;
+
+  if (state.step < STEPS.length - 1) {
+    state.step += 1;
+    state.showSuggestions = false;
+    renderAll();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    return;
+  }
+
+  submitToWhatsApp();
 }
 
 function finalEventTypeText() {
@@ -759,20 +734,11 @@ function bindNavButtons() {
   document.getElementById("btn-next").addEventListener("click", goNext);
 }
 
-function setViewportHeight() {
-let vh = window.innerHeight * 0.01;
-document.documentElement.style.setProperty('--vh', `${vh}px`);
-}
-
 document.addEventListener("DOMContentLoaded", () => {
-setViewportHeight();
-window.addEventListener('resize', setViewportHeight);
-window.addEventListener('orientationchange', setViewportHeight);
-
-// Initialize Intro before rendering the rest of the app
-initIntro();
-
-setDirAndFont();
+  // Initialize Intro before rendering the rest of the app
+  initIntro();
+  
+  setDirAndFont();
   bindNavButtons();
   renderAll();
   registerSW();
@@ -790,4 +756,5 @@ setDirAndFont();
     }
   });
 });
+
 
