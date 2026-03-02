@@ -114,25 +114,6 @@ background: linear-gradient(135deg,var(--gold1),var(--gold2),var(--gold3),var(--
 background: rgba(212,175,55,.55);
 }
 
-/* --- Smooth Step Transitions --- */
-.step-fade-out {
-animation: stepFadeOut 0.4s forwards;
-}
-
-.step-fade-in {
-animation: stepFadeIn 0.4s forwards;
-}
-
-@keyframes stepFadeOut {
-to { opacity: 0; transform: translateY(-12px); filter: blur(3px); }
-}
-
-@keyframes stepFadeIn {
-from { opacity: 0; transform: translateY(12px); filter: blur(3px); }
-to { opacity: 1; transform: translateY(0); filter: blur(0); }
-}
-/* ------------------------------- */
-
 .fade-enter{
 opacity:0;
 transform: translateY(6px);
@@ -318,4 +299,5 @@ animation-name: introBgFadeOut;
 display: none;
 }
 }
+
 
