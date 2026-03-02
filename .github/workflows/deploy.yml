@@ -22,9 +22,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
 
-      # Beginner-friendly: works even if you DON'T have package-lock.json yet
       - name: Install
         run: npm install
 
