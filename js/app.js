@@ -577,31 +577,51 @@ try { lucide.createIcons(); } catch (e) {}
 
 // ----------------------------------------------------
 // ----------------------------------------------------
-// TRANSITION WRAPPER
+// TRANSITION WRAPPER (Bulletproof Inline Animation)
 // ----------------------------------------------------
 function animateStepChange(updateCb) {
-state.isAnimating = true;
 const content = document.getElementById("step-content");
 if (!content) {
 updateCb();
-state.isAnimating = false;
 return;
 }
 
-content.classList.add("step-fade-out");
+state.isAnimating = true;
+
+// 1. Fade out smoothly
+content.style.transition = "opacity 0.35s ease, transform 0.35s ease, filter 0.35s ease";
+content.style.opacity = "0";
+content.style.transform = "translateY(-12px)";
+content.style.filter = "blur(3px)";
 
 setTimeout(() => {
+// 2. Inject the new step content while invisible
 updateCb();
-content.classList.remove("step-fade-out");
-content.classList.add("step-fade-in");
 
+// 3. Instantly move the invisible content down (ready to slide up)
+content.style.transition = "none";
+content.style.transform = "translateY(12px)";
+
+// 4. Force the browser to register the position change (CRITICAL FIX)
+void content.offsetHeight;
+
+// 5. Fade in smoothly
+content.style.transition = "opacity 0.35s ease, transform 0.35s ease, filter 0.35s ease";
+content.style.opacity = "1";
+content.style.transform = "translateY(0)";
+content.style.filter = "blur(0)";
+
+// 6. Clean up inline styles once done so it doesn't break anything else
 setTimeout(() => {
-content.classList.remove("step-fade-in");
+content.style.transition = "";
+content.style.opacity = "";
+content.style.transform = "";
+content.style.filter = "";
 state.isAnimating = false;
-}, 400); 
-}, 400); 
-}
+}, 350);
 
+}, 350);
+}
 
 function goPrev() {
 if (state.step > 0 && !state.isAnimating) {
@@ -779,4 +799,5 @@ renderSuggestions();
 }
 });
 });
+
 
