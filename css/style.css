@@ -20,22 +20,58 @@ html,body{
   padding: 0;
 }
 
-/* Luxury golden frame locked strictly to the edges */
-.luxury-frame{
-  pointer-events:none;
-  position:fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 100svh; /* Fallback */
-  height: 100dvh; /* Enforces exact viewport height on mobile */
-  z-index:9000; /* Extremely high, but beneath intro screen (10000) */
-  border: 6px solid transparent;
-  border-image: linear-gradient(135deg,var(--gold1),var(--gold2),var(--gold3),var(--gold4)) 1;
-  box-shadow:
-    inset 0 0 0 1px rgba(0,0,0,.6),
-    0 0 0 1px rgba(255,255,255,.06);
+/* Luxury golden frame applied to the mobile container */
+.luxury-frame-inner {
+  border: 4px solid transparent;
+  border-image: linear-gradient(135deg, var(--gold1), var(--gold2), var(--gold3), var(--gold4)) 1;
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
+}
+@media (min-width: 640px) {
+  .luxury-frame-inner {
+    border-radius: 38px;
+    border-image: none;
+    background: linear-gradient(135deg, var(--gold1), var(--gold2), var(--gold3), var(--gold4));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    padding: 4px;
+  }
+}
+
+/* Custom Scrollbar for container */
+.custom-scrollbar::-webkit-scrollbar { width: 0px; background: transparent; }
+
+/* Stepper styles */
+.step-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.4);
+  background: var(--bg);
+  position: relative;
+  z-index: 2;
+}
+.step-circle.active {
+  border-color: var(--gold2);
+  color: var(--gold2);
+}
+.step-circle.done {
+  background: linear-gradient(135deg, var(--gold1), var(--gold2));
+  border-color: transparent;
+  color: #000;
+}
+.step-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.15);
+  margin: 0 4px;
+  transform: translateY(-8px);
 }
 
 body{
@@ -294,5 +330,6 @@ small.help{
     display: none; /* Disable shimmer loop */
   }
 }
+
 
 
