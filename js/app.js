@@ -313,11 +313,11 @@ function renderLangSwitch() {
     { id: "ar", label: "AR" }
   ];
 
-  root.innerHTML = buttons.map((b) => `
-    <button data-lang="${b.id}" class="px-3 py-1.5 md:px-3 md:py-2 rounded-lg md:rounded-xl text-[10px] md:text-sm font-semibold w-full text-center ${state.lang===b.id ? "gold-btn" : "text-white/80 hover:text-white"}">
-      ${b.label}
-    </button>
-  `).join("");
+root.innerHTML = buttons.map((b) => `
+<button data-lang="${b.id}" class="px-3 py-1 rounded-full text-[10px] font-semibold transition-colors ${state.lang===b.id ? "gold-btn shadow-md" : "bg-[#1a1a1a] text-white/60 border border-white/10 hover:text-white"}">
+${b.label}
+</button>
+`).join("");
 
   root.querySelectorAll("button").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -333,12 +333,39 @@ function renderStepper() {
   document.getElementById("step-subtitle").textContent = stepSubtitleText();
 
   const dots = document.getElementById("step-dots");
-  dots.innerHTML = STEPS.map((_, i) => {
-    let cls = "step-dot";
-    if (i === state.step) cls += " active";
-    if (i < state.step) cls += " done";
-    return `<div class="${cls}" title="${i+1}"></div>`;
-  }).join("");
+const labels = [
+  {en: "FRAME", he: "מסגרת", ar: "إطار"},
+  {en: "CARPET", he: "שטיח", ar: "سجادة"},
+  {en: "MOUNTS", he: "מסגרות", ar: "إطارات"},
+  {en: "DETAILS", he: "פרטים", ar: "تفاصيل"}
+];
+
+let html = "";
+for(let i=0; i<4; i++) {
+  let cls = "step-circle";
+  let inner = `0${i+1}`;
+  let labelCls = "text-[8px] mt-2 tracking-wider uppercase text-white/40";
+
+  if (i === state.step || (state.step === 4 && i === 3)) {
+     cls += " active";
+     labelCls = "text-[8px] mt-2 tracking-wider uppercase gold-text font-bold";
+  } else if (i < state.step) {
+     cls += " done";
+     inner = `<i data-lucide="check" class="w-3 h-3 text-[#0b0b0b]"></i>`;
+  }
+
+  let labelText = labels[i][state.lang] || labels[i].en;
+
+  html += `<div class="flex flex-col items-center flex-1 relative">
+             <div class="${cls}">${inner}</div>
+             <div class="absolute top-7 w-max text-center ${labelCls}">${labelText}</div>
+           </div>`;
+
+  if (i < 3) {
+     html += `<div class="step-line"></div>`;
+  }
+}
+dots.innerHTML = html;
 }
 
 function cardHTML(item, selectedId, onCategory, containerClass = "aspect-[4/3]", imgClass = "object-cover", isCompact = false) {
@@ -364,14 +391,17 @@ function cardHTML(item, selectedId, onCategory, containerClass = "aspect-[4/3]",
 function renderStepContent() {
   const root = document.getElementById("step-content");
 
-  const preview = (labelKey, img, fallbackKey, extraClasses = "aspect-[16/9]", imgClass = "object-cover", idSuffix = "") => `
-    <div class="glass rounded-3xl p-4 scroll-mt-6" id="preview-section-${idSuffix}">
-      <div class="text-sm text-white/60">${t(labelKey)}</div>
-      <div class="mt-3 rounded-2xl overflow-hidden bg-black/40 ${extraClasses} flex items-center justify-center">
-        ${img ? `<img src="${img}" alt="preview" class="w-full h-full ${imgClass}">` : `<div class="text-white/55">${t(fallbackKey)}</div>`}
-      </div>
-    </div>
-  `;
+const preview = (labelKey, img, fallbackKey, extraClasses = "aspect-[16/9]", imgClass = "object-cover", idSuffix = "") => `
+<div class="rounded-3xl p-5 scroll-mt-6 bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] border border-white/5 shadow-xl mb-6" id="preview-section-${idSuffix}">
+<div class="flex items-center gap-2 mb-4">
+  <i data-lucide="sparkles" class="w-4 h-4 gold-text"></i>
+  <span class="text-sm font-semibold text-white tracking-wide uppercase">${t(labelKey)}</span>
+</div>
+<div class="rounded-2xl overflow-hidden bg-black/60 ${extraClasses} flex items-center justify-center border border-white/5 shadow-inner">
+${img ? `<img src="${img}" alt="preview" class="w-full h-full ${imgClass}">` : `<div class="text-white/40 text-sm tracking-wide">${t(fallbackKey)}</div>`}
+</div>
+</div>
+`;
 
   if (state.step === 0) {
     const selected = FRAMES.find(x => x.id === state.selections.frame);
@@ -756,5 +786,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
 
 
