@@ -22,15 +22,14 @@ html,body{
 
 /* Luxury golden frame locked strictly to the edges */
 .luxury-frame{
-pointer-events:none;
-position:fixed;
-top: 0;
-left: 0;
-right: 0;
-bottom: 0;
-height: 100vh; /* Fallback */
-height: 100dvh; /* Native modern fallback */
-height: calc(var(--vh, 1vh) * 100); /* JS dynamic height override */
+  pointer-events:none;
+  position:fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100svh; /* Fallback */
+  height: 100dvh; /* Enforces exact viewport height on mobile */
   z-index:9000; /* Extremely high, but beneath intro screen (10000) */
   border: 6px solid transparent;
   border-image: linear-gradient(135deg,var(--gold1),var(--gold2),var(--gold3),var(--gold4)) 1;
@@ -295,47 +294,5 @@ small.help{
     display: none; /* Disable shimmer loop */
   }
 }
-/* -----------------------------
-Premium Step Transitions
------------------------------- */
-.step-anim {
-transition: opacity 0.45s ease, transform 0.45s ease, filter 0.45s ease;
-opacity: 1;
-transform: translateY(0);
-filter: blur(0);
-}
 
-.step-leaving {
-opacity: 0;
-transform: translateY(-12px);
-filter: blur(3px);
-}
 
-.step-entering {
-opacity: 0;
-transform: translateY(12px);
-filter: blur(3px);
-}
-
-/* -----------------------------
-Title Shimmer Loop
------------------------------- */
-.shimmer-title {
-background: linear-gradient(to right, var(--gold1) 20%, var(--gold4) 40%, #fff 50%, var(--gold4) 60%, var(--gold1) 80%);
-background-size: 200% auto;
--webkit-background-clip: text;
-background-clip: text;
-color: transparent;
-animation: titleShimmer 3.5s linear infinite;
-}
-
-@keyframes titleShimmer {
-0% { background-position: 200% center; }
-100% { background-position: -200% center; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-.step-anim { transition: opacity 0.3s ease; transform: none !important; filter: none !important; }
-.step-leaving, .step-entering { transform: none; filter: none; }
-.shimmer-title { animation: none; background-position: 0% center; }
-}
