@@ -28,9 +28,6 @@ top: 0;
 left: 0;
 right: 0;
 bottom: 0;
-height: 100vh; /* Fallback 1 */
-height: 100dvh; /* Dynamic Viewport - overrides vh on modern mobile */
-height: calc(var(--vh, 1vh) * 100); /* JS True Viewport fix fallback */
 z-index:9000;
 border: 6px solid transparent;
 border-image: linear-gradient(135deg,var(--gold1),var(--gold2),var(--gold3),var(--gold4)) 1;
@@ -118,23 +115,21 @@ background: rgba(212,175,55,.55);
 }
 
 /* --- Smooth Step Transitions --- */
-#step-content {
-transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
-            transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
-            filter 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+.step-fade-out {
+animation: stepFadeOut 0.4s forwards;
 }
 
-.step-leaving {
-opacity: 0;
-transform: translateY(-16px);
-filter: blur(4px);
+.step-fade-in {
+animation: stepFadeIn 0.4s forwards;
 }
 
-.step-entering {
-opacity: 0;
-transform: translateY(16px);
-filter: blur(4px);
-transition: none; /* Disables transition during instant state injection */
+@keyframes stepFadeOut {
+to { opacity: 0; transform: translateY(-12px); filter: blur(3px); }
+}
+
+@keyframes stepFadeIn {
+from { opacity: 0; transform: translateY(12px); filter: blur(3px); }
+to { opacity: 1; transform: translateY(0); filter: blur(0); }
 }
 /* ------------------------------- */
 
@@ -323,3 +318,4 @@ animation-name: introBgFadeOut;
 display: none;
 }
 }
+
