@@ -194,19 +194,6 @@ isAnimating: false // Transition state lock
 };
 
 // ----------------------------------------------------
-// VIEWPORT HEIGHT FIX
-// ----------------------------------------------------
-function initViewportHeight() {
-const setVh = () => {
-let vh = window.innerHeight * 0.01;
-document.documentElement.style.setProperty('--vh', `${vh}px`);
-};
-setVh();
-window.addEventListener('resize', setVh);
-window.addEventListener('orientationchange', setVh);
-}
-
-// ----------------------------------------------------
 // INTRO ANIMATION & LOCALSTORAGE LOGIC
 // ----------------------------------------------------
 function initIntro() {
@@ -589,6 +576,7 @@ try { lucide.createIcons(); } catch (e) {}
 }
 
 // ----------------------------------------------------
+// ----------------------------------------------------
 // TRANSITION WRAPPER
 // ----------------------------------------------------
 function animateStepChange(updateCb) {
@@ -600,27 +588,18 @@ state.isAnimating = false;
 return;
 }
 
-// 1. Trigger leave state
-content.classList.add("step-leaving");
+content.classList.add("step-fade-out");
 
 setTimeout(() => {
-// 2. Inject new state behind the scenes
 updateCb();
-
-// 3. Prepare enter state (no transition logic)
-content.classList.remove("step-leaving");
-content.classList.add("step-entering");
-
-// Force a DOM reflow so browser registers the 'entering' class instantly
-void content.offsetWidth;
-
-// 4. Remove enter state to trigger smooth slide-in
-content.classList.remove("step-entering");
+content.classList.remove("step-fade-out");
+content.classList.add("step-fade-in");
 
 setTimeout(() => {
+content.classList.remove("step-fade-in");
 state.isAnimating = false;
-}, 600); // Enter transition timeframe
-}, 600); // Wait for leave transition to complete
+}, 400); 
+}, 400); 
 }
 
 
@@ -780,7 +759,6 @@ document.getElementById("btn-next").addEventListener("click", goNext);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-initViewportHeight(); // Lock UI Height
 initIntro(); // Run Intro Animation
 
 setDirAndFont();
@@ -801,3 +779,4 @@ renderSuggestions();
 }
 });
 });
+
