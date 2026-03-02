@@ -1,120 +1,117 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr" id="html-root">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Frame by Karam | MirrorBooth Reservation</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Frame by Karam | MirrorBooth Reservation</title>
 
-  <link rel="manifest" href="manifest.webmanifest" />
-  <meta name="theme-color" content="#050505" />
-  <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
+<link rel="manifest" href="manifest.webmanifest" />
+<meta name="theme-color" content="#050505" />
+<link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
 
-  <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com"></script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&family=Rubik:wght@300;400;600;700&family=Cairo:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&family=Rubik:wght@300;400;600;700&family=Cairo:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
 
-  <link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body class="min-h-screen">
-  <div class="luxury-frame"></div>
+<div class="luxury-frame"></div>
 
-  <div id="intro-overlay" class="intro-overlay hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="intro-title">
-    <div class="intro-content">
-      <img src="assets/logo.png" alt="Frame by Karam Logo" class="intro-logo" />
-      
-      <h1 id="intro-title" class="intro-title gold-shine" style="font-family: 'Playfair Display', serif;">
-        Mirrorbooth reservation
-      </h1>
-      
-      <button id="intro-start-btn" class="intro-start-btn" aria-label="Start here">
-        Start here
-      </button>
-    </div>
-  </div>
+<div id="intro-overlay" class="intro-overlay hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="intro-title">
+<div class="intro-content">
+<img src="assets/logo.png" alt="Frame by Karam Logo" class="intro-logo" />
 
-  <main class="min-h-screen flex flex-col md:flex-row">
+<h1 id="intro-title" class="intro-title" style="font-family: 'Playfair Display', serif;">
+Mirrorbooth reservation
+</h1>
 
-    <section class="hidden md:flex md:w-5/12 lg:w-1/2 relative overflow-hidden">
-      <div class="absolute inset-0">
-        <img
-          src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=2000"
-          alt="Event background"
-          class="w-full h-full object-cover opacity-20"
-        />
-        <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-      </div>
+<button id="intro-start-btn" class="intro-start-btn" aria-label="Start here">
+Start here
+</button>
+</div>
+</div>
 
-      <div class="relative z-10 p-10 flex flex-col justify-between w-full">
-        <div>
-          <img src="assets/logo.png" alt="Frame by Karam" class="h-32 lg:h-44 object-contain" />
-          <p class="mt-4 text-2xl lg:text-3xl font-semibold gold-text" style="font-family: 'Playfair Display', serif;">
-            Premium MirrorBooth
-          </p>
-          <p class="mt-2 text-white/70 max-w-md">
-            Configure your luxury setup, then send the request on WhatsApp.
-          </p>
-        </div>
+<main class="min-h-screen flex flex-col md:flex-row">
 
-        <div class="glass rounded-2xl p-4">
-          <div class="flex items-center gap-2 text-white/80">
-            <i data-lucide="instagram" class="w-5 h-5"></i>
-            <a class="underline hover:text-white" href="https://instagram.com/framebykaram" target="_blank" rel="noreferrer">
-              @framebykaram
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
+<section class="hidden md:flex md:w-5/12 lg:w-1/2 relative overflow-hidden">
+<div class="absolute inset-0">
+<img
+src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=2000"
+alt="Event background"
+class="w-full h-full object-cover opacity-20"
+/>
+<div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+</div>
 
-    <section class="w-full md:w-7/12 lg:w-1/2 p-5 md:p-10">
-      <div class="max-w-3xl mx-auto relative">
+<div class="relative z-10 p-10 flex flex-col justify-between w-full">
+<div>
+<img src="assets/logo.png" alt="Frame by Karam" class="h-32 lg:h-44 object-contain" />
+<p class="mt-4 text-2xl lg:text-3xl font-semibold gold-text" style="font-family: 'Playfair Display', serif;">
+Premium MirrorBooth
+</p>
+<p class="mt-2 text-white/70 max-w-md">
+Configure your luxury setup, then send the request on WhatsApp.
+</p>
+</div>
 
-        <header class="relative flex items-start md:items-center justify-between gap-2 mb-2 md:mb-0 min-h-[70px]">
-          
-          <div id="lang-switch" class="absolute top-0 left-0 md:relative md:top-auto md:left-auto flex flex-col md:flex-row items-center gap-0.5 md:gap-2 glass rounded-md md:rounded-2xl p-0.5 md:p-1 z-50"></div>
+<div class="glass rounded-2xl p-4">
+<div class="flex items-center gap-2 text-white/80">
+<i data-lucide="instagram" class="w-5 h-5"></i>
+<a class="underline hover:text-white" href="https://instagram.com/framebykaram" target="_blank" rel="noreferrer">
+@framebykaram
+</a>
+</div>
+</div>
+</div>
+</section>
 
-          <div class="flex items-center gap-2 md:hidden pl-8">
-            <img src="assets/logo.png" alt="Frame by Karam" class="h-14 object-contain" />
-            <div class="mt-0.5">
-              <div class="text-[19px] md:text-2xl font-semibold gold-shine leading-tight" style="font-family: 'Playfair Display', serif;">MirrorBooth</div>
-              <div class="text-[10px] md:text-xs text-white/60 uppercase tracking-widest mt-0.5">Reservation</div>
-            </div>
-          </div>
-          
-        </header>
+<section class="w-full md:w-7/12 lg:w-1/2 p-5 md:p-10">
+<div class="max-w-3xl mx-auto relative">
 
-        <div class="mt-4 md:mt-6 glass rounded-3xl p-4">
-          <div class="flex items-center justify-between gap-3">
-            <div>
-              <div id="step-title" tabindex="-1" class="text-xl md:text-2xl font-semibold outline-none" style="font-family: 'Playfair Display', serif;"></div>
-              <div id="step-subtitle" class="text-sm text-white/65 mt-1"></div>
-            </div>
-            <div id="step-dots" class="flex items-center gap-2"></div>
-          </div>
-        </div>
+<header class="relative flex items-start md:items-center justify-end md:justify-end mb-2 md:mb-0 min-h-[70px]">
+<div class="flex items-center gap-2 md:hidden pl-[3.25rem] mr-auto relative z-10">
+<img src="assets/logo.png" alt="Frame by Karam" class="h-14 sm:h-16 object-contain" />
+<div class="mt-0.5">
+<div class="text-[1.15rem] sm:text-2xl font-semibold gold-shine-animate leading-tight" style="font-family: 'Playfair Display', serif;">MirrorBooth</div>
+<div class="text-[10px] sm:text-xs text-white/60 uppercase tracking-widest mt-0.5">Reservation</div>
+</div>
+</div>
+<div id="lang-switch" class="absolute top-0 left-0 md:relative md:top-auto md:left-auto flex flex-col md:flex-row items-center gap-1 md:gap-2 glass rounded-lg md:rounded-2xl p-1 z-50"></div>
+</header>
 
-        <div id="step-content" class="mt-6"></div>
+<div class="mt-4 md:mt-6 glass rounded-3xl p-4">
+<div class="flex items-center justify-between gap-3">
+<div>
+<div id="step-title" tabindex="-1" class="text-xl md:text-2xl font-semibold outline-none" style="font-family: 'Playfair Display', serif;"></div>
+<div id="step-subtitle" class="text-sm text-white/65 mt-1"></div>
+</div>
+<div id="step-dots" class="flex items-center gap-2"></div>
+</div>
+</div>
 
-        <div class="mt-6 flex items-center justify-between gap-3 pb-8">
-          <button id="btn-prev" class="px-4 py-3 rounded-2xl glass text-white/90 hover:text-white flex items-center gap-2">
-            <i data-lucide="chevron-left" class="w-5 h-5"></i>
-            <span id="prev-label">Previous</span>
-          </button>
+<div id="step-content" class="mt-6"></div>
 
-          <button id="btn-next" class="px-4 py-3 rounded-2xl gold-btn font-semibold flex items-center gap-2">
-            <span id="next-label">Next</span>
-            <i data-lucide="chevron-right" class="w-5 h-5"></i>
-          </button>
-        </div>
+<div class="mt-6 flex items-center justify-between gap-3 pb-8">
+<button id="btn-prev" class="px-4 py-3 rounded-2xl glass text-white/90 hover:text-white flex items-center gap-2">
+<i data-lucide="chevron-left" class="w-5 h-5"></i>
+<span id="prev-label">Previous</span>
+</button>
 
-      </div>
-    </section>
-  </main>
+<button id="btn-next" class="px-4 py-3 rounded-2xl gold-btn font-semibold flex items-center gap-2">
+<span id="next-label">Next</span>
+<i data-lucide="chevron-right" class="w-5 h-5"></i>
+</button>
+</div>
 
-  <script src="js/app.js"></script>
+</div>
+</section>
+</main>
+
+<script src="js/app.js"></script>
 </body>
 </html>
