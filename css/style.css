@@ -20,7 +20,7 @@ html,body{
   padding: 0;
 }
 
-/* Luxury golden frame locked strictly to the edges */
+/* Luxury golden frame locked strictly to the edges via Dynamic JS Calc */
 .luxury-frame{
   pointer-events:none;
   position:fixed;
@@ -28,9 +28,11 @@ html,body{
   left: 0;
   right: 0;
   bottom: 0;
-  height: 100svh; /* Fallback */
-  height: 100dvh; /* Enforces exact viewport height on mobile */
-  z-index:9000; /* Extremely high, but beneath intro screen (10000) */
+  height: 100vh;
+  height: 100svh;
+  height: 100dvh;
+  height: calc(var(--vh, 1vh) * 100); /* Bulletproof JS lock */
+  z-index:9000;
   border: 6px solid transparent;
   border-image: linear-gradient(135deg,var(--gold1),var(--gold2),var(--gold3),var(--gold4)) 1;
   box-shadow:
@@ -57,6 +59,25 @@ body{
   -webkit-background-clip:text;
   background-clip:text;
   color:transparent;
+}
+
+/* Continuous Luxury Gold Shine */
+.gold-shine {
+  background: linear-gradient(
+    -45deg,
+    var(--gold1) 25%,
+    #fff 50%,
+    var(--gold3) 75%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: goldShimmer 3.5s linear infinite;
+}
+
+@keyframes goldShimmer {
+  to { background-position: 200% center; }
 }
 
 .gold-btn{
@@ -98,15 +119,11 @@ body{
   background: rgba(212,175,55,.55);
 }
 
-.fade-enter{
-  opacity:0;
-  transform: translateY(6px);
-}
-
-.fade-enter.fade-enter-active{
-  opacity:1;
-  transform: translateY(0);
-  transition: opacity .22s ease, transform .22s ease;
+/* Step Animations */
+.step-animating {
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+              filter 0.5s ease;
 }
 
 /* Autocomplete dropdown */
@@ -168,7 +185,7 @@ small.help{
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* Push content based on margin */
+  justify-content: flex-start;
 }
 
 .intro-content {
@@ -176,29 +193,28 @@ small.help{
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin-top: 15vh; /* Upper 1/3 placement */
+  margin-top: 15vh;
 }
 
 .intro-logo {
-  width: 200px; /* Noticeably larger than header logo */
+  width: 400px; 
   max-width: 80vw;
   object-fit: contain;
   margin-bottom: 1.5rem;
 }
 
 .intro-title {
-  font-size: 1.25rem;
+  font-size: 10px;
   color: rgba(255, 255, 255, 0.85);
   letter-spacing: 2px;
   font-weight: 300;
   margin-bottom: 3.5rem;
 }
 
-/* Square Shimmer Button */
 .intro-start-btn {
   width: 130px;
-  height: 130px;
-  border-radius: 12px; /* Slightly rounded square */
+  height: 100px;
+  border-radius: 12px;
   background: linear-gradient(135deg, var(--gold1), var(--gold2), var(--gold3), var(--gold4));
   color: #0b0b0b;
   font-weight: 600;
@@ -219,7 +235,6 @@ small.help{
   transform: translateY(-2px);
 }
 
-/* Looping Gold Shimmer Sweep */
 .intro-start-btn::after {
   content: '';
   position: absolute;
@@ -235,12 +250,11 @@ small.help{
 @keyframes shimmerSweep {
   0% { left: -100%; }
   20% { left: 200%; }
-  100% { left: 200%; } /* Pauses loop for a subtle effect */
+  100% { left: 200%; }
 }
 
-/* Intro Visiblity Classes */
 .intro--visible {
-  display: flex; /* Overrides .hidden */
+  display: flex;
   animation: introBgFadeIn 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
@@ -258,7 +272,6 @@ small.help{
   animation: introContentHide 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
-/* Precise Luxury Keyframes */
 @keyframes introBgFadeIn {
   0% { opacity: 0; }
   100% { opacity: 1; }
@@ -279,11 +292,16 @@ small.help{
   100% { opacity: 0; filter: blur(8px); transform: scale(0.95); }
 }
 
-/* Accessibility: Reduced Motion */
+/* Accessibility */
 @media (prefers-reduced-motion: reduce) {
+  .gold-shine {
+    animation: none;
+    background: linear-gradient(135deg,var(--gold1),var(--gold2),var(--gold3),var(--gold4));
+    -webkit-background-clip: text;
+  }
   .intro--visible .intro-content,
   .intro--hiding .intro-content {
-    animation-name: introBgFadeIn; /* Swap to simple fade */
+    animation-name: introBgFadeIn;
     filter: none !important;
     transform: none !important;
   }
@@ -291,6 +309,11 @@ small.help{
     animation-name: introBgFadeOut;
   }
   .intro-start-btn::after {
-    display: none; /* Disable shimmer loop */
+    display: none;
+  }
+  .step-animating {
+    transition: opacity 0.5s ease;
+    transform: none !important;
+    filter: none !important;
   }
 }
