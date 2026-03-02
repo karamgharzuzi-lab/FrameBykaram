@@ -143,7 +143,6 @@ const T = {
   }
 };
 
-// SPLIT STEPS: Rope and Carpet are now two separate steps
 const STEPS = [
   { id: "frame", title: { en: "Mirror Frame", he: "מסגרת מראה", ar: "إطار المرآة" }, subtitle: { en: "Choose your aesthetic", he: "בחר את העיצוב שלך", ar: "اختر تصميمك" } },
   { id: "rope", title: { en: "Red Carpet: Rope", he: "שטיח אדום: חבל", ar: "السجادة الحمراء: الحبل" }, subtitle: { en: "Select rope color", he: "בחר צבע חבל", ar: "اختر لون الحبل" } },
@@ -193,6 +192,61 @@ const state = {
   debounce: null
 };
 
+// ----------------------------------------------------
+// INTRO ANIMATION & LOCALSTORAGE LOGIC
+// ----------------------------------------------------
+function initIntro() {
+  const introScreen = document.getElementById('intro-screen');
+  const startBtn = document.getElementById('intro-start-btn');
+  if (!introScreen || !startBtn) return;
+
+  const lastSeen = localStorage.getItem('introSeenAt');
+  const now = Date.now();
+  const oneDay = 24 * 60 * 60 * 1000;
+
+  // Show if never seen, or seen more than 24 hours ago
+  if (!lastSeen || (now - parseInt(lastSeen, 10)) > oneDay) {
+    introScreen.classList.remove('hidden');
+    document.body.style.overflow = 'hidden'; // lock background scrolling
+
+    // Auto-focus button for accessibility
+    setTimeout(() => startBtn.focus(), 100);
+
+    const closeIntro = () => {
+      introScreen.classList.add('intro-hide');
+      document.body.style.overflow = ''; // unlock scroll
+      localStorage.setItem('introSeenAt', Date.now().toString());
+      
+      // Physically hide from DOM after CSS transition completes
+      setTimeout(() => {
+        introScreen.style.display = 'none';
+      }, 600); 
+    };
+
+    // Click trigger
+    startBtn.addEventListener('click', closeIntro);
+    
+    // Keyboard trigger
+    startBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        closeIntro();
+      }
+    });
+
+    // Trap focus inside the overlay
+    introScreen.addEventListener('keydown', (e) => {
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        startBtn.focus();
+      }
+    });
+  } else {
+    // Hide entirely if within 24 hours
+    introScreen.style.display = 'none';
+  }
+}
+
 function isRTL(lang) {
   return lang === "he" || lang === "ar";
 }
@@ -233,7 +287,6 @@ function stepSubtitle() {
   return STEPS[state.step].subtitle[state.lang] || STEPS[state.step].subtitle.en;
 }
 
-// Validation updated for 5 steps
 function isStepValid() {
   if (state.step === 0) return state.selections.frame !== "";
   if (state.step === 1) return state.selections.rope !== "";
@@ -251,7 +304,6 @@ function renderLangSwitch() {
     { id: "ar", label: "AR" }
   ];
 
-  // Made the buttons wider and stacked via Flexbox in HTML
   root.innerHTML = buttons.map((b) => `
     <button data-lang="${b.id}" class="px-3 py-1.5 md:px-3 md:py-2 rounded-lg md:rounded-xl text-[10px] md:text-sm font-semibold w-full text-center ${state.lang===b.id ? "gold-btn" : "text-white/80 hover:text-white"}">
       ${b.label}
@@ -280,7 +332,6 @@ function renderStepper() {
   }).join("");
 }
 
-// Added compact mode for dense grids like mounts
 function cardHTML(item, selectedId, onCategory, containerClass = "aspect-[4/3]", imgClass = "object-cover", isCompact = false) {
   const selected = item.id === selectedId;
   const title = item.name[state.lang] || item.name.en || "";
@@ -314,7 +365,6 @@ function renderStepContent() {
   `;
 
   if (state.step === 0) {
-    // Smaller preview on mobile (h-48), standard on desktop
     const selected = FRAMES.find(x => x.id === state.selections.frame);
     root.innerHTML = `
       <div class="grid gap-4">
@@ -327,7 +377,6 @@ function renderStepContent() {
   }
 
   if (state.step === 1) {
-    // Rope is now its own step
     const rope = ROPES.find(x => x.id === state.selections.rope);
     root.innerHTML = `
       <div class="grid gap-6">
@@ -343,7 +392,6 @@ function renderStepContent() {
   }
 
   if (state.step === 2) {
-    // Carpet is now its own step
     const carpet = CARPETS.find(x => x.id === state.selections.carpet);
     root.innerHTML = `
       <div class="grid gap-6">
@@ -359,7 +407,6 @@ function renderStepContent() {
   }
 
   if (state.step === 3) {
-    // Mount options layout updated to 3-cols mobile, using compact mode
     const selected = MOUNTS.find(x => x.id === state.selections.mount);
     root.innerHTML = `
       <div class="grid gap-6">
@@ -462,7 +509,6 @@ function renderStepContent() {
     `;
   }
 
-  // Bind option click events with smooth scroll
   root.querySelectorAll("[data-cat][data-id]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const cat = btn.getAttribute("data-cat");
@@ -681,6 +727,9 @@ function bindNavButtons() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Initialize Intro before rendering the rest of the app
+  initIntro();
+  
   setDirAndFont();
   bindNavButtons();
   renderAll();
