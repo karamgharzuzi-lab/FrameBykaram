@@ -1,9 +1,6 @@
-/* FrameByKaram – MirrorBooth Reservation (Static)
-   - No React / No build step
-   - GitHub Pages friendly (relative paths)
-*/
+/* FrameByKaram – MirrorBooth Reservation (Static) */
 
-const WHATSAPP_NUMBER = "972524040714"; // TODO: replace with your WhatsApp number (international format)
+const WHATSAPP_NUMBER = "972524040714"; 
 
 const T = {
   en: {
@@ -146,9 +143,11 @@ const T = {
   }
 };
 
+// SPLIT STEPS: Rope and Carpet are now two separate steps
 const STEPS = [
   { id: "frame", title: { en: "Mirror Frame", he: "מסגרת מראה", ar: "إطار المرآة" }, subtitle: { en: "Choose your aesthetic", he: "בחר את העיצוב שלך", ar: "اختر تصميمك" } },
-  { id: "setup", title: { en: "Red Carpet Setup", he: "עיצוב שטיח אדום", ar: "إعداد السجادة الحمراء" }, subtitle: { en: "Select rope and carpet colors", he: "בחר צבעי חבל ושטיח", ar: "اختر ألوان الحبل والسجادة" } },
+  { id: "rope", title: { en: "Red Carpet: Rope", he: "שטיח אדום: חבל", ar: "السجادة الحمراء: الحبل" }, subtitle: { en: "Select rope color", he: "בחר צבע חבל", ar: "اختر لون الحبل" } },
+  { id: "carpet", title: { en: "Red Carpet: Carpet", he: "שטיח אדום: שטיח", ar: "السجادة الحمراء: السجادة" }, subtitle: { en: "Select carpet color", he: "בחר צבע שטיח", ar: "اختر لون السجادة" } },
   { id: "mount", title: { en: "Photo Mounts", he: "מסגרות לתמונות", ar: "إطارات الصور" }, subtitle: { en: "How guests keep their memories", he: "איך האורחים שומרים את הזיכרונות", ar: "كيف يحتفظ الضيوف بذكرياتهم" } },
   { id: "details", title: { en: "Event Details", he: "פרטי האירוע", ar: "تفاصيل الحدث" }, subtitle: { en: "Tell us about your event", he: "ספר לנו על האירוע שלך", ar: "أخبرنا عن مناسبتك" } }
 ];
@@ -188,7 +187,6 @@ const state = {
   step: 0,
   selections: { frame: "", rope: "", carpet: "", mount: "" },
   form: { name: "", email: "", phone: "", date: "", location: "", notes: "", eventType: "Wedding", customEventType: "" },
-  // location autocomplete
   suggestions: [],
   showSuggestions: false,
   isSearching: false,
@@ -203,8 +201,6 @@ function setDirAndFont() {
   const html = document.getElementById("html-root");
   html.dir = isRTL(state.lang) ? "rtl" : "ltr";
   html.lang = state.lang;
-
-  // Light-touch font mapping for better Hebrew/Arabic rendering
   if (state.lang === "he") document.body.style.fontFamily = `"Rubik", Inter, system-ui, sans-serif`;
   else if (state.lang === "ar") document.body.style.fontFamily = `"Cairo", Inter, system-ui, sans-serif`;
   else document.body.style.fontFamily = `Inter, system-ui, sans-serif`;
@@ -237,11 +233,13 @@ function stepSubtitle() {
   return STEPS[state.step].subtitle[state.lang] || STEPS[state.step].subtitle.en;
 }
 
+// Validation updated for 5 steps
 function isStepValid() {
   if (state.step === 0) return state.selections.frame !== "";
-  if (state.step === 1) return state.selections.rope !== "" && state.selections.carpet !== "";
-  if (state.step === 2) return state.selections.mount !== "";
-  if (state.step === 3) return !!(state.form.name && state.form.email && state.form.date);
+  if (state.step === 1) return state.selections.rope !== "";
+  if (state.step === 2) return state.selections.carpet !== "";
+  if (state.step === 3) return state.selections.mount !== "";
+  if (state.step === 4) return !!(state.form.name && state.form.email && state.form.date);
   return true;
 }
 
@@ -253,8 +251,9 @@ function renderLangSwitch() {
     { id: "ar", label: "AR" }
   ];
 
+  // Made the buttons wider and stacked via Flexbox in HTML
   root.innerHTML = buttons.map((b) => `
-    <button data-lang="${b.id}" class="px-2 py-1 md:px-3 md:py-2 rounded-xl text-xs md:text-sm font-semibold ${state.lang===b.id ? "gold-btn" : "text-white/80 hover:text-white"}">
+    <button data-lang="${b.id}" class="px-3 py-1.5 md:px-3 md:py-2 rounded-lg md:rounded-xl text-[10px] md:text-sm font-semibold w-full text-center ${state.lang===b.id ? "gold-btn" : "text-white/80 hover:text-white"}">
       ${b.label}
     </button>
   `).join("");
@@ -281,19 +280,22 @@ function renderStepper() {
   }).join("");
 }
 
-// Updated to accept custom container and image classes
-function cardHTML(item, selectedId, onCategory, containerClass = "aspect-[4/3]", imgClass = "object-cover") {
+// Added compact mode for dense grids like mounts
+function cardHTML(item, selectedId, onCategory, containerClass = "aspect-[4/3]", imgClass = "object-cover", isCompact = false) {
   const selected = item.id === selectedId;
   const title = item.name[state.lang] || item.name.en || "";
   const desc = item.desc ? (item.desc[state.lang] || item.desc.en || "") : "";
+  
+  const textSize = isCompact ? "text-[10px] sm:text-[11px] md:text-base leading-tight" : "text-[11px] md:text-base font-semibold";
+
   return `
-    <button class="option-card glass rounded-3xl p-3 text-left border border-white/10 ${selected ? "selected" : ""}" data-cat="${onCategory}" data-id="${item.id}">
-      <div class="rounded-2xl overflow-hidden ${containerClass} bg-black/40">
+    <button class="option-card glass rounded-xl md:rounded-3xl p-1.5 md:p-3 text-center md:text-left border border-white/10 ${selected ? "selected" : ""}" data-cat="${onCategory}" data-id="${item.id}">
+      <div class="rounded-lg md:rounded-2xl overflow-hidden ${containerClass} bg-black/40">
         <img src="${item.image}" alt="${title}" class="w-full h-full ${imgClass}" loading="lazy">
       </div>
-      <div class="mt-3">
-        <div class="font-semibold">${title}</div>
-        ${desc ? `<div class="text-sm text-white/60 mt-1">${desc}</div>` : ``}
+      <div class="mt-1 md:mt-3 px-1 md:px-0">
+        <div class="font-semibold ${textSize}">${title}</div>
+        ${!isCompact && desc ? `<div class="text-xs text-white/60 mt-1 hidden md:block">${desc}</div>` : ``}
       </div>
     </button>
   `;
@@ -302,7 +304,6 @@ function cardHTML(item, selectedId, onCategory, containerClass = "aspect-[4/3]",
 function renderStepContent() {
   const root = document.getElementById("step-content");
 
-  // Helper: current preview - updated with idSuffix for smooth scrolling
   const preview = (labelKey, img, fallbackKey, extraClasses = "aspect-[16/9]", imgClass = "object-cover", idSuffix = "") => `
     <div class="glass rounded-3xl p-4 scroll-mt-6" id="preview-section-${idSuffix}">
       <div class="text-sm text-white/60">${t(labelKey)}</div>
@@ -313,11 +314,11 @@ function renderStepContent() {
   `;
 
   if (state.step === 0) {
+    // Smaller preview on mobile (h-48), standard on desktop
     const selected = FRAMES.find(x => x.id === state.selections.frame);
     root.innerHTML = `
       <div class="grid gap-4">
-        ${preview("mirrorFrame", selected?.image, "selectFramePreview", "aspect-[3/4] max-w-sm mx-auto w-full", "object-cover", "frame")}
-
+        ${preview("mirrorFrame", selected?.image, "selectFramePreview", "h-48 md:h-64 max-w-[160px] md:max-w-sm mx-auto w-full", "object-contain", "frame")}
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
           ${FRAMES.map((f) => cardHTML(f, state.selections.frame, "frame")).join("")}
         </div>
@@ -326,30 +327,15 @@ function renderStepContent() {
   }
 
   if (state.step === 1) {
+    // Rope is now its own step
     const rope = ROPES.find(x => x.id === state.selections.rope);
-    const carpet = CARPETS.find(x => x.id === state.selections.carpet);
-
     root.innerHTML = `
-      <div class="grid gap-8">
+      <div class="grid gap-6">
+        ${preview("rope", rope?.image, "selectRopePreview", "aspect-[16/9] md:max-w-md mx-auto w-full", "object-cover", "rope")}
         <div>
-          ${preview("rope", rope?.image, "selectRopePreview", "aspect-[16/9]", "object-cover", "rope")}
-          <div class="mt-4">
-            <div class="text-sm text-white/60 mb-2">${t("rope")} Options</div>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-              ${ROPES.map((r) => cardHTML(r, state.selections.rope, "rope")).join("")}
-            </div>
-          </div>
-        </div>
-
-        <div class="h-px bg-white/10 w-full rounded-full"></div>
-
-        <div>
-          ${preview("carpet", carpet?.image, "selectCarpetPreview", "aspect-[16/9]", "object-cover", "carpet")}
-          <div class="mt-4">
-            <div class="text-sm text-white/60 mb-2">${t("carpet")} Options</div>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-              ${CARPETS.map((c) => cardHTML(c, state.selections.carpet, "carpet")).join("")}
-            </div>
+          <div class="text-sm text-white/60 mb-2">${t("rope")} Options</div>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            ${ROPES.map((r) => cardHTML(r, state.selections.rope, "rope")).join("")}
           </div>
         </div>
       </div>
@@ -357,19 +343,36 @@ function renderStepContent() {
   }
 
   if (state.step === 2) {
-    const selected = MOUNTS.find(x => x.id === state.selections.mount);
+    // Carpet is now its own step
+    const carpet = CARPETS.find(x => x.id === state.selections.carpet);
     root.innerHTML = `
       <div class="grid gap-6">
-        ${preview("mount", selected?.image, "selectMountPreview", "aspect-[3/4] max-w-sm mx-auto w-full", "object-contain", "mount")}
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          ${MOUNTS.map((m) => cardHTML(m, state.selections.mount, "mount", "aspect-[3/4] sm:aspect-[4/3]", "object-contain")).join("")}
+        ${preview("carpet", carpet?.image, "selectCarpetPreview", "aspect-[16/9] md:max-w-md mx-auto w-full", "object-cover", "carpet")}
+        <div>
+          <div class="text-sm text-white/60 mb-2">${t("carpet")} Options</div>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+            ${CARPETS.map((c) => cardHTML(c, state.selections.carpet, "carpet")).join("")}
+          </div>
         </div>
       </div>
     `;
   }
 
   if (state.step === 3) {
+    // Mount options layout updated to 3-cols mobile, using compact mode
+    const selected = MOUNTS.find(x => x.id === state.selections.mount);
+    root.innerHTML = `
+      <div class="grid gap-6">
+        ${preview("mount", selected?.image, "selectMountPreview", "aspect-[3/4] max-w-[160px] md:max-w-sm mx-auto w-full", "object-contain", "mount")}
+
+        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-4 gap-2">
+          ${MOUNTS.map((m) => cardHTML(m, state.selections.mount, "mount", "aspect-[3/4] sm:aspect-[4/3]", "object-contain", true)).join("")}
+        </div>
+      </div>
+    `;
+  }
+
+  if (state.step === 4) {
     const selectionSummary = `
       <div class="glass rounded-3xl p-4">
         <div class="font-semibold">${t("yourSelection")}</div>
@@ -468,11 +471,9 @@ function renderStepContent() {
 
       renderAll();
 
-      // Smoothly scroll back to the specific preview to show the selection applied
       setTimeout(() => {
         const previewBox = document.getElementById(`preview-section-${cat}`);
         if (previewBox) {
-          // Adjust scroll position slightly higher so it doesn't hug the absolute top of the screen
           const y = previewBox.getBoundingClientRect().top + window.scrollY - 30;
           window.scrollTo({ top: y, behavior: "smooth" });
         }
@@ -480,29 +481,21 @@ function renderStepContent() {
     });
   });
 
-  // Bind form events (step 3)
-  if (state.step === 3) {
+  if (state.step === 4) {
     const form = document.getElementById("details-form");
     if (form) {
       form.addEventListener("input", (e) => {
         const target = e.target;
         if (!target || !target.name) return;
-
         state.form[target.name] = target.value;
-
-        // If event type changes, re-render to show/hide custom field
         if (target.name === "eventType") {
           renderAll();
           return;
         }
-
-        // Autocomplete
         if (target.name === "location") handleLocationChange(target.value);
-        renderNav(); // keep button state updated
+        renderNav(); 
       });
     }
-
-    // Fill suggestion dropdown on render
     renderSuggestions();
   }
 }
@@ -514,14 +507,11 @@ function renderNav() {
   document.getElementById("prev-label").textContent = t("prevStep");
   document.getElementById("next-label").textContent = (state.step === STEPS.length - 1) ? t("submitRequest") : t("nextStep");
 
-  // prev visibility
   prevBtn.style.visibility = state.step === 0 ? "hidden" : "visible";
 
-  // next disabled state
   const valid = isStepValid();
   nextBtn.disabled = !valid;
 
-  // flip icons in RTL
   const leftIcon = prevBtn.querySelector("i");
   const rightIcon = nextBtn.querySelector("i");
   if (isRTL(state.lang)) {
@@ -532,7 +522,6 @@ function renderNav() {
     rightIcon.setAttribute("data-lucide", "chevron-right");
   }
 
-  // Recreate icons
   safeCreateIcons();
 }
 
@@ -560,7 +549,6 @@ function goNext() {
     return;
   }
 
-  // submit (step 3)
   submitToWhatsApp();
 }
 
@@ -572,7 +560,6 @@ function finalEventTypeText() {
 }
 
 function submitToWhatsApp() {
-  // minimal validation
   if (!isStepValid()) return;
 
   const frameName = getItemName(FRAMES, state.selections.frame);
@@ -599,7 +586,6 @@ ${state.form.location ? `• ${t("location")}: ${state.form.location}\n` : ""}${
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
   window.open(url, "_blank");
 
-  // show success panel (optional)
   const success = document.getElementById("success");
   if (success) success.classList.remove("hidden");
 }
@@ -613,7 +599,6 @@ function escapeHTML(str) {
     .replaceAll("'", "&#039;");
 }
 
-/* --- Israel-only location autocomplete (Nominatim) --- */
 function handleLocationChange(val) {
   if (state.debounce) clearTimeout(state.debounce);
 
@@ -665,7 +650,6 @@ function renderSuggestions() {
       state.form.location = loc;
       state.showSuggestions = false;
 
-      // update input value without full re-render
       const input = document.getElementById("location-input");
       if (input) input.value = loc;
       renderSuggestions();
@@ -674,7 +658,6 @@ function renderSuggestions() {
   });
 }
 
-/* --- Service worker register (skip on file://) --- */
 function registerSW() {
   if (!("serviceWorker" in navigator)) return;
   if (location.protocol !== "https:" && location.hostname !== "localhost") return;
@@ -703,7 +686,6 @@ document.addEventListener("DOMContentLoaded", () => {
   renderAll();
   registerSW();
 
-  // Hide suggestions when clicking elsewhere
   document.addEventListener("click", (e) => {
     const target = e.target;
     const sugg = document.getElementById("suggestions");

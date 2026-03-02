@@ -15,7 +15,9 @@ html,body{
   min-height: 100dvh;
   min-height: -webkit-fill-available;
   background:var(--bg);
-  overscroll-behavior-y: none; /* Helps prevent mobile bounce from breaking fixed layout */
+  overscroll-behavior-y: none; /* Prevents mobile bounce */
+  margin: 0; 
+  padding: 0;
 }
 
 body{
@@ -25,7 +27,7 @@ body{
   text-rendering:optimizeLegibility;
 }
 
-/* Luxury golden frame around the viewport */
+/* Luxury golden frame locked strictly to the edges */
 .luxury-frame{
   pointer-events:none;
   position:fixed;
@@ -33,8 +35,9 @@ body{
   left: 0;
   right: 0;
   bottom: 0;
+  height: 100svh; /* Fallback */
   height: 100dvh; /* Enforces exact viewport height on mobile */
-  z-index:50;
+  z-index:9999; /* Max Z-index so it sits above all UI */
   border: 6px solid transparent;
   border-image: linear-gradient(135deg,var(--gold1),var(--gold2),var(--gold3),var(--gold4)) 1;
   box-shadow:

@@ -57,10 +57,10 @@
     </section>
 
     <section class="w-full md:w-7/12 lg:w-1/2 p-5 md:p-10">
-      <div class="max-w-3xl mx-auto">
+      <div class="max-w-3xl mx-auto relative">
 
-        <header class="flex items-start md:items-center justify-between gap-3 mb-2 md:mb-0">
-          <div class="flex items-center gap-3 md:hidden">
+        <header class="relative flex items-start md:items-center justify-between gap-3 mb-2 md:mb-0 min-h-[70px]">
+          <div class="flex items-center gap-3 md:hidden pr-12">
             <img src="assets/logo.png" alt="Frame by Karam" class="h-16 object-contain" />
             <div class="mt-1">
               <div class="text-xl md:text-2xl font-semibold gold-text leading-tight" style="font-family: 'Playfair Display', serif;">MirrorBooth</div>
@@ -68,10 +68,10 @@
             </div>
           </div>
 
-          <div id="lang-switch" class="ml-auto flex items-center gap-1 md:gap-2 glass rounded-xl md:rounded-2xl p-1 mt-2 mr-1 md:mt-0 md:mr-0"></div>
+          <div id="lang-switch" class="absolute top-0 right-0 md:relative md:top-auto md:right-auto flex flex-col md:flex-row items-center gap-1 md:gap-2 glass rounded-xl md:rounded-2xl p-1 z-50"></div>
         </header>
 
-        <div class="mt-6 glass rounded-3xl p-4">
+        <div class="mt-4 md:mt-6 glass rounded-3xl p-4">
           <div class="flex items-center justify-between gap-3">
             <div>
               <div id="step-title" class="text-xl md:text-2xl font-semibold" style="font-family: 'Playfair Display', serif;"></div>
