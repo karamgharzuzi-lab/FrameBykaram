@@ -157,7 +157,6 @@ const FRAMES = [
   { id: "no-frame", name: { en: "No Frame", he: "ללא מסגרת", ar: "بدون إطار" }, image: "assets/images/no-frame.jpg" },
   { id: "vintage-gold", name: { en: "Vintage Gold", he: "זהב וינטג׳", ar: "ذهبي عتيق" }, image: "assets/images/vintage-gold.jpg" },
   { id: "vintage-silver", name: { en: "Vintage Silver", he: "כסף וינטג׳", ar: "فضي عتيق" }, image: "assets/images/vintage-silver.jpg" },
-  { id: "royal-gold", name: { en: "Royal Gold", he: "זהב מלכותי", ar: "ذهبي ملكي" }, image: "assets/images/royal-gold.jpg" }
 ];
 
 const ROPES = [
@@ -303,20 +302,23 @@ function renderStepContent() {
   const root = document.getElementById("step-content");
 
   // Helper: current preview
-  const preview = (labelKey, img, fallbackKey) => `
+  const preview = (labelKey, img, fallbackKey, opts = {}) => {
+    const aspect = opts.aspect || "aspect-[16/9]";
+    const fit = opts.fit || "object-cover";
+    return `
     <div class="glass rounded-3xl p-4">
       <div class="text-sm text-white/60">${t(labelKey)}</div>
-      <div class="mt-3 rounded-2xl overflow-hidden bg-black/40 aspect-[16/9] flex items-center justify-center" id="preview-box">
-        ${img ? `<img src="${img}" alt="preview" class="w-full h-full object-cover">` : `<div class="text-white/55">${t(fallbackKey)}</div>`}
+      <div class="mt-3 rounded-2xl overflow-hidden bg-black/40 ${aspect} flex items-center justify-center" id="preview-box">
+        ${img ? `<img src="${img}" alt="preview" class="w-full h-full ${fit}">` : `<div class="text-white/55">${t(fallbackKey)}</div>`}
       </div>
     </div>
   `;
-
+  };
   if (state.step === 0) {
     const selected = FRAMES.find(x => x.id === state.selections.frame);
     root.innerHTML = `
       <div class="grid gap-4">
-        ${preview("mirrorFrame", selected?.image, "selectFramePreview")}
+        ${preview("mirrorFrame", selected?.image, "selectFramePreview", { aspect: "aspect-[9/16] md:aspect-[16/9]", fit: "object-contain md:object-cover" })}
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
           ${FRAMES.map((f) => cardHTML(f, state.selections.frame, "frame")).join("")}
