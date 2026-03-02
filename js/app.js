@@ -1,5 +1,14 @@
 /* FrameByKaram – MirrorBooth Reservation (Static) */
 
+// Frame mobile scroll fix - Updates 1vh variable constantly
+function setViewportHeight() {
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+window.addEventListener('resize', setViewportHeight);
+window.addEventListener('orientationchange', setViewportHeight);
+setViewportHeight();
+
 const WHATSAPP_NUMBER = "972524040714"; 
 
 const T = {
@@ -205,40 +214,32 @@ function initIntro() {
   const now = Date.now();
   const oneDay = 24 * 60 * 60 * 1000;
 
-  // Show intro if never seen or if older than 24 hours
   if (!lastSeen || (now - parseInt(lastSeen, 10)) > oneDay) {
     introOverlay.classList.remove('hidden');
     introOverlay.classList.add('intro--visible');
     introOverlay.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden'; // Lock background scrolling
+    document.body.style.overflow = 'hidden'; 
 
-    // Auto-focus button for accessibility
     setTimeout(() => startBtn.focus(), 100);
 
     const closeIntro = () => {
-      // Trigger the hide animation sequence
       introOverlay.classList.remove('intro--visible');
       introOverlay.classList.add('intro--hiding');
       
-      // Clean up after CSS animation ends (1000ms based on keyframes)
       setTimeout(() => {
         introOverlay.classList.add('hidden');
         introOverlay.classList.remove('intro--hiding');
         introOverlay.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = ''; // Unlock scroll
+        document.body.style.overflow = ''; 
         
-        // Pass focus to the main app so keyboard users aren't lost
         if (stepTitle) stepTitle.focus();
       }, 1000);
 
-      // Save user choice to localStorage
       localStorage.setItem('introSeenAt', Date.now().toString());
     };
 
-    // Click trigger
     startBtn.addEventListener('click', closeIntro);
     
-    // Keyboard trigger (Enter/Space)
     startBtn.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -246,7 +247,6 @@ function initIntro() {
       }
     });
 
-    // Trap focus inside the overlay while it is visible
     introOverlay.addEventListener('keydown', (e) => {
       if (e.key === 'Tab') {
         e.preventDefault();
@@ -254,6 +254,61 @@ function initIntro() {
       }
     });
   }
+}
+
+// ----------------------------------------------------
+// PREMIUM STEP TRANSITION ANIMATOR
+// ----------------------------------------------------
+let isAnimatingStep = false;
+
+function transitionStep(direction, actionFn) {
+  if (isAnimatingStep) return;
+  const content = document.getElementById("step-content");
+  if (!content) { actionFn(); return; }
+
+  isAnimatingStep = true;
+  
+  // Slide out to bottom if going next, slide up if going prev
+  const slideOutY = direction === 'next' ? '16px' : '-16px';
+  const slideInY = direction === 'next' ? '-16px' : '16px';
+
+  content.classList.add("step-animating");
+  content.style.opacity = '0';
+  content.style.transform = `translateY(${slideOutY})`;
+  content.style.filter = 'blur(3px)';
+
+  // Wait 500ms for fade out
+  setTimeout(() => {
+    actionFn();
+
+    // Prepare content in the invisible 'start' position
+    content.classList.remove("step-animating");
+    content.style.opacity = '0';
+    content.style.transform = `translateY(${slideInY})`;
+    content.style.filter = 'blur(3px)';
+
+    // Force browser reflow to register the starting position
+    void content.offsetWidth;
+
+    // Trigger animate in
+    content.classList.add("step-animating");
+    content.style.opacity = '1';
+    content.style.transform = 'translateY(0)';
+    content.style.filter = 'blur(0)';
+
+    // Automatically smooth scroll back up so the user is ready for the new step
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    // Clean up inline styles after entering (500ms)
+    setTimeout(() => {
+      content.classList.remove("step-animating");
+      content.style.opacity = '';
+      content.style.transform = '';
+      content.style.filter = '';
+      isAnimatingStep = false;
+    }, 500);
+
+  }, 500);
 }
 
 function isRTL(lang) {
@@ -313,8 +368,9 @@ function renderLangSwitch() {
     { id: "ar", label: "AR" }
   ];
 
+  // Buttons are now ultra-compact on mobile, stacked inside the top-left absolute container
   root.innerHTML = buttons.map((b) => `
-    <button data-lang="${b.id}" class="px-3 py-1.5 md:px-3 md:py-2 rounded-lg md:rounded-xl text-[10px] md:text-sm font-semibold w-full text-center ${state.lang===b.id ? "gold-btn" : "text-white/80 hover:text-white"}">
+    <button data-lang="${b.id}" class="px-1.5 py-0.5 md:px-3 md:py-2 rounded md:rounded-xl text-[9px] md:text-sm font-semibold w-full text-center ${state.lang===b.id ? "gold-btn" : "text-white/80 hover:text-white"}">
       ${b.label}
     </button>
   `).join("");
@@ -583,12 +639,14 @@ function safeCreateIcons() {
   try { lucide.createIcons(); } catch (e) {}
 }
 
+// Nav Buttons integrated with the premium transition
 function goPrev() {
   if (state.step > 0) {
-    state.step -= 1;
-    state.showSuggestions = false;
-    renderAll();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    transitionStep('prev', () => {
+      state.step -= 1;
+      state.showSuggestions = false;
+      renderAll();
+    });
   }
 }
 
@@ -596,10 +654,11 @@ function goNext() {
   if (!isStepValid()) return;
 
   if (state.step < STEPS.length - 1) {
-    state.step += 1;
-    state.showSuggestions = false;
-    renderAll();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    transitionStep('next', () => {
+      state.step += 1;
+      state.showSuggestions = false;
+      renderAll();
+    });
     return;
   }
 
@@ -735,7 +794,6 @@ function bindNavButtons() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Initialize Intro before rendering the rest of the app
   initIntro();
   
   setDirAndFont();
