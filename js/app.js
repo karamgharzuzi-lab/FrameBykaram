@@ -156,7 +156,7 @@ const STEPS = [
 const FRAMES = [
   { id: "no-frame", name: { en: "No Frame", he: "ללא מסגרת", ar: "بدون إطار" }, image: "assets/images/no-frame.jpg" },
   { id: "vintage-gold", name: { en: "Vintage Gold", he: "זהב וינטג׳", ar: "ذهبي عتيق" }, image: "assets/images/vintage-gold.jpg" },
-  { id: "vintage-silver", name: { en: "Vintage Silver", he: "כסף וינטג׳", ar: "فضي عتيق" }, image: "assets/images/vintage-silver.jpg" },
+  { id: "vintage-silver", name: { en: "Vintage Silver", he: "כסף וינטג׳", ar: "فضي عتيق" }, image: "assets/images/vintage-silver.jpg" }
 ];
 
 const ROPES = [
@@ -254,7 +254,7 @@ function renderLangSwitch() {
   ];
 
   root.innerHTML = buttons.map((b) => `
-    <button data-lang="${b.id}" class="px-3 py-2 rounded-xl text-sm font-semibold ${state.lang===b.id ? "gold-btn" : "text-white/80 hover:text-white"}">
+    <button data-lang="${b.id}" class="px-2 py-1 md:px-3 md:py-2 rounded-xl text-xs md:text-sm font-semibold ${state.lang===b.id ? "gold-btn" : "text-white/80 hover:text-white"}">
       ${b.label}
     </button>
   `).join("");
@@ -281,14 +281,15 @@ function renderStepper() {
   }).join("");
 }
 
-function cardHTML(item, selectedId, onCategory) {
+// Updated to accept custom container and image classes
+function cardHTML(item, selectedId, onCategory, containerClass = "aspect-[4/3]", imgClass = "object-cover") {
   const selected = item.id === selectedId;
   const title = item.name[state.lang] || item.name.en || "";
   const desc = item.desc ? (item.desc[state.lang] || item.desc.en || "") : "";
   return `
     <button class="option-card glass rounded-3xl p-3 text-left border border-white/10 ${selected ? "selected" : ""}" data-cat="${onCategory}" data-id="${item.id}">
-      <div class="rounded-2xl overflow-hidden aspect-[4/3] bg-black/40">
-        <img src="${item.image}" alt="${title}" class="w-full h-full object-cover" loading="lazy">
+      <div class="rounded-2xl overflow-hidden ${containerClass} bg-black/40">
+        <img src="${item.image}" alt="${title}" class="w-full h-full ${imgClass}" loading="lazy">
       </div>
       <div class="mt-3">
         <div class="font-semibold">${title}</div>
@@ -301,24 +302,21 @@ function cardHTML(item, selectedId, onCategory) {
 function renderStepContent() {
   const root = document.getElementById("step-content");
 
-  // Helper: current preview
-  const preview = (labelKey, img, fallbackKey, opts = {}) => {
-    const aspect = opts.aspect || "aspect-[16/9]";
-    const fit = opts.fit || "object-cover";
-    return `
-    <div class="glass rounded-3xl p-4">
+  // Helper: current preview - updated with idSuffix for smooth scrolling
+  const preview = (labelKey, img, fallbackKey, extraClasses = "aspect-[16/9]", imgClass = "object-cover", idSuffix = "") => `
+    <div class="glass rounded-3xl p-4 scroll-mt-6" id="preview-section-${idSuffix}">
       <div class="text-sm text-white/60">${t(labelKey)}</div>
-      <div class="mt-3 rounded-2xl overflow-hidden bg-black/40 ${aspect} flex items-center justify-center" id="preview-box">
-        ${img ? `<img src="${img}" alt="preview" class="w-full h-full ${fit}">` : `<div class="text-white/55">${t(fallbackKey)}</div>`}
+      <div class="mt-3 rounded-2xl overflow-hidden bg-black/40 ${extraClasses} flex items-center justify-center">
+        ${img ? `<img src="${img}" alt="preview" class="w-full h-full ${imgClass}">` : `<div class="text-white/55">${t(fallbackKey)}</div>`}
       </div>
     </div>
   `;
-  };
+
   if (state.step === 0) {
     const selected = FRAMES.find(x => x.id === state.selections.frame);
     root.innerHTML = `
       <div class="grid gap-4">
-        ${preview("mirrorFrame", selected?.image, "selectFramePreview", { aspect: "aspect-[9/16] md:aspect-[16/9]", fit: "object-contain md:object-cover" })}
+        ${preview("mirrorFrame", selected?.image, "selectFramePreview", "aspect-[3/4] max-w-sm mx-auto w-full", "object-cover", "frame")}
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
           ${FRAMES.map((f) => cardHTML(f, state.selections.frame, "frame")).join("")}
@@ -332,25 +330,23 @@ function renderStepContent() {
     const carpet = CARPETS.find(x => x.id === state.selections.carpet);
 
     root.innerHTML = `
-      <div class="grid gap-4">
-        <div class="grid md:grid-cols-2 gap-4">
-          ${preview("rope", rope?.image, "selectRopePreview")}
-          ${preview("carpet", carpet?.image, "selectCarpetPreview")}
-        </div>
-
-        <div class="glass rounded-3xl p-4">
-          <div class="font-semibold">${t("redCarpetSetup")}</div>
-          <div class="text-sm text-white/60 mt-1">${stepSubtitle()}</div>
-
+      <div class="grid gap-8">
+        <div>
+          ${preview("rope", rope?.image, "selectRopePreview", "aspect-[16/9]", "object-cover", "rope")}
           <div class="mt-4">
-            <div class="text-sm text-white/60 mb-2">${t("rope")}</div>
+            <div class="text-sm text-white/60 mb-2">${t("rope")} Options</div>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
               ${ROPES.map((r) => cardHTML(r, state.selections.rope, "rope")).join("")}
             </div>
           </div>
+        </div>
 
-          <div class="mt-6">
-            <div class="text-sm text-white/60 mb-2">${t("carpet")}</div>
+        <div class="h-px bg-white/10 w-full rounded-full"></div>
+
+        <div>
+          ${preview("carpet", carpet?.image, "selectCarpetPreview", "aspect-[16/9]", "object-cover", "carpet")}
+          <div class="mt-4">
+            <div class="text-sm text-white/60 mb-2">${t("carpet")} Options</div>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
               ${CARPETS.map((c) => cardHTML(c, state.selections.carpet, "carpet")).join("")}
             </div>
@@ -363,11 +359,11 @@ function renderStepContent() {
   if (state.step === 2) {
     const selected = MOUNTS.find(x => x.id === state.selections.mount);
     root.innerHTML = `
-      <div class="grid gap-4">
-        ${preview("mount", selected?.image, "selectMountPreview")}
+      <div class="grid gap-6">
+        ${preview("mount", selected?.image, "selectMountPreview", "aspect-[3/4] max-w-sm mx-auto w-full", "object-contain", "mount")}
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          ${MOUNTS.map((m) => cardHTML(m, state.selections.mount, "mount")).join("")}
+          ${MOUNTS.map((m) => cardHTML(m, state.selections.mount, "mount", "aspect-[3/4] sm:aspect-[4/3]", "object-contain")).join("")}
         </div>
       </div>
     `;
@@ -463,21 +459,24 @@ function renderStepContent() {
     `;
   }
 
-  // Bind option click events (for steps that show cards)
+  // Bind option click events with smooth scroll
   root.querySelectorAll("[data-cat][data-id]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const cat = btn.getAttribute("data-cat");
       const id = btn.getAttribute("data-id");
       state.selections[cat] = id;
 
-      // Scroll preview into view on mount selection (nice UX)
-      if (cat === "mount") {
-        setTimeout(() => {
-          document.getElementById("preview-box")?.scrollIntoView({ behavior: "smooth", block: "center" });
-        }, 50);
-      }
-
       renderAll();
+
+      // Smoothly scroll back to the specific preview to show the selection applied
+      setTimeout(() => {
+        const previewBox = document.getElementById(`preview-section-${cat}`);
+        if (previewBox) {
+          // Adjust scroll position slightly higher so it doesn't hug the absolute top of the screen
+          const y = previewBox.getBoundingClientRect().top + window.scrollY - 30;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
+      }, 50);
     });
   });
 
@@ -546,6 +545,7 @@ function goPrev() {
     state.step -= 1;
     state.showSuggestions = false;
     renderAll();
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 }
 
@@ -556,6 +556,7 @@ function goNext() {
     state.step += 1;
     state.showSuggestions = false;
     renderAll();
+    window.scrollTo({ top: 0, behavior: "smooth" });
     return;
   }
 
