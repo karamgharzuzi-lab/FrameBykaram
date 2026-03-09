@@ -597,12 +597,27 @@ border-radius: 22px;
 background: rgba(20, 20, 20, 0.72) !important;
 backdrop-filter: blur(18px);
 box-shadow: 0 10px 30px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.04);
-padding-top: 0.9rem;
-padding-bottom: 0.9rem;
+padding-top: 0.45rem;
+padding-bottom: 0.45rem;
+padding-left: 0.85rem;
+padding-right: 0.85rem;
 }
 
 body.light-theme nav {
 background: rgba(248, 245, 225, 0.78) !important;
+}
+
+nav > div {
+gap: 0.35rem !important;
+}
+
+nav .flex.items-center.gap-3 {
+gap: 0.45rem !important;
+margin-bottom: -0.1rem;
+}
+
+nav .flex.space-x-6 {
+margin-top: -0.1rem;
 }
 
 .page-frame {
@@ -689,6 +704,21 @@ overflow: hidden;
 
 footer {
 padding-bottom: max(24px, env(safe-area-inset-bottom));
+}
+
+/* --- Mobile nav overflow fix (prevents right lean) --- */
+@media (max-width: 768px) {
+nav {
+box-sizing: border-box;
+margin-left: 0;
+margin-right: 0;
+max-width: calc(100% - 24px);
+}
+
+nav > div {
+width: 100%;
+box-sizing: border-box;
+}
 }
 }
 </style>
