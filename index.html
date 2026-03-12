@@ -5,44 +5,52 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FrameByKaram | Luxury Mirror Booth</title>
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#121212">
+<meta name="theme-color" content="#0a0a0a">
 <link rel="apple-touch-icon" href="icon-192.png">
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Rubik:wght@300;400;500;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=Rubik:wght@300;400;500;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
 :root {
-  --bg-body: #121212;
-  --bg-card: rgba(255,255,255,0.04);
-  --bg-card-strong: rgba(255,255,255,0.06);
-  --text-main: #f5f1ea;
-  --text-muted: #b5ada2;
-  --border-color: rgba(255,255,255,0.1);
-  --gold: #bf953f;
-  --gold-bright: #fcf6ba;
-  --gold-deep: #8a6236;
-  --input-bg: rgba(255,255,255,0.05);
+  --bg-body: #0a0a0a;
+  --bg-card: rgba(255,255,255,0.032);
+  --bg-card-strong: rgba(20,18,14,0.97);
+  --text-main: #f0ebe2;
+  --text-muted: #9a9189;
+  --border-color: rgba(255,255,255,0.07);
+  --gold: #c9a84c;
+  --gold-bright: #fdf6d3;
+  --gold-deep: #7a5228;
+  --gold-mid: #b8873a;
+  --input-bg: rgba(255,255,255,0.04);
+  --nav-bg: rgba(10,10,10,0.82);
+  --card-shadow: 0 32px 80px rgba(0,0,0,0.5);
 }
-
 body.light-theme {
-  --bg-body: #f6f1e8;
-  --bg-card: rgba(255,255,255,0.72);
-  --bg-card-strong: rgba(255,255,255,0.9);
-  --text-main: #3e332b;
-  --text-muted: #76685d;
-  --border-color: rgba(62,51,43,0.12);
-  --input-bg: rgba(255,255,255,0.8);
+  --bg-body: #f2ece0;
+  --bg-card: rgba(255,255,255,0.75);
+  --bg-card-strong: rgba(255,255,255,0.96);
+  --text-main: #2e2418;
+  --text-muted: #6b5d4f;
+  --border-color: rgba(50,38,28,0.1);
+  --input-bg: rgba(255,255,255,0.85);
+  --nav-bg: rgba(242,236,224,0.88);
+  --card-shadow: 0 32px 80px rgba(0,0,0,0.12);
 }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
 body {
-  margin: 0;
   min-height: 100vh;
-  background: radial-gradient(circle at top, rgba(191,149,63,0.1), transparent 26%), var(--bg-body);
+  background:
+    radial-gradient(ellipse 80% 40% at 50% -10%, rgba(201,168,76,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 30% at 100% 80%, rgba(122,82,40,0.05) 0%, transparent 50%),
+    var(--bg-body);
   color: var(--text-main);
   font-family: 'Inter', sans-serif;
-  transition: background-color 0.35s ease, color 0.35s ease;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  overflow-x: hidden;
 }
 body[lang="he"] { font-family: 'Rubik', sans-serif; }
 body[lang="ar"] { font-family: 'Cairo', sans-serif; }
@@ -50,827 +58,480 @@ body[lang="ar"] { font-family: 'Cairo', sans-serif; }
 h1,h2,h3,.serif-font,.always-serif { font-family: 'Playfair Display', serif; }
 body:not([lang="en"]) h1:not(.always-serif),
 body:not([lang="en"]) h2:not(.always-serif),
-body:not([lang="en"]) h3:not(.always-serif),
-body:not([lang="en"]) .serif-font:not(.always-serif) {
-  font-family: inherit;
-  font-weight: 700;
+body:not([lang="en"]) h3:not(.always-serif) {
+  font-family: inherit; font-weight: 700;
 }
 
 .gold-text {
-  background: linear-gradient(to right, #8a6236, #bf953f, #fcf6ba, #b38728, #aa771c, #8a6236);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: luxuryGoldGlow 3.2s ease-in-out infinite;
+  background: linear-gradient(105deg, #7a5228 0%, #c9a84c 30%, #fdf6d3 52%, #b8873a 72%, #7a5228 100%);
+  background-size: 220% auto;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: goldShimmer 5s linear infinite;
+}
+@keyframes goldShimmer {
+  0%   { background-position: 0%   50%; }
+  100% { background-position: 220% 50%; }
 }
 
-@keyframes luxuryGoldGlow {
-  0% { background-position: 0% center; filter: drop-shadow(0 0 6px rgba(191,149,63,0.16)); }
-  50% { background-position: 100% center; filter: drop-shadow(0 0 12px rgba(252,246,186,0.28)); }
-  100% { background-position: 0% center; filter: drop-shadow(0 0 6px rgba(191,149,63,0.16)); }
-}
-
-nav {
-  position: fixed;
-  top: 14px;
-  left: 14px;
-  right: 14px;
-  z-index: 60;
-  border-radius: 24px;
-  padding: 0.8rem 1rem;
-  background: rgba(18,18,18,0.78);
-  border: 1px solid rgba(255,255,255,0.1);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.28);
-}
-body.light-theme nav { background: rgba(246,241,232,0.84); }
-
-.brand-wordmark {
-  font-size: 0.92rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.nav-link {
-  cursor: pointer;
-  opacity: 0.82;
-  transition: color 0.25s ease, opacity 0.25s ease, transform 0.2s ease;
-}
-.nav-link:hover,
-.nav-link.active {
-  color: var(--gold);
-  opacity: 1;
-}
-.nav-link:active { transform: scale(0.97); }
-
-.lang-btn,
-.icon-pill {
-  height: 34px;
-  min-width: 34px;
-  padding: 0 10px;
-  border-radius: 999px;
-  border: 1px solid transparent;
-  background: transparent;
-  color: var(--text-muted);
-  transition: all 0.25s ease;
-  font-size: 0.72rem;
-}
-.lang-btn.active {
-  background: linear-gradient(135deg, rgba(191,149,63,0.95), rgba(138,98,54,0.95));
-  color: white;
-  box-shadow: 0 8px 18px rgba(191,149,63,0.22);
-}
-.lang-btn:hover,
-.icon-pill:hover {
-  color: var(--gold);
-  background: rgba(191,149,63,0.09);
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  opacity: 0.4;
 }
 
 .page-frame {
-  position: absolute;
-  inset: 8px;
-  pointer-events: none;
-  z-index: 1;
-  border: 1px solid rgba(191,149,63,0.42);
-  border-radius: 30px;
-  box-shadow: inset 0 0 24px rgba(191,149,63,0.04);
+  position: fixed; inset: 10px; pointer-events: none; z-index: 5;
+  border: 1px solid rgba(201,168,76,0.18); border-radius: 28px;
 }
-.page-frame::after {
-  content: '';
-  position: absolute;
-  inset: 7px;
-  border-radius: 24px;
-  border: 1px solid rgba(191,149,63,0.16);
+@media (max-width: 768px) {
+  .page-frame, .page-frame-inner { display: none; }
 }
+.page-frame::before, .page-frame::after,
+.page-frame-inner::before, .page-frame-inner::after {
+  content: ''; position: absolute;
+  width: 22px; height: 22px;
+  border-color: rgba(201,168,76,0.55); border-style: solid;
+}
+.page-frame::before  { top:-1px; left:-1px;  border-width:2px 0 0 2px; border-radius:8px 0 0 0; }
+.page-frame::after   { top:-1px; right:-1px; border-width:2px 2px 0 0; border-radius:0 8px 0 0; }
+.page-frame-inner::before { bottom:-1px; left:-1px;  border-width:0 0 2px 2px; border-radius:0 0 0 8px; }
+.page-frame-inner::after  { bottom:-1px; right:-1px; border-width:0 2px 2px 0; border-radius:0 0 8px 0; }
 
-#intro-screen { background: #000; }
-#lightbox { transition: opacity 0.35s ease, visibility 0.35s ease; }
-#lightbox-img { transition: transform 0.35s ease; transform: scale(0.94); }
+nav {
+  position: fixed; top: 16px; left: 16px; right: 16px; z-index: 60;
+  border-radius: 20px; padding: 0.75rem 1.1rem;
+  background: var(--nav-bg);
+  border: 1px solid rgba(201,168,76,0.12);
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.04);
+  transition: background 0.35s ease;
+}
+.brand-wordmark { font-size: 0.88rem; letter-spacing: 0.26em; text-transform: uppercase; cursor: pointer; }
+.nav-link {
+  cursor: pointer; opacity: 0.7; font-size: 0.7rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  transition: color 0.25s, opacity 0.25s, transform 0.2s;
+  position: relative; padding-bottom: 2px;
+}
+.nav-link::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 1px; background: var(--gold);
+  transform: scaleX(0); transform-origin: center; transition: transform 0.3s ease;
+}
+.nav-link:hover, .nav-link.active { color: var(--gold); opacity: 1; }
+.nav-link.active::after, .nav-link:hover::after { transform: scaleX(1); }
+
+.lang-btn, .icon-pill {
+  height: 32px; min-width: 32px; padding: 0 9px;
+  border-radius: 999px; border: 1px solid transparent;
+  background: transparent; color: var(--text-muted);
+  font-size: 0.68rem; letter-spacing: 0.1em;
+  transition: all 0.25s ease; cursor: pointer;
+}
+.lang-btn.active {
+  background: linear-gradient(135deg, #c9a84c, #7a5228);
+  color: #fff; border-color: transparent;
+  box-shadow: 0 4px 14px rgba(201,168,76,0.28);
+}
+.lang-btn:hover:not(.active), .icon-pill:hover { color: var(--gold); background: rgba(201,168,76,0.08); }
+
+#lightbox { transition: opacity 0.3s ease, visibility 0.3s ease; }
+#lightbox-img { transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); transform: scale(0.92); }
 #lightbox.open #lightbox-img { transform: scale(1); }
 
+#intro-screen { background: #000; }
 @keyframes logoReveal {
-  0% { opacity: 0; transform: translateY(18px) scale(0.96); }
+  0%   { opacity: 0; transform: translateY(22px) scale(0.95); }
   100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 @keyframes lineExpand {
-  0% { width: 0; opacity: 0; }
-  100% { width: 38%; opacity: 1; }
+  0%   { width: 0; opacity: 0; }
+  100% { width: 42%; opacity: 1; }
 }
-.animate-logo-reveal { animation: logoReveal 1.3s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-.animate-line-expand { animation: lineExpand 1.1s ease forwards 0.85s; }
+.animate-logo-reveal { animation: logoReveal 1.4s cubic-bezier(0.22,1,0.36,1) forwards; }
+.animate-line-expand  { animation: lineExpand 1.2s ease forwards 0.9s; }
 
-.hero-shell {
-  padding-top: 118px;
-  position: relative;
-  z-index: 2;
-}
+/* ── Hero ── */
+.hero-shell { padding-top: 112px; position: relative; z-index: 2; }
 .hero-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 34px;
-  min-height: 74vh;
-  display: flex;
-  align-items: flex-end;
-  padding: 1.35rem;
-  background: linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.38)), url('hero-bg.jpg') center center / cover no-repeat;
-  box-shadow: 0 28px 80px rgba(0,0,0,0.32);
+  position: relative; overflow: hidden; border-radius: 30px;
+  min-height: 76vh;
+  display: flex; align-items: flex-end; padding: 1.5rem;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.18) 40%, rgba(0,0,0,0.68) 100%),
+    url('hero-bg.jpg') center center / cover no-repeat;
+  box-shadow: 0 30px 90px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(201,168,76,0.08);
+  border: 1px solid rgba(201,168,76,0.1);
 }
-.hero-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.08) 36%, rgba(0,0,0,0.34) 100%);
-}
-.hero-content {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  max-width: 32rem;
-  margin: 0 auto;
-  padding-top: 10vh;
-}
-.hero-mirror-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2rem, 8vw, 3.6rem);
-  line-height: 1;
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
-  text-align: center;
-  margin: 0 0 1.15rem;
-  width: 100%;
-  background: linear-gradient(to right, #8a6236, #bf953f, #fcf6ba, #b38728, #aa771c, #8a6236);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 0 0 10px rgba(191,149,63,0.28), 0 0 24px rgba(191,149,63,0.16);
-  filter: drop-shadow(0 0 8px rgba(191,149,63,0.18));
+.hero-card::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.35) 100%);
+  border-radius: inherit;
 }
 
-.kicker {
-  letter-spacing: 0.28em;
+/* ── Hero top kicker ── */
+.hero-kicker-top {
+  position: absolute;
+  top: 5.5rem;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 3;
+  font-size: 1.4rem !important;
+  letter-spacing: 0.38em;
   text-transform: uppercase;
-  font-size: 0.72rem;
-  color: rgba(245,241,234,0.88);
-  margin-bottom: 0.8rem;
+  color: var(--gold);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  opacity: 0;
+  animation: luxReveal 0.9s cubic-bezier(0.16,1,0.3,1) 0.05s forwards;
+  text-shadow: 0 0 28px rgba(201,168,76,0.45);
+}
+.hero-kicker-top::before,
+.hero-kicker-top::after {
+  content: '';
+  width: clamp(1.5rem, 5vw, 4rem);
+  height: 1px;
+  flex-shrink: 0;
+  background: linear-gradient(to right, transparent, var(--gold));
+}
+.hero-kicker-top::after {
+  background: linear-gradient(to left, transparent, var(--gold));
+}
+
+.hero-content {
+  position: relative; z-index: 2;
+  width: 100%; max-width: 34rem; margin: 0 auto; padding-top: 8vh;
 }
 .hero-title {
-  font-size: clamp(2.2rem, 7vw, 4.8rem);
-  line-height: 0.96;
-  margin: 0;
+  font-size: clamp(2.4rem, 7.5vw, 5rem);
+  line-height: 0.94; margin: 0; color: #fff;
 }
 .hero-subtitle {
-  font-size: 0.98rem;
-  line-height: 1.65;
-  color: rgba(245,241,234,0.88);
-  max-width: 26rem;
-  margin: 1rem 0 0;
+  font-size: 0.95rem; line-height: 1.7;
+  color: rgba(240,235,226,0.82); max-width: 24rem; margin: 1.1rem 0 0;
 }
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: 1.5rem;
-}
-.hero-actions a,
-.hero-actions button {
-  min-height: 52px;
-  padding: 0 1.15rem;
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: 0.92rem;
+.hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.6rem; }
+.hero-actions a, .hero-actions button {
+  min-height: 50px; padding: 0 1.25rem; border-radius: 999px;
+  font-weight: 600; font-size: 0.88rem;
+  display: inline-flex; align-items: center; justify-content: center;
 }
 .hero-mobile-links { display: none; }
 
-main {
-  position: relative;
-  z-index: 2;
-}
-.section-wrap { margin-top: 1.1rem; }
+main { position: relative; z-index: 2; }
+.section-wrap { margin-top: 1rem; }
 .editorial-card {
-  border-radius: 30px;
-  padding: 1.1rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  box-shadow: 0 18px 60px rgba(0,0,0,0.22);
+  border-radius: 26px; padding: 1.35rem;
+  background: var(--bg-card); border: 1px solid var(--border-color);
+  box-shadow: var(--card-shadow); backdrop-filter: blur(8px);
+  position: relative; overflow: hidden;
 }
-.section-heading {
-  font-size: clamp(1.55rem, 5vw, 2.5rem);
-  line-height: 1.05;
-  margin: 0;
+.editorial-card::before {
+  content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(to right, transparent, rgba(201,168,76,0.2), transparent);
+  pointer-events: none;
 }
-.section-copy {
-  font-size: 0.95rem;
-  line-height: 1.7;
-  color: var(--text-muted);
-}
+.section-heading { font-size: clamp(1.5rem, 4.5vw, 2.4rem); line-height: 1.05; }
+.section-copy { font-size: 0.93rem; line-height: 1.72; color: var(--text-muted); }
 
 h2[data-i18n="step1_title"],
 h2[data-i18n="step2_title"],
 h2[data-i18n="step3_title"],
 h2[data-i18n="step_carpet_title"],
 h2[data-i18n="step4_title"] {
-  background: linear-gradient(to right, #8a6236, #bf953f, #fcf6ba, #b38728, #aa771c, #8a6236);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 0 0 12px rgba(191,149,63,0.35), 0 0 24px rgba(191,149,63,0.18);
-  filter: drop-shadow(0 0 6px rgba(191,149,63,0.18));
+  background: linear-gradient(105deg, #7a5228, #c9a84c, #fdf6d3, #b8873a, #7a5228);
+  background-size: 220% auto; -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: goldShimmer 5s linear infinite;
 }
 
-.gallery-grid,
-.choices-grid,
-.details-grid,
-.about-stack {
-  display: grid;
-  gap: 0.9rem;
-}
-.gallery-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-.details-grid { grid-template-columns: 1fr; }
+.choices-grid, .details-grid, .about-stack { display: grid; gap: 0.85rem; }
+.gallery-grid  { display: grid; gap: 0.85rem; grid-template-columns: repeat(2, minmax(0,1fr)); }
+.details-grid  { grid-template-columns: 1fr; }
 
 .option-card {
-  position: relative;
-  border-radius: 24px;
-  padding: 1rem;
-  background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(0,0,0,0.10));
-  border: 1px solid rgba(191,149,63,0.45);
-  box-shadow: 0 0 0 1px rgba(191,149,63,0.18), 0 18px 46px rgba(191,149,63,0.18), inset 0 0 18px rgba(191,149,63,0.06);
-  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, background-color 0.35s ease;
+  position: relative; border-radius: 22px; padding: 1rem;
+  background: linear-gradient(160deg, rgba(255,255,255,0.042) 0%, rgba(0,0,0,0.12) 100%);
+  border: 1px solid rgba(201,168,76,0.28);
+  box-shadow: 0 0 0 1px rgba(201,168,76,0.08), 0 16px 40px rgba(0,0,0,0.28);
+  transition: transform 0.38s cubic-bezier(0.16,1,0.3,1), border-color 0.35s, box-shadow 0.35s;
   cursor: pointer;
 }
 .option-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(191,149,63,0.65);
-  box-shadow: 0 0 0 1px rgba(191,149,63,0.25), 0 20px 50px rgba(191,149,63,0.25);
+  transform: translateY(-5px) scale(1.01);
+  border-color: rgba(201,168,76,0.55);
+  box-shadow: 0 0 0 1px rgba(201,168,76,0.18), 0 22px 52px rgba(201,168,76,0.18);
 }
 .option-card.selected {
-  border-color: rgba(191,149,63,0.85);
-  background: radial-gradient(circle at top, rgba(191,149,63,0.16), rgba(255,255,255,0.035));
-  box-shadow: 0 0 0 1px rgba(252,246,186,0.22), 0 22px 55px rgba(191,149,63,0.35), inset 0 0 26px rgba(191,149,63,0.12);
+  border-color: rgba(201,168,76,0.8);
+  background: radial-gradient(circle at top left, rgba(201,168,76,0.14), rgba(255,255,255,0.025));
+  box-shadow: 0 0 0 1px rgba(253,246,211,0.18), 0 0 28px rgba(201,168,76,0.22), 0 22px 56px rgba(201,168,76,0.28);
 }
-.option-card h3 {
-  font-size: 1rem;
-  line-height: 1.25;
-  margin: 0.9rem 0 0;
-}
+.option-card h3 { font-size: 0.92rem; line-height: 1.3; margin-top: 0.85rem; }
+
 .option-visual {
-  position: relative;
-  border-radius: 20px;
-  overflow: hidden;
-  aspect-ratio: 1 / 1;
-  background: rgba(255,255,255,0.03);
-  display: grid;
-  place-items: center;
-  border: 1px solid rgba(255,255,255,0.08);
+  position: relative; border-radius: 17px; overflow: hidden;
+  aspect-ratio: 1/1; background: rgba(255,255,255,0.025);
+  display: grid; place-items: center; border: 1px solid rgba(255,255,255,0.06);
 }
-.option-visual img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.option-card.compact .option-visual img {
-  object-fit: contain;
-  width: 82%;
-  height: 82%;
-}
+.option-visual img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+.option-card:hover .option-visual img { transform: scale(1.06); }
+.option-card.compact .option-visual img { object-fit: contain; width: 80%; height: 80%; }
+
 .enlarge-btn {
-  position: absolute;
-  top: 0.7rem;
-  left: 0.7rem;
-  z-index: 5;
-  width: 36px;
-  height: 36px;
-  border-radius: 999px;
-  border: 1px solid rgba(191,149,63,0.28);
-  background: rgba(0,0,0,0.55);
-  color: var(--gold);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  position: absolute; top: 0.6rem; left: 0.6rem; z-index: 5;
+  width: 34px; height: 34px; border-radius: 999px;
+  border: 1px solid rgba(201,168,76,0.22);
+  background: rgba(0,0,0,0.6); color: var(--gold);
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: all 0.25s ease; backdrop-filter: blur(6px);
 }
-.enlarge-btn:hover {
-  background: rgba(191,149,63,0.92);
-  color: #fff;
-}
+.enlarge-btn:hover { background: var(--gold); color: #000; transform: scale(1.08); }
+
 .selection-check {
-  position: absolute;
-  top: 0.85rem;
-  right: 0.85rem;
-  z-index: 6;
-  width: 34px;
-  height: 34px;
-  border-radius: 999px;
-  background: rgba(0,0,0,0.6);
-  border: 1px solid rgba(191,149,63,0.46);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--gold);
-  box-shadow: 0 0 14px rgba(191,149,63,0.16);
+  position: absolute; top: 0.75rem; right: 0.75rem; z-index: 6;
+  width: 32px; height: 32px; border-radius: 999px;
+  background: linear-gradient(135deg, #c9a84c, #7a5228);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: #fff; box-shadow: 0 4px 14px rgba(201,168,76,0.4);
 }
+.selection-check.hidden { display: none; }
 
 .mount-toggle {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  text-align: left;
-  background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(0,0,0,0.10));
-  border: 1px solid rgba(191,149,63,0.45);
-  border-radius: 24px;
-  padding: 1rem;
+  width: 100%; display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; text-align: left;
+  background: linear-gradient(160deg, rgba(255,255,255,0.042) 0%, rgba(0,0,0,0.12) 100%);
+  border: 1px solid rgba(201,168,76,0.28); border-radius: 22px; padding: 1rem;
   color: var(--text-main);
-  box-shadow: 0 0 0 1px rgba(191,149,63,0.18), 0 18px 46px rgba(191,149,63,0.18), inset 0 0 18px rgba(191,149,63,0.06);
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  box-shadow: 0 0 0 1px rgba(201,168,76,0.08), 0 16px 40px rgba(0,0,0,0.28);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease; cursor: pointer;
 }
 .mount-toggle:hover {
-  transform: translateY(-2px);
-  border-color: rgba(191,149,63,0.65);
-  box-shadow: 0 0 0 1px rgba(191,149,63,0.25), 0 20px 50px rgba(191,149,63,0.25);
+  transform: translateY(-3px); border-color: rgba(201,168,76,0.55);
+  box-shadow: 0 0 0 1px rgba(201,168,76,0.18), 0 22px 52px rgba(201,168,76,0.18);
 }
 .mount-toggle .preview {
-  width: 100%;
-  max-width: 220px;
-  min-height: 160px;
-  height: auto;
-  padding: 0.75rem;
-  border-radius: 18px;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.08);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%; max-width: 200px; min-height: 150px; padding: 0.6rem;
+  border-radius: 15px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06);
+  display: flex; align-items: center; justify-content: center;
   background: rgba(255,255,255,0.02);
 }
-.mount-toggle .preview img {
-  max-width: 100%;
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  display: block;
-  margin: 0 auto;
-}
+.mount-toggle .preview img { max-width: 100%; height: auto; object-fit: contain; display: block; }
 .dropdown-arrow { transition: transform 0.3s ease; }
 .dropdown-arrow.rotate { transform: rotate(180deg); }
-.special-edition-wine {
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #8f2436;
-  margin-top: 0.7rem;
-  display: inline-block;
-}
-
-.mount-options-2,
-.mount-options-3 {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
+.special-edition-wine { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: #a0293e; margin-top: 0.6rem; display: inline-block; }
+.mount-options-2, .mount-options-3 { display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0,1fr)); }
 
 .lux-input {
-  width: 100%;
-  min-height: 54px;
-  padding: 0.95rem 1rem;
-  background: var(--input-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 18px;
-  color: var(--text-main);
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  width: 100%; min-height: 52px; padding: 0.9rem 1rem;
+  background: var(--input-bg); border: 1px solid var(--border-color);
+  border-radius: 16px; color: var(--text-main);
+  font-family: inherit; font-size: 0.93rem;
+  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
 }
 .lux-input:focus {
-  outline: none;
-  border-color: rgba(191,149,63,0.72);
-  box-shadow: 0 0 0 4px rgba(191,149,63,0.10);
+  outline: none; border-color: rgba(201,168,76,0.65);
+  background: rgba(201,168,76,0.04); box-shadow: 0 0 0 4px rgba(201,168,76,0.08);
 }
-label.field-label {
-  display: block;
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 0.6rem;
-}
+label.field-label { display: block; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.55rem; }
 
-.custom-dropdown-menu,
-.calendar-popup {
+.custom-dropdown-menu, .calendar-popup {
   transform-origin: top;
-  transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.35s ease, visibility 0.35s ease;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-8px) scale(0.98);
-  background: var(--bg-card-strong);
-  border: 1px solid var(--border-color);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border-radius: 20px;
-  overflow: hidden;
+  transition: transform 0.38s cubic-bezier(0.16,1,0.3,1), opacity 0.35s ease, visibility 0.35s ease;
+  opacity: 0; visibility: hidden; transform: translateY(-10px) scale(0.97);
+  background: var(--bg-card-strong); border: 1px solid rgba(201,168,76,0.14);
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  border-radius: 18px; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
 }
-.custom-dropdown-menu.open,
-.calendar-popup.open {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0) scale(1);
-}
+.custom-dropdown-menu.open, .calendar-popup.open { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
 .calendar-popup { padding: 1rem; }
-.calendar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-  color: var(--gold);
-  font-weight: 700;
-}
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7,1fr);
-  gap: 0.25rem;
-  text-align: center;
-}
-.calendar-day-name {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  padding-bottom: 0.35rem;
-}
-.calendar-day {
-  padding: 0.55rem 0.2rem;
-  border-radius: 12px;
-  cursor: pointer;
-}
-.calendar-day:hover:not(.empty) { background: rgba(191,149,63,0.12); color: var(--gold); }
-.calendar-day.selected { background: linear-gradient(135deg, #bf953f, #8a6236); color: white; }
+.calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; color: var(--gold); font-weight: 700; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 0.2rem; text-align: center; }
+.calendar-day-name { font-size: 0.68rem; color: var(--text-muted); padding-bottom: 0.35rem; }
+.calendar-day { padding: 0.5rem 0.2rem; border-radius: 10px; cursor: pointer; font-size: 0.82rem; transition: all 0.2s; }
+.calendar-day:hover:not(.empty) { background: rgba(201,168,76,0.12); color: var(--gold); }
+.calendar-day.selected { background: linear-gradient(135deg, #c9a84c, #7a5228); color: #fff; }
 .calendar-day.empty { cursor: default; }
 
 .gallery-item {
-  position: relative;
-  overflow: hidden;
-  border-radius: 24px;
-  min-height: 210px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--border-color);
+  position: relative; overflow: hidden; border-radius: 22px;
+  min-height: 220px; background: rgba(255,255,255,0.025); border: 1px solid var(--border-color);
 }
-.gallery-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.5s ease;
-}
-.gallery-item:hover img { transform: scale(1.05); }
-
-.contact-link {
-  font-size: 2rem;
-  font-weight: 300;
-  letter-spacing: 0.04em;
-  color: #ffffff;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-.contact-link:hover { color: var(--gold); }
-
-.about-hero-title {
-  font-size: 3rem;
-  line-height: 1.05;
-  margin: 0;
-}
-
-.about-hero-subtitle {
-  font-size: 1rem;
-  line-height: 1.65;
-  color: rgba(245,241,234,0.9);
-  max-width: 19rem;
-  margin: 1rem auto 0;
-}
-
-.about-card {
-  border-radius: 28px;
-  padding: 1.5rem 1.1rem;
-  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.14));
-  border: 1px solid rgba(255,255,255,0.12);
-  box-shadow: 0 18px 60px rgba(0,0,0,0.22);
-}
-
-.about-divider {
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(to right, transparent, rgba(255,255,255,0.12), transparent);
-  margin: 1.8rem 0;
-}
-
-.about-label {
-  font-size: 0.72rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: rgba(245,241,234,0.88);
-}
-
-.instagram-glow{
-border:1px solid rgba(191,149,63,0.6);
-box-shadow:
-0 0 0 1px rgba(191,149,63,0.35),
-0 0 14px rgba(191,149,63,0.35),
-0 0 28px rgba(191,149,63,0.28),
-0 0 46px rgba(191,149,63,0.18);
-transition: all 0.45s ease;
-}
-
-.instagram-glow:hover{
-box-shadow:
-0 0 0 1px rgba(191,149,63,0.6),
-0 0 20px rgba(191,149,63,0.5),
-0 0 40px rgba(191,149,63,0.35),
-0 0 70px rgba(191,149,63,0.25);
-transform: scale(1.06);
-}
-
-.back-reservation-wrap {
-  text-align: center;
-  margin-top: 1.8rem;
-}
-.contact-link:hover { color: var(--gold); }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.55s ease; }
+.gallery-item:hover img { transform: scale(1.07); }
 
 .gold-btn {
-  background: linear-gradient(to right, #8a6236, #bf953f, #fcf6ba, #b38728, #aa771c, #8a6236);
-  background-size: 200% auto;
-  color: white;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.45);
-  border: 1px solid rgba(255,255,255,0.18);
-  transition: transform 0.35s ease, box-shadow 0.35s ease, background-position 0.45s ease;
+  background: linear-gradient(105deg, #7a5228 0%, #c9a84c 40%, #fdf6d3 65%, #c9a84c 80%, #7a5228 100%);
+  background-size: 220% auto; color: #1a1000; font-weight: 700; border: none;
+  box-shadow: 0 8px 28px rgba(201,168,76,0.28), inset 0 1px 0 rgba(255,255,255,0.2);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, background-position 0.5s ease;
+  letter-spacing: 0.12em;
 }
-.gold-btn:hover {
-  background-position: right center;
-  transform: translateY(-2px);
-  box-shadow: 0 16px 35px rgba(191,149,63,0.28);
-}
+.gold-btn:hover { background-position: right center; transform: translateY(-3px); box-shadow: 0 18px 40px rgba(201,168,76,0.38); }
+.gold-btn:active { transform: translateY(-1px); }
+
 .outline-btn {
-  border: 1px solid rgba(191,149,63,0.35);
-  background: rgba(255,255,255,0.02);
-  color: var(--text-main);
-  transition: all 0.3s ease;
+  border: 1px solid rgba(201,168,76,0.28); background: rgba(255,255,255,0.02); color: var(--text-main); transition: all 0.3s ease;
 }
-.outline-btn:hover {
-  border-color: rgba(191,149,63,0.65);
-  background: rgba(191,149,63,0.08);
+.outline-btn:hover { border-color: rgba(201,168,76,0.6); background: rgba(201,168,76,0.07); color: var(--gold); }
+
+.contact-link {
+  font-size: 1.9rem; font-weight: 300; letter-spacing: 0.05em;
+  color: var(--text-main); text-decoration: none;
+  transition: color 0.3s ease, letter-spacing 0.3s ease;
+  font-family: 'Playfair Display', serif; font-style: italic;
+}
+.contact-link:hover { color: var(--gold); letter-spacing: 0.08em; }
+
+.about-card {
+  border-radius: 26px; padding: 2rem 1.4rem;
+  background: linear-gradient(160deg, rgba(255,255,255,0.035) 0%, rgba(0,0,0,0.16) 100%);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: var(--card-shadow); position: relative; overflow: hidden;
+}
+.about-card::before {
+  content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(to right, transparent, rgba(201,168,76,0.3), transparent);
+}
+.about-divider { width: 100%; height: 1px; margin: 2rem 0; background: linear-gradient(to right, transparent, rgba(201,168,76,0.2), transparent); }
+.about-label { font-size: 0.68rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold); }
+
+.instagram-glow {
+  border: 1px solid rgba(201,168,76,0.45);
+  box-shadow: 0 0 0 1px rgba(201,168,76,0.2), 0 0 20px rgba(201,168,76,0.25), 0 0 40px rgba(201,168,76,0.14);
+  transition: all 0.45s ease;
+}
+.instagram-glow:hover {
+  box-shadow: 0 0 0 1px rgba(201,168,76,0.5), 0 0 28px rgba(201,168,76,0.45), 0 0 60px rgba(201,168,76,0.28);
+  transform: scale(1.08);
 }
 
-.reveal-hidden {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1);
-}
-.reveal-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.reveal-hidden { opacity: 0; transform: translateY(28px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+.reveal-visible { opacity: 1; transform: translateY(0); }
 
-::-webkit-scrollbar { width: 12px; }
+.hero-title, .hero-subtitle, .hero-actions {
+  opacity: 0; transform: translateY(22px); animation: luxReveal 0.95s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+.hero-title    { animation-delay: 0.18s; }
+.hero-subtitle { animation-delay: 0.34s; }
+.hero-actions  { animation-delay: 0.48s; }
+@keyframes luxReveal { to { opacity: 1; transform: translateY(0); } }
+
+/* ── Gallery soon ── */
+.soon-wrap { min-height: 55vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem; text-align: center; }
+.soon-word {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: clamp(4rem, 14vw, 9rem); line-height: 1;
+  background: linear-gradient(105deg, #7a5228 0%, #c9a84c 30%, #fdf6d3 52%, #b8873a 72%, #7a5228 100%);
+  background-size: 220% auto; -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: goldShimmer 4s linear infinite; letter-spacing: 0.06em;
+}
+.soon-sub { font-size: 0.85rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--text-muted); max-width: 22rem; line-height: 1.7; }
+.soon-instagram {
+  display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1.4rem; border-radius: 999px;
+  background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.28);
+  color: var(--gold); font-size: 0.8rem; letter-spacing: 0.16em; text-transform: uppercase;
+  text-decoration: none; transition: all 0.3s ease;
+}
+.soon-instagram:hover { background: rgba(201,168,76,0.14); border-color: rgba(201,168,76,0.55); transform: translateY(-2px); }
+
+::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: var(--bg-body); }
-::-webkit-scrollbar-thumb {
-  background-color: var(--gold);
-  border-radius: 999px;
-  border: 3px solid var(--bg-body);
-}
+::-webkit-scrollbar-thumb { background: linear-gradient(var(--gold-deep), var(--gold)); border-radius: 999px; border: 2px solid var(--bg-body); }
 
 @media (min-width: 900px) {
-  .choices-grid.frame-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
-  .choices-grid.rope-grid { grid-template-columns: repeat(5, minmax(0,1fr)); }
-  .choices-grid.carpet-grid { grid-template-columns: repeat(4, minmax(0,1fr)); }
-  .details-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-  .about-stack { grid-template-columns: 1.1fr 0.9fr; }
+  .choices-grid.frame-grid   { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .choices-grid.rope-grid    { grid-template-columns: repeat(5, minmax(0,1fr)); }
+  .choices-grid.carpet-grid  { grid-template-columns: repeat(4, minmax(0,1fr)); }
+  .details-grid              { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .about-stack               { grid-template-columns: 1.1fr 0.9fr; }
 }
 
 @media (max-width: 768px) {
-  .about-hero-title {
-    font-size: 2.45rem;
-    text-align: center;
-  }
-  .about-hero-subtitle {
-    font-size: 0.95rem;
-    max-width: 17rem;
-    text-align: center;
-  }
-  .about-card {
-    padding: 1.35rem 1rem 1.5rem;
-  }
-  .contact-link {
-    font-size: 2.1rem;
-  }
-
-  body {
-    padding-left: max(12px, env(safe-area-inset-left));
-    padding-right: max(12px, env(safe-area-inset-right));
-    padding-bottom: max(18px, env(safe-area-inset-bottom));
-  }
-  nav {
-    padding: 0.72rem 0.85rem;
-    border-radius: 22px;
-  }
+  body { padding-left: max(10px, env(safe-area-inset-left)); padding-right: max(10px, env(safe-area-inset-right)); padding-bottom: max(20px, env(safe-area-inset-bottom)); }
+  nav { padding: 0.65rem 0.85rem; border-radius: 18px; top: 12px; left: 12px; right: 12px; }
   nav .desktop-links { display: none !important; }
-  .hero-shell { padding-top: 96px; }
-  .hero-card {
-    min-height: 66vh;
-    padding: 1rem;
-    border-radius: 28px;
-    background-position: center center;
-  }
-  .kicker {
-    font-size: 0.78rem;
-    letter-spacing: 0.42em;
-    text-align: center;
-    margin-bottom: 0.6rem;
-    width: 100%;
-  }
+  .page-frame { inset: 6px; border-radius: 24px; }
+  .hero-shell { padding-top: 88px; }
+  .hero-card { min-height: 68vh; padding: 1.1rem; border-radius: 26px; }
   .hero-content { max-width: 100%; }
-  .hero-title {
-    font-size: 2.45rem;
-    line-height: 1.06;
-    text-align: center;
-    max-width: 12rem;
-    margin: 0 auto;
-  }
-  .hero-subtitle {
-    font-size: 0.92rem;
-    text-align: center;
-    max-width: 18.5rem;
-    margin: 1rem auto 0;
-  }
+.hero-kicker-top { font-size: 1.2rem !important; letter-spacing: 0.3em; top: 4.5rem; gap: 0.65rem; }
+.hero-kicker-top::before, .hero-kicker-top::after { width: 1.4rem; }
+  .hero-title { font-size: 2.55rem; line-height: 1.04; text-align: center; margin: 0 auto; }
+  .hero-subtitle { font-size: 0.9rem; text-align: center; max-width: 19rem; margin: 1rem auto 0; }
   .hero-actions { flex-direction: column; }
   .hero-actions a, .hero-actions button { width: 100%; justify-content: center; }
-  .hero-mobile-links {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.4rem;
-    margin-top: 0.9rem;
-    width: 100%;
-  }
-  .hero-mobile-links .nav-link {
-    padding: 0.55rem 0.4rem;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.08);
-    font-size: 0.68rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    text-align: center;
-    white-space: nowrap;
-  }
-  .section-heading { font-size: 1.8rem; }
-  .section-copy { font-size: 0.92rem; }
-  .editorial-card { border-radius: 24px; }
+  .hero-mobile-links { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.4rem; margin-top: 0.9rem; width: 100%; }
+  .hero-mobile-links .nav-link { padding: 0.5rem 0.35rem; border-radius: 999px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.07); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; text-align: center; }
+  .section-heading { font-size: 1.75rem; }
+  .editorial-card { border-radius: 22px; padding: 1.1rem; }
   .gallery-item { min-height: 160px; }
   .mount-toggle { flex-direction: column; align-items: flex-start; }
-  .mount-toggle .preview { max-width: 100%; width: 100%; min-height: 148px; padding: 0.6rem; }
-  .reservation-card-mobile { padding: 0.85rem 0.9rem; overflow: hidden; }
-  .reservation-title-wrap {
-    min-height: 88px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 0 0.2rem;
-  }
-  .reservation-title-mobile {
-    font-size: 1.7rem;
-    line-height: 1;
-    letter-spacing: 0.22em;
-    margin: 0;
-    width: 100%;
-    text-align: center;
-  }
-  .frame-grid .option-card { padding: 0.85rem; }
-  .frame-grid .option-visual {
-    aspect-ratio: 3 / 4;
-    padding: 0.6rem;
-    background: rgba(255,255,255,0.02);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .frame-grid .option-visual img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto;
-  }
-  .frame-grid .option-card h3 { margin-top: 0.7rem; }
+  .mount-toggle .preview { max-width: 100%; width: 100%; min-height: 140px; }
+  .frame-grid .option-card { padding: 0.8rem; }
+  .frame-grid .option-visual { aspect-ratio: 3/4; }
+  .frame-grid .option-visual img { object-fit: contain; }
+  .contact-link { font-size: 1.65rem; }
+  .about-card { padding: 1.5rem 1rem; }
+  .soon-word { font-size: clamp(3.5rem, 20vw, 6rem); }
 }
 
 @media (max-width: 420px) {
-  .frame-grid .option-card { padding: 0.75rem; }
-  .frame-grid .option-visual { padding: 0.45rem; }
-  .reservation-card-mobile { padding-left: 0.7rem; padding-right: 0.7rem; }
-  .reservation-title-wrap { min-height: 80px; }
-  .reservation-title-mobile { font-size: 1.45rem; letter-spacing: 0.18em; }
-  .kicker { font-size: 0.95rem; letter-spacing: 0.34em; }
-  .hero-title { font-size: 1.72rem; max-width: 11rem; }
-  .hero-subtitle { font-size: 0.88rem; max-width: 17rem; }
+  .hero-title { font-size: 2rem; }
+  .hero-subtitle { font-size: 0.86rem; }
+.hero-kicker-top { font-size: 0.75rem; letter-spacing: 0.26em; }
+  .frame-grid .option-card { padding: 0.7rem; }
+  .contact-link { font-size: 1.45rem; }
 }
-
-@media (max-width: 360px) {
-  .reservation-title-mobile { font-size: 1.28rem; letter-spacing: 0.14em; }
-}
-.hero-mirror-title,
-.hero-title,
-.hero-subtitle,
-.hero-nav{
-opacity:0;
-transform:translateY(20px);
-animation:luxReveal 0.9s ease forwards;
-}
-
-.hero-title{
-animation-delay:0.25s;
-}
-
-.hero-subtitle{
-animation-delay:0.45s;
-}
-
-.hero-nav{
-animation-delay:0.65s;
-}
-
-@keyframes luxReveal{
- to{
-  opacity:1;
-  transform:translateY(0);
- }
-}
-
-.hero-mirror-title{
-background:linear-gradient(
-90deg,
-#8a6236,
-#bf953f,
-#fcf6ba,
-#b38728,
-#aa771c,
-#bf953f,
-#fcf6ba
-);
-background-size:300% 100%;
--webkit-background-clip:text;
-color:transparent;
-animation:goldShimmer 7s linear infinite;
-}
-
-@keyframes goldShimmer{
-0%{background-position:0% 50%;}
-100%{background-position:200% 50%;}
-}
-
-.option-card{
-transition:transform 0.35s ease,box-shadow 0.35s ease,border-color 0.35s ease;
-}
-
-.option-card:active,
-.option-card:hover{
-transform:scale(1.02);
-box-shadow:
-0 0 0 1px rgba(191,149,63,0.35),
-0 0 18px rgba(191,149,63,0.25),
-0 0 38px rgba(191,149,63,0.18);
-border-color:rgba(191,149,63,0.55);
-}
-
 </style>
 </head>
+
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KN9PBXP7');</script>
+
 <body class="min-h-screen relative" lang="en">
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KN9PBXP7" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<!-- Intro -->
 <div id="intro-screen" class="fixed inset-0 z-[10000] hidden items-center justify-center transition-opacity duration-1000">
   <div class="text-center w-full px-4">
     <img src="logo.png" alt="FrameByKaram Logo" class="mx-auto w-52 md:w-80 object-contain opacity-0 animate-logo-reveal mb-6" onerror="this.style.display='none'; document.getElementById('fallback-logo-text').classList.remove('hidden');">
-    <div id="fallback-logo-text" class="hidden serif-font always-serif text-4xl md:text-7xl gold-text tracking-widest opacity-0 animate-logo-reveal font-bold">FrameByKaram</div>
-    <div class="mt-4 h-0.5 bg-gradient-to-r from-transparent via-[#bf953f] to-transparent w-0 mx-auto animate-line-expand"></div>
+    <div id="fallback-logo-text" class="hidden always-serif text-4xl md:text-7xl gold-text tracking-widest opacity-0 animate-logo-reveal font-bold">FrameByKaram</div>
+    <div class="mt-5 h-px bg-gradient-to-r from-transparent via-[#c9a84c] to-transparent w-0 mx-auto animate-line-expand"></div>
   </div>
 </div>
 
-<div class="page-frame"></div>
+<!-- Page frame -->
+<div class="page-frame"><div class="page-frame-inner"></div></div>
 
-<div id="lightbox" class="fixed inset-0 z-[10001] bg-black/95 backdrop-blur-md invisible opacity-0 flex items-center justify-center p-4" onclick="closeLightbox()">
+<!-- Lightbox -->
+<div id="lightbox" class="fixed inset-0 z-[10001] bg-black/96 backdrop-blur-lg invisible opacity-0 flex items-center justify-center p-4" onclick="closeLightbox()">
   <div class="relative max-w-5xl max-h-full w-full flex justify-center">
-    <button onclick="closeLightbox()" class="absolute -top-12 right-0 md:-right-12 text-stone-400 hover:text-[#bf953f] transition-colors duration-300"><i data-lucide="x" class="w-8 h-8"></i></button>
-    <img id="lightbox-img" src="" class="max-w-full max-h-[85vh] object-contain border border-[#bf953f] shadow-[0_0_50px_rgba(191,149,63,0.2)] rounded-2xl" onclick="event.stopPropagation()">
+    <button onclick="closeLightbox()" class="absolute -top-12 right-0 md:-right-14 text-stone-500 hover:text-[#c9a84c] transition-colors duration-300">
+      <i data-lucide="x" class="w-7 h-7"></i>
+    </button>
+    <img id="lightbox-img" src="" class="max-w-full max-h-[86vh] object-contain border border-[rgba(201,168,76,0.3)] shadow-[0_0_60px_rgba(201,168,76,0.18)] rounded-2xl" onclick="event.stopPropagation()">
   </div>
 </div>
 
+<!-- Nav -->
 <nav>
   <div class="flex items-center justify-between gap-3">
     <div class="brand-wordmark gold-text always-serif" onclick="showPage('booking')">FrameByKaram</div>
-    <div class="desktop-links flex items-center gap-6 text-xs uppercase tracking-[0.22em] text-stone-400">
+    <div class="desktop-links flex items-center gap-7 text-xs uppercase tracking-[0.2em] text-stone-500">
       <span class="nav-link active" onclick="showPage('booking')" data-page="booking" data-i18n="nav_reserve">Reserve</span>
       <span class="nav-link" onclick="showPage('gallery')" data-page="gallery" data-i18n="nav_gallery">Gallery</span>
       <span class="nav-link" onclick="showPage('about')" data-page="about" data-i18n="nav_about">Contact Us</span>
     </div>
     <div class="flex items-center gap-1.5">
-      <button onclick="toggleTheme()" class="icon-pill" title="Toggle Theme"><i data-lucide="sun" id="theme-icon-sun" class="hidden w-4 h-4"></i><i data-lucide="moon" id="theme-icon-moon" class="w-4 h-4"></i></button>
+      <button onclick="toggleTheme()" class="icon-pill flex items-center justify-center" title="Toggle Theme">
+        <i data-lucide="sun" id="theme-icon-sun" class="hidden w-4 h-4"></i>
+        <i data-lucide="moon" id="theme-icon-moon" class="w-4 h-4"></i>
+      </button>
       <button onclick="setLanguage('en')" class="lang-btn active" id="lang-en">EN</button>
       <button onclick="setLanguage('he')" class="lang-btn" id="lang-he">HE</button>
       <button onclick="setLanguage('ar')" class="lang-btn" id="lang-ar">AR</button>
@@ -878,232 +539,190 @@ border-color:rgba(191,149,63,0.55);
   </div>
 </nav>
 
+<!-- ══════════════════ BOOKING PAGE ══════════════════ -->
 <div id="booking-page" class="transition-all duration-500 ease-in-out opacity-100 translate-y-0">
   <div class="hero-shell px-3 md:px-6 max-w-6xl mx-auto">
     <header class="hero-card reveal-hidden">
+
+      <!-- KICKER: pinned to top center of hero image -->
+      <div class="hero-kicker-top" data-i18n="hero_kicker">MIRROR BOOTH</div>
+
       <div class="hero-content">
-        <div class="kicker" data-i18n="hero_kicker">MIRROR BOOTH</div>
         <h1 class="hero-title always-serif" data-i18n="hero_title">Reflect Your Elegance</h1>
         <p class="hero-subtitle" data-i18n="hero_subtitle">Customize your premium photo experience. Select your finishes below to request a reservation.</p>
-        <div class="hero-actions"></div>
+        <div class="hero-actions">
+          <button type="button" onclick="document.getElementById('booking-form-start').scrollIntoView({behavior:'smooth'})" class="gold-btn px-6 py-3 rounded-full text-sm" data-i18n="btn_start_reservation">Begin Reservation</button>
+        </div>
         <div class="hero-mobile-links">
           <span class="nav-link active" onclick="showPage('booking')" data-page="booking" data-i18n="nav_reserve">Reserve</span>
           <span class="nav-link" onclick="showPage('gallery')" data-page="gallery" data-i18n="nav_gallery">Gallery</span>
-          <span class="nav-link" onclick="showPage('about')" data-page="about" data-i18n="nav_about">Contact Us</span>
+          <span class="nav-link" onclick="showPage('about')" data-page="about" data-i18n="nav_about">Contact</span>
         </div>
       </div>
     </header>
   </div>
 
-  <main class="max-w-6xl mx-auto px-3 md:px-6 pb-20">
+  <main class="max-w-6xl mx-auto px-3 md:px-6 pb-24">
     <form id="bookingForm" onsubmit="event.preventDefault(); sendToWhatsApp();">
-      
+      <div id="booking-form-start"></div>
 
+      <!-- Frame -->
       <section class="section-wrap editorial-card reveal-hidden">
-        <h2 class="section-heading text-[1.65rem]" data-i18n="step2_title">Mirror Frame</h2>
+        <h2 class="section-heading text-[1.6rem]" data-i18n="step2_title">Mirror Frame</h2>
         <p class="section-copy mt-2 mb-5" data-i18n="step2_desc">Choose the frame finish for the mirror.</p>
         <div class="choices-grid frame-grid">
-          <div class="option-card group" onclick="selectOption('frame', 'Vintage Gold')">
+          <div class="option-card group" onclick="selectOption('frame','Vintage Gold')">
             <div class="option-visual">
               <button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('royal-gold.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button>
-              <img src="royal-gold.jpg" id="img-gold-frame" alt="Vintage Gold Frame" onerror="this.style.display='none'; this.parentElement.style.background='#bf953f';">
+              <img loading="lazy" src="royal-gold.jpg" alt="Vintage Gold Frame" onerror="this.style.display='none'; this.parentElement.style.background='#bf953f';">
             </div>
             <h3 data-i18n="frame_gold">Vintage Gold</h3>
-            <div id="check-frame-Vintage Gold" class="selection-check hidden"><i data-lucide="check-circle"></i></div>
+            <div id="check-frame-Vintage Gold" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div>
           </div>
-
-          <div class="option-card group" onclick="selectOption('frame', 'Vintage Silver')">
+          <div class="option-card group" onclick="selectOption('frame','Vintage Silver')">
             <div class="option-visual">
               <button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('vintage-silver.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button>
-              <img src="vintage-silver.jpg" id="img-silver-frame" alt="Vintage Silver Frame" onerror="this.style.display='none'; this.parentElement.style.background='#9ca3af';">
+              <img loading="lazy" src="vintage-silver.jpg" alt="Vintage Silver Frame" onerror="this.style.display='none'; this.parentElement.style.background='#9ca3af';">
             </div>
             <h3 data-i18n="frame_silver">Vintage Silver</h3>
-            <div id="check-frame-Vintage Silver" class="selection-check hidden"><i data-lucide="check-circle"></i></div>
+            <div id="check-frame-Vintage Silver" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div>
           </div>
-
-          <div class="option-card group" onclick="selectOption('frame', 'None')">
+          <div class="option-card group" onclick="selectOption('frame','None')">
             <div class="option-visual">
               <button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mirror-no-frame.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button>
-              <img src="mirror-no-frame.jpg" alt="Mirror Without Frame" onerror="this.style.display='none'; this.parentElement.style.background='rgba(255,255,255,0.04)';">
+              <img loading="lazy" src="mirror-no-frame.jpg" alt="Mirror Without Frame" onerror="this.style.display='none'; this.parentElement.style.background='rgba(255,255,255,0.04)';">
             </div>
             <h3 data-i18n="frame_none">No Frame</h3>
-            <div id="check-frame-None" class="selection-check hidden"><i data-lucide="check-circle"></i></div>
+            <div id="check-frame-None" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div>
           </div>
         </div>
         <input type="hidden" id="frameSelection" required>
       </section>
 
+      <!-- Rope -->
       <section class="section-wrap editorial-card reveal-hidden">
-        <h2 class="section-heading text-[1.65rem]" data-i18n="step3_title">Velvet Rope / Twisted Rope</h2>
+        <h2 class="section-heading text-[1.6rem]" data-i18n="step3_title">Velvet Rope / Twisted Rope</h2>
         <p class="section-copy mt-2 mb-5" data-i18n="step3_desc">Select the color of the velvet crowd control ropes.</p>
         <div class="choices-grid rope-grid">
-          <div class="option-card compact group" onclick="selectOption('rope', 'Red')">
-            <div class="option-visual">
-              <button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('red-rope.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button>
-              <img src="red-rope.jpg" id="img-red-rope" alt="Red Velvet Rope" onerror="this.style.display='none'; this.parentElement.style.background='#7f1d1d';">
-            </div>
+          <div class="option-card compact group" onclick="selectOption('rope','Red')">
+            <div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('red-rope.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img loading="lazy" src="red-rope.jpg" alt="Red Velvet Rope" onerror="this.style.display='none'; this.parentElement.style.background='#7f1d1d';"></div>
             <h3 data-i18n="rope_red">Red Velvet</h3>
-            <div id="check-rope-Red" class="selection-check hidden"><i data-lucide="check-circle"></i></div>
+            <div id="check-rope-Red" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div>
           </div>
-          <div class="option-card compact group" onclick="selectOption('rope', 'Twisted Pink')">
-            <div class="option-visual">
-              <button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('twisted-pink.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button>
-              <img src="twisted-pink.jpg" id="img-pink-rope" alt="Twisted Pink Rope" onerror="this.style.display='none'; this.parentElement.style.background='#f472b6';">
-            </div>
+          <div class="option-card compact group" onclick="selectOption('rope','Twisted Pink')">
+            <div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('twisted-pink.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img loading="lazy" src="twisted-pink.jpg" alt="Twisted Pink Rope" onerror="this.style.display='none'; this.parentElement.style.background='#f472b6';"></div>
             <h3 data-i18n="rope_twisted_pink">Twisted Pink</h3>
-            <div id="check-rope-Twisted Pink" class="selection-check hidden"><i data-lucide="check-circle"></i></div>
+            <div id="check-rope-Twisted Pink" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div>
           </div>
-          <div class="option-card compact group" onclick="selectOption('rope', 'Twisted White')">
-            <div class="option-visual">
-              <button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('twisted-white.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button>
-              <img src="twisted-white.jpg" id="img-white-rope" alt="Twisted White Rope" onerror="this.style.display='none'; this.parentElement.style.background='#e5e7eb';">
-            </div>
+          <div class="option-card compact group" onclick="selectOption('rope','Twisted White')">
+            <div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('twisted-white.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img loading="lazy" src="twisted-white.jpg" alt="Twisted White Rope" onerror="this.style.display='none'; this.parentElement.style.background='#e5e7eb';"></div>
             <h3 data-i18n="rope_twisted_white">Twisted White</h3>
-            <div id="check-rope-Twisted White" class="selection-check hidden"><i data-lucide="check-circle"></i></div>
+            <div id="check-rope-Twisted White" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div>
           </div>
-          <div class="option-card compact group" onclick="selectOption('rope', 'Twisted Gold')">
-            <div class="option-visual">
-              <button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('twisted-gold.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button>
-              <img src="twisted-gold.jpg" id="img-gold-rope" alt="Twisted Gold Rope" onerror="this.style.display='none'; this.parentElement.style.background='#ca8a04';">
-            </div>
+          <div class="option-card compact group" onclick="selectOption('rope','Twisted Gold')">
+            <div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('twisted-gold.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img loading="lazy" src="twisted-gold.jpg" alt="Twisted Gold Rope" onerror="this.style.display='none'; this.parentElement.style.background='#ca8a04';"></div>
             <h3 data-i18n="rope_twisted_gold">Twisted Gold</h3>
-            <div id="check-rope-Twisted Gold" class="selection-check hidden"><i data-lucide="check-circle"></i></div>
+            <div id="check-rope-Twisted Gold" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div>
           </div>
-          <div class="option-card compact group" onclick="selectOption('rope', 'None')">
-            <div class="option-visual flex items-center justify-center"><i data-lucide="ban" class="w-10 h-10 text-stone-500"></i></div>
+          <div class="option-card compact group" onclick="selectOption('rope','None')">
+            <div class="option-visual flex items-center justify-center"><i data-lucide="ban" class="w-9 h-9 text-stone-600"></i></div>
             <h3 data-i18n="rope_none">No Rope</h3>
-            <div id="check-rope-None" class="selection-check hidden"><i data-lucide="check-circle"></i></div>
+            <div id="check-rope-None" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div>
           </div>
         </div>
         <input type="hidden" id="ropeSelection" required>
       </section>
 
+      <!-- Carpet -->
       <section class="section-wrap editorial-card reveal-hidden">
-        <h2 class="section-heading text-[1.65rem]" data-i18n="step_carpet_title">Carpet</h2>
+        <h2 class="section-heading text-[1.6rem]" data-i18n="step_carpet_title">Carpet</h2>
         <p class="section-copy mt-2 mb-5" data-i18n="step_carpet_desc">Select the carpet color for your event.</p>
         <div class="choices-grid carpet-grid">
-          <div class="option-card group" onclick="selectOption('carpet', 'Red')">
-            <div class="option-visual">
-              <button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('carpet-red.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button>
-              <img src="carpet-red.jpg" id="img-carpet-red" alt="Red Carpet" onerror="this.style.display='none'; this.parentElement.style.background='#7f1d1d';">
-            </div>
+          <div class="option-card group" onclick="selectOption('carpet','Red')">
+            <div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('carpet-red.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img loading="lazy" src="carpet-red.jpg" alt="Red Carpet" onerror="this.style.display='none'; this.parentElement.style.background='#7f1d1d';"></div>
             <h3 data-i18n="carpet_red">Red Carpet</h3>
-            <div id="check-carpet-Red" class="selection-check hidden"><i data-lucide="check-circle"></i></div>
+            <div id="check-carpet-Red" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div>
           </div>
-          <div class="option-card group" onclick="selectOption('carpet', 'Beige')">
-            <div class="option-visual">
-              <button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('carpet-beige.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button>
-              <img src="carpet-beige.jpg" id="img-carpet-beige" alt="Beige Carpet" onerror="this.style.display='none'; this.parentElement.style.background='#d4c4a8';">
-            </div>
+          <div class="option-card group" onclick="selectOption('carpet','Beige')">
+            <div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('carpet-beige.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img loading="lazy" src="carpet-beige.jpg" alt="Beige Carpet" onerror="this.style.display='none'; this.parentElement.style.background='#d4c4a8';"></div>
             <h3 data-i18n="carpet_beige">Beige Carpet</h3>
-            <div id="check-carpet-Beige" class="selection-check hidden"><i data-lucide="check-circle"></i></div>
+            <div id="check-carpet-Beige" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div>
           </div>
-          <div class="option-card group" onclick="selectOption('carpet', 'White')">
-            <div class="option-visual">
-              <button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('carpet-white.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button>
-              <img src="carpet-white.jpg" id="img-carpet-white" alt="White Carpet" onerror="this.style.display='none'; this.parentElement.style.background='#f5f5f4';">
-            </div>
+          <div class="option-card group" onclick="selectOption('carpet','White')">
+            <div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('carpet-white.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img loading="lazy" src="carpet-white.jpg" alt="White Carpet" onerror="this.style.display='none'; this.parentElement.style.background='#f5f5f4';"></div>
             <h3 data-i18n="carpet_white">White Carpet</h3>
-            <div id="check-carpet-White" class="selection-check hidden"><i data-lucide="check-circle"></i></div>
+            <div id="check-carpet-White" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div>
           </div>
-          <div class="option-card group" onclick="selectOption('carpet', 'Pink')">
-            <div class="option-visual">
-              <button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('carpet-pink.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button>
-              <img src="carpet-pink.jpg" id="img-carpet-pink" alt="Pink Carpet" onerror="this.style.display='none'; this.parentElement.style.background='#fbcfe8';">
-            </div>
+          <div class="option-card group" onclick="selectOption('carpet','Pink')">
+            <div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('carpet-pink.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img loading="lazy" src="carpet-pink.jpg" alt="Pink Carpet" onerror="this.style.display='none'; this.parentElement.style.background='#fbcfe8';"></div>
             <h3 data-i18n="carpet_pink">Pink Carpet</h3>
-            <div id="check-carpet-Pink" class="selection-check hidden"><i data-lucide="check-circle"></i></div>
+            <div id="check-carpet-Pink" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div>
           </div>
         </div>
-        <input type="hidden" id="carpetSelection" required>
+        <input type="hidden" id="carpetSelection">
       </section>
 
+      <!-- Photo Mount -->
       <section class="section-wrap editorial-card reveal-hidden">
-        <h2 class="section-heading text-[1.65rem]" data-i18n="step4_title">Photo Mount</h2>
+        <h2 class="section-heading text-[1.6rem]" data-i18n="step4_title">Photo Mount</h2>
         <p class="section-copy mt-2 mb-5" data-i18n="step4_desc">The cardboard frame attached to final printed photos.</p>
         <div class="space-y-4">
           <button type="button" class="mount-toggle" onclick="toggleMountCategory('mount-1pic')" aria-expanded="false" aria-controls="mount-1pic">
             <div>
-              <div class="kicker text-[var(--gold)] !mb-2" style="font-size:0.64rem" data-i18n="mount_group_one">1 Picture</div>
-              <div class="text-base font-medium" data-i18n="mount_group_one_desc">Elegant single-photo presentation</div>
+              <div class="about-label mb-2" data-i18n="mount_group_one">1 Picture</div>
+              <div class="text-sm font-medium" data-i18n="mount_group_one_desc">Elegant single-photo presentation</div>
             </div>
-            <div class="preview"><img src="1pic-preview.jpg" alt="1 Picture Preview" onerror="this.style.display='none';"></div>
-            <i data-lucide="chevron-down" id="arrow-mount-1pic" class="dropdown-arrow w-5 h-5 text-stone-500"></i>
+            <div class="preview"><img loading="lazy" src="1pic-preview.jpg" alt="1 Picture Preview" onerror="this.style.display='none';"></div>
+            <i data-lucide="chevron-down" id="arrow-mount-1pic" class="dropdown-arrow w-5 h-5 text-stone-500 flex-shrink-0"></i>
           </button>
-          <div id="mount-1pic" class="hidden mt-4">
+          <div id="mount-1pic" class="hidden mt-3">
             <div class="choices-grid mount-options-2">
-              <div class="option-card group" onclick="selectOption('cardboard', 'Luxury White')">
-                <div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mount-luxury-white.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img src="mount-luxury-white.jpg" alt="Luxury White Mount" onerror="this.style.display='none'; this.parentElement.style.background='#f5f5f4';"></div>
-                <h3 data-i18n="mount_luxury_white">Luxury White</h3>
-                <div id="check-cardboard-Luxury White" class="selection-check hidden"><i data-lucide="check-circle"></i></div>
-              </div>
-              <div class="option-card group" onclick="selectOption('cardboard', 'Natural Kraft XL')">
-                <div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mount-kraft-xl.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img src="mount-kraft-xl.jpg" alt="Natural Kraft XL Mount" onerror="this.style.display='none'; this.parentElement.style.background='#d2b48c';"></div>
-                <h3 data-i18n="mount_kraft_xl">Natural Kraft XL</h3>
-                <div id="check-cardboard-Natural Kraft XL" class="selection-check hidden"><i data-lucide="check-circle"></i></div>
-              </div>
+              <div class="option-card group" onclick="selectOption('cardboard','Luxury White')"><div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mount-luxury-white.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img loading="lazy" src="mount-luxury-white.jpg" alt="Luxury White Mount" onerror="this.style.display='none'; this.parentElement.style.background='#f5f5f4';"></div><h3 data-i18n="mount_luxury_white">Luxury White</h3><div id="check-cardboard-Luxury White" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div></div>
+              <div class="option-card group" onclick="selectOption('cardboard','Natural Kraft XL')"><div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mount-kraft-xl.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img loading="lazy" src="mount-kraft-xl.jpg" alt="Natural Kraft XL Mount" onerror="this.style.display='none'; this.parentElement.style.background='#d2b48c';"></div><h3 data-i18n="mount_kraft_xl">Natural Kraft XL</h3><div id="check-cardboard-Natural Kraft XL" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div></div>
             </div>
           </div>
-
           <button type="button" class="mount-toggle" onclick="toggleMountCategory('mount-3in1')" aria-expanded="false" aria-controls="mount-3in1">
             <div>
-              <div class="kicker text-[var(--gold)] !mb-2" style="font-size:0.64rem" data-i18n="mount_group_two">3 in 1 Picture</div>
-              <div class="text-base font-medium" data-i18n="mount_group_two_desc">Editorial multi-photo print presentation</div>
+              <div class="about-label mb-2" data-i18n="mount_group_two">3 in 1 Picture</div>
+              <div class="text-sm font-medium" data-i18n="mount_group_two_desc">Editorial multi-photo print presentation</div>
             </div>
-            <div class="preview"><img src="3in1-preview.jpg" alt="3 in 1 Picture Preview" onerror="this.style.display='none';"></div>
-            <i data-lucide="chevron-down" id="arrow-mount-3in1" class="dropdown-arrow w-5 h-5 text-stone-500"></i>
+            <div class="preview"><img loading="lazy" src="3in1-preview.jpg" alt="3 in 1 Picture Preview" onerror="this.style.display='none';"></div>
+            <i data-lucide="chevron-down" id="arrow-mount-3in1" class="dropdown-arrow w-5 h-5 text-stone-500 flex-shrink-0"></i>
           </button>
-          <div id="mount-3in1" class="hidden mt-4">
+          <div id="mount-3in1" class="hidden mt-3">
             <div class="choices-grid mount-options-3">
-              <div class="option-card group" onclick="selectOption('cardboard', 'White')">
-                <div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mount-white.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img src="mount-white.jpg" alt="Classic White Mount" onerror="this.style.display='none'; this.parentElement.style.background='#ffffff';"></div>
-                <h3 data-i18n="mount_white">Monochrome</h3>
-                <div id="check-cardboard-White" class="selection-check hidden"><i data-lucide="check-circle"></i></div>
-              </div>
-              <div class="option-card group" onclick="selectOption('cardboard', 'Pure White')">
-                <div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mount-pure-white.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img src="mount-pure-white.jpg" alt="Pure White Mount" onerror="this.style.display='none'; this.parentElement.style.background='#f8f8f8';"></div>
-                <h3 data-i18n="mount_pure_white">Pure White</h3>
-                <div id="check-cardboard-Pure White" class="selection-check hidden"><i data-lucide="check-circle"></i></div>
-              </div>
-              <div class="option-card group" onclick="selectOption('cardboard', 'White & Gold')">
-                <div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mount-white-gold.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img src="mount-white-gold.jpg" alt="White & Gold Mount" onerror="this.style.display='none'; this.parentElement.style.background='#f1e6cc';"></div>
-                <h3 data-i18n="mount_white_gold">White & Gold</h3>
-                <div id="check-cardboard-White & Gold" class="selection-check hidden"><i data-lucide="check-circle"></i></div>
-              </div>
-              <div class="option-card group" onclick="selectOption('cardboard', 'Natural Kraft')">
-                <div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mount-kraft.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img src="mount-kraft.jpg" alt="Natural Kraft Mount" onerror="this.style.display='none'; this.parentElement.style.background='#d2b48c';"></div>
-                <h3 data-i18n="mount_kraft">Natural Kraft</h3>
-                <div id="check-cardboard-Natural Kraft" class="selection-check hidden"><i data-lucide="check-circle"></i></div>
-              </div>
-              <div class="option-card group" onclick="selectOption('cardboard', 'Luxury Black')">
-                <div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mount-black.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img src="mount-black.jpg" alt="Luxury Black Mount" onerror="this.style.display='none'; this.parentElement.style.background='#111111';"></div>
-                <h3 data-i18n="mount_black">Luxury Black</h3>
-                <div id="check-cardboard-Luxury Black" class="selection-check hidden"><i data-lucide="check-circle"></i></div>
-              </div>
-              <div class="option-card group" onclick="selectOption('cardboard', 'Classic Wine Red')">
-                <div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mount-wine-red.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img src="mount-wine-red.jpg" alt="Classic Wine Red Mount" onerror="this.style.display='none'; this.parentElement.style.background='#7a1726';"></div>
-                <span class="special-edition-wine">Special Order</span>
-                <h3 data-i18n="mount_wine_red">Classic Wine Red</h3>
-                <div id="check-cardboard-Classic Wine Red" class="selection-check hidden"><i data-lucide="check-circle"></i></div>
-              </div>
+              <div class="option-card group" onclick="selectOption('cardboard','White')"><div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mount-white.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img loading="lazy" src="mount-white.jpg" alt="Monochrome Mount" onerror="this.style.display='none'; this.parentElement.style.background='#fff';"></div><h3 data-i18n="mount_white">Monochrome</h3><div id="check-cardboard-White" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div></div>
+              <div class="option-card group" onclick="selectOption('cardboard','Pure White')"><div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mount-pure-white.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img loading="lazy" src="mount-pure-white.jpg" alt="Pure White Mount" onerror="this.style.display='none'; this.parentElement.style.background='#f8f8f8';"></div><h3 data-i18n="mount_pure_white">Pure White</h3><div id="check-cardboard-Pure White" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div></div>
+              <div class="option-card group" onclick="selectOption('cardboard','White & Gold')"><div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mount-white-gold.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img loading="lazy" src="mount-white-gold.jpg" alt="White & Gold Mount" onerror="this.style.display='none'; this.parentElement.style.background='#f1e6cc';"></div><h3 data-i18n="mount_white_gold">White & Gold</h3><div id="check-cardboard-White & Gold" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div></div>
+              <div class="option-card group" onclick="selectOption('cardboard','Natural Kraft')"><div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mount-kraft.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img loading="lazy" src="mount-kraft.jpg" alt="Natural Kraft Mount" onerror="this.style.display='none'; this.parentElement.style.background='#d2b48c';"></div><h3 data-i18n="mount_kraft">Natural Kraft</h3><div id="check-cardboard-Natural Kraft" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div></div>
+              <div class="option-card group" onclick="selectOption('cardboard','Luxury Black')"><div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mount-black.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img loading="lazy" src="mount-black.jpg" alt="Luxury Black Mount" onerror="this.style.display='none'; this.parentElement.style.background='#111';"></div><h3 data-i18n="mount_black">Luxury Black</h3><div id="check-cardboard-Luxury Black" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div></div>
+              <div class="option-card group" onclick="selectOption('cardboard','Classic Wine Red')"><div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mount-wine-red.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img loading="lazy" src="mount-wine-red.jpg" alt="Classic Wine Red Mount" onerror="this.style.display='none'; this.parentElement.style.background='#7a1726';"></div><span class="special-edition-wine">Special Order</span><h3 data-i18n="mount_wine_red">Classic Wine Red</h3><div id="check-cardboard-Classic Wine Red" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div></div>
             </div>
           </div>
         </div>
         <input type="hidden" id="cardboardSelection" required>
       </section>
 
+      <!-- Details -->
       <section class="section-wrap editorial-card reveal-hidden">
-        <h2 class="section-heading text-[1.65rem]" data-i18n="step1_title">Your Details</h2>
-        <p class="section-copy mt-2 mb-5" data-i18n="details_desc">Complete your reservation request and receive your offer on WhatsApp.</p>
+        <h2 class="section-heading text-[1.6rem]" data-i18n="step1_title">Your Details</h2>
+        <p class="section-copy mt-2 mb-6" data-i18n="details_desc">Complete your reservation request and receive your offer on WhatsApp.</p>
         <div class="details-grid">
           <div><label class="field-label" data-i18n="label_name">Full Name</label><input required type="text" id="name" placeholder="Your Name" class="lux-input" data-i18n-placeholder="placeholder_name"></div>
           <div><label class="field-label" data-i18n="label_phone">Phone Number</label><input required type="tel" id="phone" placeholder="050-0000000" class="lux-input"></div>
           <div class="relative">
             <label class="field-label" data-i18n="label_date">Event Date</label>
             <input type="hidden" id="date">
-            <button type="button" onclick="toggleCalendar()" class="lux-input flex justify-between items-center text-left cursor-pointer group"><span id="dateDisplay" class="text-stone-400" data-i18n="date_placeholder">Select Date</span><i data-lucide="calendar" class="w-4 h-4 text-stone-500 group-hover:text-[#bf953f] transition-colors"></i></button>
-            <div id="customCalendar" class="calendar-popup absolute left-0 right-0 top-full mt-2 shadow-xl z-50">
-              <div class="calendar-header"><button type="button" onclick="changeMonth(-1)" class="hover:text-white transition-colors"><i data-lucide="chevron-left" class="w-5 h-5"></i></button><span id="currentMonthYear">Month Year</span><button type="button" onclick="changeMonth(1)" class="hover:text-white transition-colors"><i data-lucide="chevron-right" class="w-5 h-5"></i></button></div>
+            <button type="button" onclick="toggleCalendar()" class="lux-input flex justify-between items-center text-left cursor-pointer group">
+              <span id="dateDisplay" class="text-stone-500" data-i18n="date_placeholder">Select Date</span>
+              <i data-lucide="calendar" class="w-4 h-4 text-stone-500 group-hover:text-[#c9a84c] transition-colors flex-shrink-0"></i>
+            </button>
+            <div id="customCalendar" class="calendar-popup absolute left-0 right-0 top-full mt-2 shadow-2xl z-50">
+              <div class="calendar-header">
+                <button type="button" onclick="changeMonth(-1)" class="hover:text-white transition-colors p-1"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
+                <span id="currentMonthYear" class="text-sm tracking-wider"></span>
+                <button type="button" onclick="changeMonth(1)" class="hover:text-white transition-colors p-1"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
+              </div>
               <div class="calendar-grid" id="calendarDays"></div>
             </div>
           </div>
@@ -1112,505 +731,393 @@ border-color:rgba(191,149,63,0.55);
           <div class="relative">
             <label class="field-label" data-i18n="label_event_type">Event Type</label>
             <input type="hidden" id="eventType">
-            <button type="button" onclick="toggleDropdown()" class="lux-input flex justify-between items-center text-left cursor-pointer group"><span id="eventTypeLabel" class="text-stone-400" data-i18n="select_event_type">Select Event Type</span><i data-lucide="chevron-down" id="dropdownArrow" class="dropdown-arrow w-4 h-4 text-stone-500 group-hover:text-[#bf953f] transition-colors"></i></button>
-            <div id="eventTypeDropdown" class="custom-dropdown-menu absolute left-0 right-0 top-full mt-2 shadow-xl z-50">
-              <ul class="flex flex-col text-stone-400">
-                <li class="p-4 hover:bg-stone-800/40 hover:text-[#bf953f] cursor-pointer transition-colors border-b border-white/5" onclick="selectEventOption('Wedding', 'event_wedding')" data-i18n="event_wedding">Wedding</li>
-                <li class="p-4 hover:bg-stone-800/40 hover:text-[#bf953f] cursor-pointer transition-colors border-b border-white/5" onclick="selectEventOption('Engagement', 'event_engagement')" data-i18n="event_engagement">Engagement</li>
-                <li class="p-4 hover:bg-stone-800/40 hover:text-[#bf953f] cursor-pointer transition-colors border-b border-white/5" onclick="selectEventOption('Birthday', 'event_birthday')" data-i18n="event_birthday">Birthday</li>
-                <li class="p-4 hover:bg-stone-800/40 hover:text-[#bf953f] cursor-pointer transition-colors border-b borderwhite/5" onclick="selectEventOption('Corporate', 'event_corporate')" data-i18n="event_corporate">Corporate</li>
-                <li class="p-4 hover:bg-stone-800/40 hover:text-[#bf953f] cursor-pointer transition-colors" onclick="selectEventOption('Other', 'event_other')" data-i18n="event_other">Other</li>
+            <button type="button" onclick="toggleDropdown()" class="lux-input flex justify-between items-center text-left cursor-pointer group">
+              <span id="eventTypeLabel" class="text-stone-500" data-i18n="select_event_type">Select Event Type</span>
+              <i data-lucide="chevron-down" id="dropdownArrow" class="dropdown-arrow w-4 h-4 text-stone-500 group-hover:text-[#c9a84c] transition-colors flex-shrink-0"></i>
+            </button>
+            <div id="eventTypeDropdown" class="custom-dropdown-menu absolute left-0 right-0 top-full mt-2 z-50">
+              <ul class="flex flex-col">
+                <li class="px-4 py-3.5 text-sm text-stone-400 hover:bg-white/5 hover:text-[#c9a84c] cursor-pointer transition-colors border-b border-white/5" onclick="selectEventOption('Wedding','event_wedding')" data-i18n="event_wedding">Wedding</li>
+                <li class="px-4 py-3.5 text-sm text-stone-400 hover:bg-white/5 hover:text-[#c9a84c] cursor-pointer transition-colors border-b border-white/5" onclick="selectEventOption('Engagement','event_engagement')" data-i18n="event_engagement">Engagement</li>
+                <li class="px-4 py-3.5 text-sm text-stone-400 hover:bg-white/5 hover:text-[#c9a84c] cursor-pointer transition-colors border-b border-white/5" onclick="selectEventOption('Birthday','event_birthday')" data-i18n="event_birthday">Birthday</li>
+                <li class="px-4 py-3.5 text-sm text-stone-400 hover:bg-white/5 hover:text-[#c9a84c] cursor-pointer transition-colors border-b border-white/5" onclick="selectEventOption('Corporate','event_corporate')" data-i18n="event_corporate">Corporate</li>
+                <li class="px-4 py-3.5 text-sm text-stone-400 hover:bg-white/5 hover:text-[#c9a84c] cursor-pointer transition-colors" onclick="selectEventOption('Other','event_other')" data-i18n="event_other">Other</li>
               </ul>
             </div>
           </div>
         </div>
-        <div class="mt-7 text-center">
-          <h3 class="section-heading text-[1.65rem] gold-text" data-i18n="summary_title">Ready to Book?</h3>
-          <p class="section-copy mt-3 mb-6" data-i18n="summary_desc">Clicking the button below will open WhatsApp with your order details pre-filled.</p>
-          <button type="submit" class="gold-btn w-full md:w-auto px-8 py-4 rounded-full text-base font-semibold tracking-[0.14em] uppercase" data-i18n="btn_submit">Get Your Offer</button>
+        <div class="mt-8 text-center">
+          <div class="about-label mb-3" data-i18n="summary_title">Ready to Book?</div>
+          <p class="section-copy mb-7 max-w-xs mx-auto" data-i18n="summary_desc">Clicking the button below will open WhatsApp with your order details pre-filled.</p>
+          <button type="submit" class="gold-btn inline-flex items-center gap-2 px-10 py-4 rounded-full text-sm font-bold tracking-[0.16em] uppercase">
+            <i data-lucide="send" class="w-4 h-4"></i>
+            <span data-i18n="btn_submit">Get Your Offer</span>
+          </button>
         </div>
       </section>
     </form>
   </main>
 </div>
 
+<!-- ══════════════════ GALLERY PAGE ══════════════════ -->
 <div id="gallery-page" class="hidden transition-all duration-500 ease-in-out opacity-0 translate-y-10">
   <div class="hero-shell px-3 md:px-6 max-w-6xl mx-auto">
-    <header class="editorial-card reveal-hidden text-center py-10 md:py-14">
-      <div class="kicker text-[var(--gold)]" data-i18n="gallery_kicker">Gallery</div>
-      <h1 class="hero-title text-[2.3rem] md:text-[4rem] italic" data-i18n="gallery_heading">Moments of Elegance</h1>
-      <p class="hero-subtitle mx-auto" data-i18n="gallery_subheading">Browse through our curated collection of mirror booth setups, event styling, and printed keepsakes.</p>
+    <header class="editorial-card reveal-hidden text-center py-12 md:py-16">
+      <div class="about-label mb-3" data-i18n="gallery_kicker">Gallery</div>
+      <h1 class="hero-title italic mt-3" data-i18n="gallery_heading">Moments of Elegance</h1>
+      <p class="section-copy mt-4 max-w-sm mx-auto" data-i18n="gallery_subheading">Browse through our curated collection of mirror booth setups, event styling, and printed keepsakes.</p>
     </header>
   </div>
-  <main class="max-w-6xl mx-auto px-3 md:px-6 pb-20">
+  <main class="max-w-6xl mx-auto px-3 md:px-6 pb-24">
     <section class="section-wrap editorial-card reveal-hidden">
-      <div class="flex items-center justify-center min-h-[50vh] w-full text-center">
-        <div class="gold-text always-serif text-5xl md:text-7xl tracking-[0.28em]">SOON</div>
+      <div class="soon-wrap">
+        <div class="soon-word">Soon</div>
+        <p class="soon-sub" data-i18n="gallery_coming_soon">We're curating our portfolio of beautiful moments. In the meantime, follow us on Instagram for a preview.</p>
+        <a href="https://www.instagram.com/framebykaram?igsh=MXJrYXcxdmd6ZmJjZw==" target="_blank" class="soon-instagram">
+          <i data-lucide="instagram" class="w-4 h-4"></i>
+          <span>@framebykaram</span>
+        </a>
       </div>
     </section>
     <div class="text-center mt-10">
-      <button onclick="showPage('booking')" class="outline-btn px-6 py-3 rounded-full text-sm uppercase tracking-[0.14em]"><i data-lucide="arrow-left" class="w-4 h-4 inline-block mr-1 align-middle rtl:rotate-180"></i><span data-i18n="back_to_booking">Back to Reservation</span></button>
+      <button onclick="showPage('booking')" class="outline-btn inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs uppercase tracking-[0.16em]">
+        <i data-lucide="arrow-left" class="w-4 h-4 rtl:rotate-180"></i>
+        <span data-i18n="back_to_booking">Back to Reservation</span>
+      </button>
     </div>
   </main>
 </div>
 
+<!-- ══════════════════ ABOUT PAGE ══════════════════ -->
 <div id="about-page" class="hidden transition-all duration-500 ease-in-out opacity-0 translate-y-10">
   <div class="hero-shell px-3 md:px-6 max-w-6xl mx-auto">
-    
+    <header class="editorial-card reveal-hidden text-center py-12 md:py-16">
+      <div class="about-label mb-3" data-i18n="about_kicker">Contact</div>
+      <h1 class="hero-title italic mt-3 text-white" data-i18n="about_heading">Our Story</h1>
+      <p class="section-copy mt-4 max-w-xs mx-auto" data-i18n="about_subtitle">Capturing elegance, one reflection at a time.</p>
+    </header>
   </div>
-  <main class="max-w-6xl mx-auto px-3 md:px-6 pb-20">
+  <main class="max-w-6xl mx-auto px-3 md:px-6 pb-24">
     <section class="section-wrap about-card reveal-hidden">
-      <div class="text-center">
-        <h2 class="section-heading gold-text" data-i18n="about_heading">Our Story</h2>
-        <p class="section-copy mt-6 max-w-[18rem] mx-auto text-center" data-i18n="about_text">We specialize in bringing a touch of luxury to your most cherished moments. Our vintage-styled mirror photo booths are more than just cameras; they are interactive experiences designed to reflect the beauty of your event.</p>
-      </div>
-
+      <p class="section-copy text-center max-w-[22rem] mx-auto leading-relaxed" data-i18n="about_text">We specialize in bringing a touch of luxury to your most cherished moments. Our vintage-styled mirror photo booths are more than just cameras — they are interactive experiences designed to reflect the beauty of your event.</p>
       <div class="about-divider"></div>
-
-      <div class="flex flex-col items-center gap-8 text-center">
+      <div class="flex flex-col items-center gap-10 text-center">
         <div class="flex flex-col items-center gap-3">
-          <div class="about-label" data-i18n="label_phone">Contact Us</div>
-          <a href="tel:+972524040714" class="contact-link always-serif">052-404-0714</a>
+          <div class="about-label mb-1" data-i18n="label_phone">Phone</div>
+          <a href="tel:+972524040714" class="contact-link">052-404-0714</a>
         </div>
-
         <div class="flex flex-col items-center gap-4">
-          <div class="about-label" data-i18n="label_follow">Follow Us</div>
-          <a href="https://www.instagram.com/framebykaram?igsh=MXJrYXcxdmd6ZmJjZw==" target="_blank" class="instagram-glow inline-flex items-center justify-center w-20 h-20 rounded-full border border-[rgba(191,149,63,0.6)] hover:bg-[rgba(191,149,63,0.10)] transition-all duration-300">
-            <i data-lucide="instagram" class="w-9 h-9 text-[#bf953f]"></i>
+          <div class="about-label mb-1" data-i18n="label_follow">Follow Us</div>
+          <a href="https://www.instagram.com/framebykaram?igsh=MXJrYXcxdmd6ZmJjZw==" target="_blank" rel="noopener"
+             class="instagram-glow inline-flex flex-col items-center justify-center w-24 h-24 rounded-full gap-2 hover:bg-[rgba(201,168,76,0.06)] transition-all duration-300">
+            <i data-lucide="instagram" class="w-9 h-9 text-[#c9a84c]"></i>
+            <span class="text-[0.6rem] text-[#c9a84c] tracking-widest uppercase">Instagram</span>
           </a>
+          <span class="text-xs text-stone-600 tracking-widest">@framebykaram</span>
         </div>
       </div>
     </section>
-
-    <div class="back-reservation-wrap">
-      <button onclick="showPage('booking')" class="outline-btn px-6 py-3 rounded-full text-sm uppercase tracking-[0.14em]"><i data-lucide="arrow-left" class="w-4 h-4 inline-block mr-1 align-middle rtl:rotate-180"></i><span data-i18n="back_to_booking">Back to Reservation</span></button>
+    <div class="text-center mt-10">
+      <button onclick="showPage('booking')" class="outline-btn inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs uppercase tracking-[0.16em]">
+        <i data-lucide="arrow-left" class="w-4 h-4 rtl:rotate-180"></i>
+        <span data-i18n="back_to_booking">Back to Reservation</span>
+      </button>
     </div>
   </main>
 </div>
 
-<footer class="text-center py-8 text-xs text-stone-500 border-t border-white/5 relative z-[2]" data-i18n="footer">&copy; 2025 Mirror Booth Experience. All rights reserved.</footer>
+<footer class="relative z-[2] text-center py-8 text-xs tracking-widest uppercase" style="color: var(--text-muted); border-top: 1px solid rgba(201,168,76,0.08);" data-i18n="footer">
+  &copy; 2025 Mirror Booth Experience. All rights reserved.
+</footer>
 
 <script>
-(function manageIntro() {
+(function(){
   const intro = document.getElementById('intro-screen');
   if (!intro) return;
-  intro.classList.remove('hidden');
-  intro.classList.add('flex');
+  intro.classList.remove('hidden'); intro.classList.add('flex');
   setTimeout(() => {
-    intro.style.opacity = '0';
-    intro.style.pointerEvents = 'none';
-    setTimeout(() => {
-      if (intro.parentNode) intro.parentNode.removeChild(intro);
-    }, 1000);
-  }, 2600);
+    intro.style.opacity = '0'; intro.style.pointerEvents = 'none';
+    setTimeout(() => intro.parentNode && intro.parentNode.removeChild(intro), 1000);
+  }, 2700);
 })();
 
-try { lucide.createIcons(); } catch (e) { console.warn('Icon load failed', e); }
+try { lucide.createIcons(); } catch(e) {}
 
-let currentTheme = 'dark';
-let currentLang = 'en';
-let currentDate = new Date();
-let selectedDate = null;
+let currentTheme = 'dark', currentLang = 'en';
+let currentDate = new Date(), selectedDate = null;
 const selections = { frame: null, rope: null, carpet: null, cardboard: null };
 
 const translations = {
   en: {
-    nav_gallery: 'Gallery', nav_reserve: 'Reserve', nav_about: 'Contact Us',
-    hero_kicker: 'MIRROR BOOTH', hero_title: 'Reflect Your Elegance', hero_subtitle: 'Customize your premium photo experience. Select your finishes below to request a reservation.',
-    btn_start_reservation: '',
-    step1_title: 'Your Details', details_desc: 'Complete your reservation request and receive your offer on WhatsApp.',
-    label_name: 'Full Name', label_phone: 'Phone Number', label_date: 'Event Date', label_email: 'Email Address', label_location: 'Event Location',
-    placeholder_location: 'City, Venue name...', placeholder_name: 'Your Name', placeholder_email: 'client@example.com', date_placeholder: 'Select Date',
-    step2_title: 'Mirror Frame', step2_desc: 'Choose the frame finish for the mirror.', frame_gold: 'Vintage Gold', frame_silver: 'Vintage Silver', frame_none: 'No Frame',
-    step3_title: 'Velvet Rope / Twisted Rope', step3_desc: 'Select the color of the velvet crowd control ropes.', rope_red: 'Red Velvet', rope_twisted_pink: 'Twisted Pink', rope_twisted_white: 'Twisted White', rope_twisted_gold: 'Twisted Gold', rope_none: 'No Rope',
-    step_carpet_title: 'Carpet', step_carpet_desc: 'Select the carpet color for your event.', carpet_red: 'Red Carpet', carpet_beige: 'Beige Carpet', carpet_white: 'White Carpet', carpet_pink: 'Pink Carpet',
-    step4_title: 'Photo Mount', step4_desc: 'The cardboard frame attached to final printed photos.', mount_group_one: '1 Picture', mount_group_one_desc: 'Elegant single-photo presentation', mount_group_two: '3 in 1 Picture', mount_group_two_desc: 'Editorial multi-photo print presentation',
-    mount_white: 'Monochrome', mount_pure_white: 'Pure White', mount_white_gold: 'White & Gold', mount_kraft: 'Natural Kraft', mount_luxury_white: 'Luxury White', mount_kraft_xl: 'Natural Kraft XL', mount_black: 'Luxury Black', mount_wine_red: 'Classic Wine Red',
-    label_event_type: 'Event Type', select_event_type: 'Select Event Type', event_wedding: 'Wedding', event_engagement: 'Engagement', event_birthday: 'Birthday', event_corporate: 'Corporate', event_other: 'Other',
-    summary_title: 'Ready to Book?', summary_desc: 'Clicking the button below will open WhatsApp with your order details pre-filled.', btn_submit: 'Get Your Offer',
-    alert_contact: 'Please fill in all contact details.', alert_select: 'Please select an option for Frame, Rope, and Photo Mount.',
-    gallery_kicker: 'Gallery', gallery_heading: 'Moments of Elegance', gallery_subheading: 'Browse through our curated collection of mirror booth setups, event styling, and printed keepsakes.',
-    about_kicker: 'Contact', about_subtitle: 'Capturing elegance, one reflection at a time.', about_heading: 'Our Story', about_text: 'We specialize in bringing a touch of luxury to your most cherished moments. Our vintage-styled mirror photo booths are more than just cameras; they are interactive experiences designed to reflect the beauty of your event.',
-    label_follow: 'Follow Us', back_to_booking: 'Back to Reservation', footer: '© 2025 Mirror Booth Experience. All rights reserved.'
+    nav_gallery:'Gallery', nav_reserve:'Reserve', nav_about:'Contact Us',
+    hero_kicker:'MIRROR BOOTH', hero_title:'Reflect Your Elegance',
+    hero_subtitle:'Customize your premium photo experience. Select your finishes below to request a reservation.',
+    btn_start_reservation:'Begin Reservation',
+    step1_title:'Your Details', details_desc:'Complete your reservation request and receive your offer on WhatsApp.',
+    label_name:'Full Name', label_phone:'Phone', label_date:'Event Date', label_email:'Email Address', label_location:'Event Location',
+    placeholder_location:'City, Venue name...', placeholder_name:'Your Name', placeholder_email:'client@example.com', date_placeholder:'Select Date',
+    step2_title:'Mirror Frame', step2_desc:'Choose the frame finish for the mirror.',
+    frame_gold:'Vintage Gold', frame_silver:'Vintage Silver', frame_none:'No Frame',
+    step3_title:'Velvet Rope / Twisted Rope', step3_desc:'Select the color of the velvet crowd control ropes.',
+    rope_red:'Red Velvet', rope_twisted_pink:'Twisted Pink', rope_twisted_white:'Twisted White', rope_twisted_gold:'Twisted Gold', rope_none:'No Rope',
+    step_carpet_title:'Carpet', step_carpet_desc:'Select the carpet color for your event.',
+    carpet_red:'Red Carpet', carpet_beige:'Beige Carpet', carpet_white:'White Carpet', carpet_pink:'Pink Carpet',
+    step4_title:'Photo Mount', step4_desc:'The cardboard frame attached to final printed photos.',
+    mount_group_one:'1 Picture', mount_group_one_desc:'Elegant single-photo presentation',
+    mount_group_two:'3 in 1 Picture', mount_group_two_desc:'Editorial multi-photo print presentation',
+    mount_white:'Monochrome', mount_pure_white:'Pure White', mount_white_gold:'White & Gold',
+    mount_kraft:'Natural Kraft', mount_luxury_white:'Luxury White', mount_kraft_xl:'Natural Kraft XL',
+    mount_black:'Luxury Black', mount_wine_red:'Classic Wine Red',
+    label_event_type:'Event Type', select_event_type:'Select Event Type',
+    event_wedding:'Wedding', event_engagement:'Engagement', event_birthday:'Birthday', event_corporate:'Corporate', event_other:'Other',
+    summary_title:'Ready to Book?', summary_desc:'Clicking the button below will open WhatsApp with your order details pre-filled.',
+    btn_submit:'Get Your Offer',
+    alert_contact:'Please fill in all contact details.', alert_select:'Please select an option for Frame, Rope, and Photo Mount.',
+    gallery_kicker:'Gallery', gallery_heading:'Moments of Elegance',
+    gallery_subheading:'Browse through our curated collection of mirror booth setups, event styling, and printed keepsakes.',
+    gallery_coming_soon:"We're curating our portfolio of beautiful moments. In the meantime, follow us on Instagram for a preview.",
+    about_kicker:'Contact', about_heading:'Our Story', about_subtitle:'Capturing elegance, one reflection at a time.',
+    about_text:'We specialize in bringing a touch of luxury to your most cherished moments. Our vintage-styled mirror photo booths are more than just cameras — they are interactive experiences designed to reflect the beauty of your event.',
+    label_follow:'Follow Us', back_to_booking:'Back to Reservation', footer:'© 2025 Mirror Booth Experience. All rights reserved.'
   },
   he: {
-    nav_gallery: 'גלריה', nav_reserve: 'הזמנה', nav_about: 'צור קשר',
-    hero_kicker: 'עמדת מראה', hero_title: 'שקפו את האלגנטיות שלכם', hero_subtitle: 'התאימו את חוויית הצילום היוקרתית שלכם. בחרו את העיצוב המועדף עליכם למטה כדי לשלוח בקשת הזמנה.',
-    btn_start_reservation: 'התחל הזמנה',
-    step1_title: 'הפרטים שלכם', details_desc: 'השלימו את פרטי ההזמנה וקבלו את ההצעה בוואטסאפ.',
-    label_name: 'שם מלא', label_phone: 'מספר טלפון', label_date: 'תאריך האירוע', label_email: 'כתובת אימייל', label_location: 'מיקום האירוע',
-    placeholder_location: 'עיר, אולם וכו׳', placeholder_name: 'השם שלך', placeholder_email: 'client@example.com', date_placeholder: 'בחר תאריך',
-    step2_title: 'מסגרת המראה', step2_desc: 'בחרו את גימור המסגרת למראה.', frame_gold: 'זהב וינטג׳', frame_silver: 'כסף וינטג׳', frame_none: 'ללא מסגרת',
-    step3_title: 'חבל קטיפה / חבל שזור', step3_desc: 'בחרו את צבע החבלים לתיחום יוקרתי.', rope_red: 'קטיפה אדומה', rope_twisted_pink: 'חבל שזור ורוד', rope_twisted_white: 'חבל שזור לבן', rope_twisted_gold: 'חבל שזור זהב', rope_none: 'ללא חבל',
-    step_carpet_title: 'שטיח', step_carpet_desc: 'בחרו את צבע השטיח לאירוע שלכם.', carpet_red: 'שטיח אדום', carpet_beige: 'שטיח בז׳', carpet_white: 'שטיח לבן', carpet_pink: 'שטיח ורוד',
-    step4_title: 'מסגרת תמונה', step4_desc: 'מסגרת הקרטון שמצורפת לתמונות המודפסות.', mount_group_one: 'תמונה אחת', mount_group_one_desc: 'הגשה אלגנטית להדפסה בודדת', mount_group_two: '3 תמונות בהדפס אחד', mount_group_two_desc: 'הגשה אלגנטית למספר תמונות',
-    mount_white: 'מונוכרום', mount_pure_white: 'לבן טהור', mount_white_gold: 'לבן וזהב', mount_kraft: 'קרפט טבעי', mount_luxury_white: 'לבן יוקרתי', mount_kraft_xl: 'קרפט טבעי XL', mount_black: 'שחור יוקרתי', mount_wine_red: 'אדום יין קלאסי',
-    label_event_type: 'סוג אירוע', select_event_type: 'בחר סוג אירוע', event_wedding: 'חתונה', event_engagement: 'אירוסין', event_birthday: 'יום הולדת', event_corporate: 'אירוע עסקי', event_other: 'אחר',
-    summary_title: 'מוכנים להזמין?', summary_desc: 'לחיצה על הכפתור למטה תפתח את וואטסאפ עם פרטי ההזמנה שלכם.', btn_submit: 'קבלו הצעת מחיר',
-    alert_contact: 'נא למלא את כל פרטי הקשר.', alert_select: 'נא לבחור אפשרות למסגרת, חבל ומסגרת תמונה.',
-    gallery_kicker: 'גלריה', gallery_heading: 'רגעים של אלגנטיות', gallery_subheading: 'עיינו באוסף מוקפד של סטיילינג, עיצוב והדפסות מהמירור בות׳.',
-    about_kicker: 'צור קשר', about_subtitle: 'לוכדים אלגנטיות, בכל השתקפות.', about_heading: 'הסיפור שלנו', about_text: 'אנחנו מתמחים בהבאת מגע של יוקרה לרגעים היקרים ביותר שלכם. עמדות הצילום בסגנון וינטג׳ שלנו הן יותר ממצלמות — הן חוויה אינטראקטיבית שמעצימה את יופי האירוע שלכם.',
-    label_follow: 'עקבו אחרינו', back_to_booking: 'חזרה להזמנה', footer: '© 2025 Mirror Booth Experience. כל הזכויות שמורות.'
+    nav_gallery:'גלריה', nav_reserve:'הזמנה', nav_about:'צור קשר',
+    hero_kicker:'עמדת מראה', hero_title:'שקפו את האלגנטיות שלכם',
+    hero_subtitle:'התאימו את חוויית הצילום היוקרתית. בחרו את העיצוב המועדף עליכם כדי לשלוח בקשת הזמנה.',
+    btn_start_reservation:'התחל הזמנה',
+    step1_title:'הפרטים שלכם', details_desc:'השלימו את פרטי ההזמנה וקבלו את ההצעה בוואטסאפ.',
+    label_name:'שם מלא', label_phone:'טלפון', label_date:'תאריך האירוע', label_email:'אימייל', label_location:'מיקום האירוע',
+    placeholder_location:'עיר, אולם', placeholder_name:'השם שלך', placeholder_email:'client@example.com', date_placeholder:'בחר תאריך',
+    step2_title:'מסגרת המראה', step2_desc:'בחרו את גימור המסגרת.', frame_gold:'זהב וינטג׳', frame_silver:'כסף וינטג׳', frame_none:'ללא מסגרת',
+    step3_title:'חבל קטיפה / שזור', step3_desc:'בחרו את צבע החבלים.',
+    rope_red:'קטיפה אדומה', rope_twisted_pink:'ורוד שזור', rope_twisted_white:'לבן שזור', rope_twisted_gold:'זהב שזור', rope_none:'ללא חבל',
+    step_carpet_title:'שטיח', step_carpet_desc:'בחרו את צבע השטיח.',
+    carpet_red:'שטיח אדום', carpet_beige:'שטיח בז׳', carpet_white:'שטיח לבן', carpet_pink:'שטיח ורוד',
+    step4_title:'מסגרת תמונה', step4_desc:'מסגרת הקרטון שמצורפת לתמונות.',
+    mount_group_one:'תמונה אחת', mount_group_one_desc:'הגשה אלגנטית להדפסה בודדת',
+    mount_group_two:'3 תמונות', mount_group_two_desc:'הגשה אלגנטית למספר תמונות',
+    mount_white:'מונוכרום', mount_pure_white:'לבן טהור', mount_white_gold:'לבן וזהב',
+    mount_kraft:'קרפט טבעי', mount_luxury_white:'לבן יוקרתי', mount_kraft_xl:'קרפט XL',
+    mount_black:'שחור יוקרתי', mount_wine_red:'אדום יין',
+    label_event_type:'סוג אירוע', select_event_type:'בחר סוג אירוע',
+    event_wedding:'חתונה', event_engagement:'אירוסין', event_birthday:'יום הולדת', event_corporate:'עסקי', event_other:'אחר',
+    summary_title:'מוכנים להזמין?', summary_desc:'לחצו על הכפתור לפתיחת וואטסאפ עם פרטי ההזמנה.',
+    btn_submit:'קבלו הצעת מחיר',
+    alert_contact:'נא למלא את כל פרטי הקשר.', alert_select:'נא לבחור מסגרת, חבל ומסגרת תמונה.',
+    gallery_kicker:'גלריה', gallery_heading:'רגעים של אלגנטיות',
+    gallery_subheading:'עיינו באוסף מוקפד של עיצובים והדפסות.',
+    gallery_coming_soon:'אנחנו בונים את הגלריה שלנו. בינתיים עקבו אחרינו באינסטגרם.',
+    about_kicker:'צור קשר', about_heading:'הסיפור שלנו', about_subtitle:'לוכדים אלגנטיות בכל השתקפות.',
+    about_text:'אנחנו מתמחים בהבאת מגע של יוקרה לרגעים היקרים ביותר שלכם.',
+    label_follow:'עקבו אחרינו', back_to_booking:'חזרה להזמנה', footer:'© 2025 Mirror Booth Experience. כל הזכויות שמורות.'
   },
   ar: {
-    nav_gallery: 'المعرض', nav_reserve: 'الحجز', nav_about: 'اتصل بنا',
-    hero_kicker: 'مرآة التصوير', hero_title: 'اعكس أناقتك', hero_subtitle: 'خصص تجربة التصوير الفاخرة الخاصة بك. اختر اللمسات التي تفضلها أدناه لإرسال طلب حجز.',
-    btn_start_reservation: 'ابدأ الحجز',
-    step1_title: 'تفاصيلك', details_desc: 'أكمل طلب الحجز واحصل على العرض عبر واتساب.',
-    label_name: 'الاسم الكامل', label_phone: 'رقم الهاتف', label_date: 'تاريخ المناسبة', label_email: 'البريد الإلكتروني', label_location: 'موقع المناسبة',
-    placeholder_location: 'المدينة، القاعة، إلخ', placeholder_name: 'اسمك', placeholder_email: 'client@example.com', date_placeholder: 'اختر التاريخ',
-    step2_title: 'إطار المرآة', step2_desc: 'اختر تشطيب إطار المرآة.', frame_gold: 'ذهبي كلاسيكي', frame_silver: 'فضي كلاسيكي', frame_none: 'بدون إطار',
-    step3_title: 'حبل مخمل / حبل مجدول', step3_desc: 'اختر لون الحبال لتحديد المساحة بأناقة.', rope_red: 'مخمل أحمر', rope_twisted_pink: 'حبل مجدول وردي', rope_twisted_white: 'حبل مجدول أبيض', rope_twisted_gold: 'حبل مجدول ذهبي', rope_none: 'بدون حبل',
-    step_carpet_title: 'السجاد', step_carpet_desc: 'اختر لون السجاد لمناسبتك.', carpet_red: 'سجاد أحمر', carpet_beige: 'سجاد بيج', carpet_white: 'سجاد أبيض', carpet_pink: 'سجاد وردي',
-    step4_title: 'إطار الصورة', step4_desc: 'إطار الكرتون المرفق مع الصور المطبوعة.', mount_group_one: 'صورة واحدة', mount_group_one_desc: 'تقديم أنيق لصورة مطبوعة واحدة', mount_group_two: 'ثلاث صور في طباعة واحدة', mount_group_two_desc: 'تقديم أنيق لعدة صور',
-    mount_white: 'أحادي اللون', mount_pure_white: 'أبيض نقي', mount_white_gold: 'أبيض وذهبي', mount_kraft: 'كرافت طبيعي', mount_luxury_white: 'أبيض فاخر', mount_kraft_xl: 'كرافت طبيعي XL', mount_black: 'أسود فاخر', mount_wine_red: 'أحمر نبيذي كلاسيكي',
-    label_event_type: 'نوع المناسبة', select_event_type: 'اختر نوع المناسبة', event_wedding: 'زفاف', event_engagement: 'خطوبة', event_birthday: 'عيد ميلاد', event_corporate: 'شركة', event_other: 'أخرى',
-    summary_title: 'جاهز للحجز؟', summary_desc: 'النقر على الزر أدناه سيفتح واتساب مع تفاصيل طلبك.', btn_submit: 'احصل على عرض السعر',
-    alert_contact: 'يرجى ملء جميع تفاصيل الاتصال.', alert_select: 'يرجى اختيار إطار، حبل، وإطار صورة.',
-    gallery_kicker: 'المعرض', gallery_heading: 'لحظات من الأناقة', gallery_subheading: 'تصفح مجموعة منتقاة من تجهيزات المرآة والتنسيق والمطبوعات الراقية.',
-    about_kicker: 'اتصل بنا', about_subtitle: 'نلتقط الأناقة، انعكاساً بعد انعكاس.', about_heading: 'قصتنا', about_text: 'نحن متخصصون في إضافة لمسة فاخرة إلى لحظاتكم المميزة. أكشاك التصوير ذات الطابع العتيق لدينا ليست مجرد كاميرات، بل تجربة تفاعلية تعكس جمال مناسبتكم.',
-    label_follow: 'تابعنا', back_to_booking: 'العودة إلى الحجز', footer: '© 2025 Mirror Booth Experience. جميع الحقوق محفوظة.'
+    nav_gallery:'المعرض', nav_reserve:'الحجز', nav_about:'اتصل بنا',
+    hero_kicker:'مرآة التصوير', hero_title:'اعكس أناقتك',
+    hero_subtitle:'خصص تجربة التصوير الفاخرة. اختر اللمسات التي تفضلها لإرسال طلب حجز.',
+    btn_start_reservation:'ابدأ الحجز',
+    step1_title:'تفاصيلك', details_desc:'أكمل طلب الحجز واحصل على العرض عبر واتساب.',
+    label_name:'الاسم الكامل', label_phone:'الهاتف', label_date:'تاريخ المناسبة', label_email:'البريد الإلكتروني', label_location:'موقع المناسبة',
+    placeholder_location:'المدينة، القاعة', placeholder_name:'اسمك', placeholder_email:'client@example.com', date_placeholder:'اختر التاريخ',
+    step2_title:'إطار المرآة', step2_desc:'اختر تشطيب الإطار.', frame_gold:'ذهبي كلاسيكي', frame_silver:'فضي كلاسيكي', frame_none:'بدون إطار',
+    step3_title:'حبل مخمل / مجدول', step3_desc:'اختر لون الحبال.',
+    rope_red:'مخمل أحمر', rope_twisted_pink:'وردي مجدول', rope_twisted_white:'أبيض مجدول', rope_twisted_gold:'ذهبي مجدول', rope_none:'بدون حبل',
+    step_carpet_title:'السجاد', step_carpet_desc:'اختر لون السجاد.',
+    carpet_red:'سجاد أحمر', carpet_beige:'سجاد بيج', carpet_white:'سجاد أبيض', carpet_pink:'سجاد وردي',
+    step4_title:'إطار الصورة', step4_desc:'إطار الكرتون المرفق مع الصور.',
+    mount_group_one:'صورة واحدة', mount_group_one_desc:'تقديم أنيق لصورة واحدة',
+    mount_group_two:'ثلاث صور', mount_group_two_desc:'تقديم أنيق لعدة صور',
+    mount_white:'أحادي اللون', mount_pure_white:'أبيض نقي', mount_white_gold:'أبيض وذهبي',
+    mount_kraft:'كرافت طبيعي', mount_luxury_white:'أبيض فاخر', mount_kraft_xl:'كرافت XL',
+    mount_black:'أسود فاخر', mount_wine_red:'أحمر نبيذي',
+    label_event_type:'نوع المناسبة', select_event_type:'اختر النوع',
+    event_wedding:'زفاف', event_engagement:'خطوبة', event_birthday:'عيد ميلاد', event_corporate:'شركة', event_other:'أخرى',
+    summary_title:'جاهز للحجز؟', summary_desc:'النقر سيفتح واتساب مع تفاصيل طلبك.',
+    btn_submit:'احصل على عرض السعر',
+    alert_contact:'يرجى ملء جميع تفاصيل الاتصال.', alert_select:'يرجى اختيار إطار وحبل وإطار صورة.',
+    gallery_kicker:'المعرض', gallery_heading:'لحظات من الأناقة',
+    gallery_subheading:'تصفح مجموعة منتقاة من التجهيزات.',
+    gallery_coming_soon:'نحن نبني معرضنا. تابعنا على إنستغرام في هذه الأثناء.',
+    about_kicker:'اتصل بنا', about_heading:'قصتنا', about_subtitle:'نلتقط الأناقة، انعكاساً بعد انعكاس.',
+    about_text:'نحن متخصصون في إضافة لمسة فاخرة إلى مناسباتكم المميزة.',
+    label_follow:'تابعنا', back_to_booking:'العودة إلى الحجز', footer:'© 2025 Mirror Booth Experience. جميع الحقوق محفوظة.'
   }
 };
 
-function refreshIcons() {
-  try { lucide.createIcons(); } catch (e) { console.warn('Icon refresh failed', e); }
-}
+function refreshIcons() { try { lucide.createIcons(); } catch(e) {} }
 
 function toggleTheme() {
-  const body = document.body;
-  const sunIcon = document.getElementById('theme-icon-sun');
-  const moonIcon = document.getElementById('theme-icon-moon');
+  const sun = document.getElementById('theme-icon-sun'), moon = document.getElementById('theme-icon-moon');
   if (currentTheme === 'dark') {
-    body.classList.add('light-theme');
-    currentTheme = 'light';
-    if (sunIcon) sunIcon.classList.remove('hidden');
-    if (moonIcon) moonIcon.classList.add('hidden');
+    document.body.classList.add('light-theme'); currentTheme = 'light';
+    sun?.classList.remove('hidden'); moon?.classList.add('hidden');
   } else {
-    body.classList.remove('light-theme');
-    currentTheme = 'dark';
-    if (sunIcon) sunIcon.classList.add('hidden');
-    if (moonIcon) moonIcon.classList.remove('hidden');
+    document.body.classList.remove('light-theme'); currentTheme = 'dark';
+    sun?.classList.add('hidden'); moon?.classList.remove('hidden');
   }
 }
 
 function showPage(pageId) {
-  const pageElements = {
-    booking: document.getElementById('booking-page'),
-    gallery: document.getElementById('gallery-page'),
-    about: document.getElementById('about-page')
-  };
-  const activePageId = Object.keys(pageElements).find(key => !pageElements[key].classList.contains('hidden'));
-  if (!pageElements[pageId] || activePageId === pageId) return;
-  const pageToHide = pageElements[activePageId];
-  const pageToShow = pageElements[pageId];
-  document.querySelectorAll('.nav-link').forEach(link => {
-    link.classList.remove('active');
-    if (link.dataset.page === pageId) link.classList.add('active');
-  });
-  pageToHide.classList.remove('opacity-100', 'translate-y-0');
-  pageToHide.classList.add('opacity-0', 'translate-y-10');
+  const pages = { booking: document.getElementById('booking-page'), gallery: document.getElementById('gallery-page'), about: document.getElementById('about-page') };
+  const activeId = Object.keys(pages).find(k => !pages[k].classList.contains('hidden'));
+  if (!pages[pageId] || activeId === pageId) return;
+  document.querySelectorAll('.nav-link').forEach(l => { l.classList.remove('active'); if (l.dataset.page === pageId) l.classList.add('active'); });
+  const hide = pages[activeId], show = pages[pageId];
+  hide.classList.remove('opacity-100','translate-y-0'); hide.classList.add('opacity-0','translate-y-10');
   setTimeout(() => {
-    pageToHide.classList.add('hidden');
-    pageToShow.classList.remove('hidden');
-    pageToShow.classList.add('opacity-0', 'translate-y-10');
-    pageToShow.classList.remove('opacity-100', 'translate-y-0');
-    void pageToShow.offsetWidth;
-    pageToShow.classList.remove('opacity-0', 'translate-y-10');
-    pageToShow.classList.add('opacity-100', 'translate-y-0');
+    hide.classList.add('hidden');
+    show.classList.remove('hidden'); show.classList.add('opacity-0','translate-y-10');
+    void show.offsetWidth;
+    show.classList.remove('opacity-0','translate-y-10'); show.classList.add('opacity-100','translate-y-0');
     window.scrollTo({ top: 0, behavior: 'smooth' });
     refreshIcons();
+    show.querySelectorAll('.reveal-hidden').forEach(el => el.classList.add('reveal-visible'));
   }, 420);
 }
 
 function applyTranslations(lang) {
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (translations[lang][key]) el.innerText = translations[lang][key];
-  });
-  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-    const key = el.getAttribute('data-i18n-placeholder');
-    if (translations[lang][key]) el.placeholder = translations[lang][key];
-  });
+  document.querySelectorAll('[data-i18n]').forEach(el => { const v = translations[lang][el.getAttribute('data-i18n')]; if (v) el.innerText = v; });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { const v = translations[lang][el.getAttribute('data-i18n-placeholder')]; if (v) el.placeholder = v; });
 }
-
 function setLanguage(lang) {
   if (!translations[lang] || currentLang === lang) return;
-  const pageElements = { booking: document.getElementById('booking-page'), gallery: document.getElementById('gallery-page'), about: document.getElementById('about-page') };
-  const activePageId = Object.keys(pageElements).find(key => !pageElements[key].classList.contains('hidden'));
-  const activePage = pageElements[activePageId];
-  activePage.classList.remove('opacity-100', 'translate-y-0');
-  activePage.classList.add('opacity-0', 'translate-y-10');
+  const pages = { booking: document.getElementById('booking-page'), gallery: document.getElementById('gallery-page'), about: document.getElementById('about-page') };
+  const activeId = Object.keys(pages).find(k => !pages[k].classList.contains('hidden'));
+  const active = pages[activeId];
+  active.classList.remove('opacity-100','translate-y-0'); active.classList.add('opacity-0','translate-y-10');
   setTimeout(() => {
     currentLang = lang;
     const dir = (lang === 'he' || lang === 'ar') ? 'rtl' : 'ltr';
-    document.documentElement.setAttribute('dir', dir);
-    document.documentElement.setAttribute('lang', lang);
-    document.body.setAttribute('lang', lang);
-    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-    const activeBtn = document.getElementById(`lang-${lang}`);
-    if (activeBtn) activeBtn.classList.add('active');
+    document.documentElement.setAttribute('dir', dir); document.documentElement.setAttribute('lang', lang); document.body.setAttribute('lang', lang);
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(`lang-${lang}`)?.classList.add('active');
     applyTranslations(lang);
-    const eventTypeInput = document.getElementById('eventType');
-    const eventTypeLabel = document.getElementById('eventTypeLabel');
-    if (eventTypeInput && eventTypeLabel && eventTypeInput.value) {
-      const eventMap = {
-        Wedding: 'event_wedding',
-        Engagement: 'event_engagement',
-        Birthday: 'event_birthday',
-        Corporate: 'event_corporate',
-        Other: 'event_other'
-      };
-      const key = eventMap[eventTypeInput.value];
-      if (key && translations[lang][key]) {
-        eventTypeLabel.setAttribute('data-i18n', key);
-        eventTypeLabel.innerText = translations[lang][key];
-      }
+    const etInput = document.getElementById('eventType'), etLabel = document.getElementById('eventTypeLabel');
+    if (etInput?.value && etLabel) {
+      const map = { Wedding:'event_wedding', Engagement:'event_engagement', Birthday:'event_birthday', Corporate:'event_corporate', Other:'event_other' };
+      const k = map[etInput.value]; if (k && translations[lang][k]) { etLabel.setAttribute('data-i18n', k); etLabel.innerText = translations[lang][k]; }
     }
-    activePage.classList.remove('opacity-0', 'translate-y-10');
-    activePage.classList.add('opacity-100', 'translate-y-0');
+    active.classList.remove('opacity-0','translate-y-10'); active.classList.add('opacity-100','translate-y-0');
     refreshIcons();
   }, 320);
 }
 
 function toggleMountCategory(panelId) {
   const scrollY = window.scrollY;
-  const panels = ['mount-1pic', 'mount-3in1'];
-  const panel = document.getElementById(panelId);
-  if (!panel) return;
-  const isOpening = panel.classList.contains('hidden');
-  panels.forEach(otherId => {
-    const otherPanel = document.getElementById(otherId);
-    const otherArrow = document.getElementById(`arrow-${otherId}`);
-    const otherBtn = document.querySelector(`button[aria-controls="${otherId}"]`);
-    if (!otherPanel) return;
-    if (otherId !== panelId) {
-      otherPanel.classList.add('hidden');
-      otherPanel.style.opacity = '';
-      otherPanel.style.transform = '';
-      otherPanel.style.transition = '';
-      if (otherArrow) otherArrow.classList.remove('rotate');
-      if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
-    }
+  ['mount-1pic','mount-3in1'].forEach(id => {
+    if (id === panelId) return;
+    const p = document.getElementById(id); if (!p) return;
+    p.classList.add('hidden'); p.style.cssText = '';
+    document.getElementById(`arrow-${id}`)?.classList.remove('rotate');
+    document.querySelector(`button[aria-controls="${id}"]`)?.setAttribute('aria-expanded','false');
   });
-  const arrow = document.getElementById(`arrow-${panelId}`);
+  const panel = document.getElementById(panelId), arrow = document.getElementById(`arrow-${panelId}`);
   const btn = document.querySelector(`button[aria-controls="${panelId}"]`);
-  if (isOpening) {
-    panel.classList.remove('hidden');
-    panel.style.opacity = '0';
-    panel.style.transform = 'translateY(-12px)';
-    requestAnimationFrame(() => {
-      panel.style.transition = 'opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1)';
-      panel.style.opacity = '1';
-      panel.style.transform = 'translateY(0)';
-    });
-    if (arrow) arrow.classList.add('rotate');
-    if (btn) btn.setAttribute('aria-expanded', 'true');
+  if (!panel) return;
+  const opening = panel.classList.contains('hidden');
+  if (opening) {
+    panel.classList.remove('hidden'); panel.style.opacity = '0'; panel.style.transform = 'translateY(-14px)';
+    requestAnimationFrame(() => { panel.style.transition = 'opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1)'; panel.style.opacity = '1'; panel.style.transform = 'translateY(0)'; });
+    arrow?.classList.add('rotate'); btn?.setAttribute('aria-expanded','true');
   } else {
-    panel.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    panel.style.opacity = '0';
-    panel.style.transform = 'translateY(-10px)';
-    setTimeout(() => {
-      panel.classList.add('hidden');
-      panel.style.opacity = '';
-      panel.style.transform = '';
-      panel.style.transition = '';
-    }, 420);
-    if (arrow) arrow.classList.remove('rotate');
-    if (btn) btn.setAttribute('aria-expanded', 'false');
+    panel.style.transition = 'opacity 0.5s ease, transform 0.5s ease'; panel.style.opacity = '0'; panel.style.transform = 'translateY(-10px)';
+    setTimeout(() => { panel.classList.add('hidden'); panel.style.cssText = ''; }, 400);
+    arrow?.classList.remove('rotate'); btn?.setAttribute('aria-expanded','false');
   }
   requestAnimationFrame(() => window.scrollTo(0, scrollY));
 }
 
 function selectOption(category, value) {
   selections[category] = value;
-  const hiddenInput = document.getElementById(`${category}Selection`);
-  if (hiddenInput) hiddenInput.value = value;
-  document.querySelectorAll('.option-card.selected').forEach(card => {
+  const inp = document.getElementById(`${category}Selection`); if (inp) inp.value = value;
+  document.querySelectorAll('.option-card').forEach(card => {
     const check = card.querySelector(`[id^="check-${category}-"]`);
-    if (check) {
-      card.classList.remove('selected');
-      check.classList.add('hidden');
-    }
+    if (check) { card.classList.remove('selected'); check.classList.add('hidden'); }
   });
-  const activeCheckmark = document.getElementById(`check-${category}-${value}`);
-  if (activeCheckmark) {
-    activeCheckmark.classList.remove('hidden');
-    const card = activeCheckmark.closest('.option-card');
-    if (card) card.classList.add('selected');
-  }
+  const check = document.getElementById(`check-${category}-${value}`);
+  if (check) { check.classList.remove('hidden'); check.closest('.option-card')?.classList.add('selected'); }
 }
 
 function toggleDropdown() {
-  const dropdown = document.getElementById('eventTypeDropdown');
-  const arrow = document.getElementById('dropdownArrow');
-  if (!dropdown || !arrow) return;
-  dropdown.classList.toggle('open');
-  arrow.classList.toggle('rotate');
+  document.getElementById('eventTypeDropdown')?.classList.toggle('open');
+  document.getElementById('dropdownArrow')?.classList.toggle('rotate');
 }
-
-function selectEventOption(value, i18nKey) {
-  const input = document.getElementById('eventType');
-  const label = document.getElementById('eventTypeLabel');
-  if (!input || !label) return;
-  input.value = value;
-  label.setAttribute('data-i18n', i18nKey);
-  label.innerText = translations[currentLang][i18nKey];
-  label.classList.remove('text-stone-400');
-  label.classList.add('text-stone-200');
+function selectEventOption(value, key) {
+  const inp = document.getElementById('eventType'), lbl = document.getElementById('eventTypeLabel');
+  if (!inp || !lbl) return;
+  inp.value = value; lbl.setAttribute('data-i18n', key); lbl.innerText = translations[currentLang][key];
+  lbl.classList.remove('text-stone-500'); lbl.classList.add('text-stone-200');
   toggleDropdown();
 }
 
-window.addEventListener('click', function(e) {
-  const dropdown = document.getElementById('eventTypeDropdown');
-  const dropdownButton = document.querySelector('button[onclick="toggleDropdown()"]');
-  if (dropdown && dropdown.classList.contains('open') && dropdownButton && !dropdown.contains(e.target) && !dropdownButton.contains(e.target)) {
-    toggleDropdown();
-  }
-  const calendar = document.getElementById('customCalendar');
-  const dateBtn = document.querySelector('button[onclick="toggleCalendar()"]');
-  if (calendar && calendar.classList.contains('open') && dateBtn && !calendar.contains(e.target) && !dateBtn.contains(e.target)) {
-    toggleCalendar();
-  }
-});
-
-function toggleCalendar() {
-  const calendar = document.getElementById('customCalendar');
-  if (!calendar) return;
-  calendar.classList.toggle('open');
-  if (calendar.classList.contains('open')) renderCalendar();
-}
-
-function changeMonth(delta) {
-  currentDate.setMonth(currentDate.getMonth() + delta);
-  renderCalendar();
-}
-
+function toggleCalendar() { document.getElementById('customCalendar')?.classList.toggle('open'); if (document.getElementById('customCalendar')?.classList.contains('open')) renderCalendar(); }
+function changeMonth(d) { currentDate.setMonth(currentDate.getMonth() + d); renderCalendar(); }
 function renderCalendar() {
-  const year = currentDate.getFullYear();
-  const month = currentDate.getMonth();
-  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  const header = document.getElementById('currentMonthYear');
-  const daysContainer = document.getElementById('calendarDays');
-  if (!header || !daysContainer) return;
-  header.innerText = `${monthNames[month]} ${year}`;
-  daysContainer.innerHTML = '';
-  ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(name => {
-    const div = document.createElement('div');
-    div.className = 'calendar-day-name';
-    div.innerText = name;
-    daysContainer.appendChild(div);
-  });
-  const firstDay = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  for (let i = 0; i < firstDay; i++) {
-    const div = document.createElement('div');
-    div.className = 'calendar-day empty';
-    daysContainer.appendChild(div);
-  }
-  for (let d = 1; d <= daysInMonth; d++) {
-    const div = document.createElement('div');
-    div.className = 'calendar-day';
-    div.innerText = d;
-    if (selectedDate && selectedDate.getDate() === d && selectedDate.getMonth() === month && selectedDate.getFullYear() === year) {
-      div.classList.add('selected');
-    }
-    div.onclick = function() {
-      selectedDate = new Date(year, month, d);
-      const monthShort = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-      const displayStr = `${String(d).padStart(2,'0')} ${monthShort[month]} ${year}`;
-      const label = document.getElementById('dateDisplay');
-      if (label) {
-        label.innerText = displayStr;
-        label.classList.remove('text-stone-400');
-        label.classList.add('text-stone-200');
-      }
-      const hiddenDate = document.getElementById('date');
-      if (hiddenDate) hiddenDate.value = `${year}-${String(month + 1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+  const y = currentDate.getFullYear(), m = currentDate.getMonth();
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const header = document.getElementById('currentMonthYear'), daysEl = document.getElementById('calendarDays');
+  if (!header || !daysEl) return;
+  header.innerText = `${months[m]} ${y}`; daysEl.innerHTML = '';
+  ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(n => { const d = document.createElement('div'); d.className = 'calendar-day-name'; d.innerText = n; daysEl.appendChild(d); });
+  const firstDay = new Date(y, m, 1).getDay(), dim = new Date(y, m+1, 0).getDate();
+  for (let i = 0; i < firstDay; i++) { const d = document.createElement('div'); d.className = 'calendar-day empty'; daysEl.appendChild(d); }
+  for (let n = 1; n <= dim; n++) {
+    const d = document.createElement('div'); d.className = 'calendar-day'; d.innerText = n;
+    if (selectedDate && selectedDate.getDate()===n && selectedDate.getMonth()===m && selectedDate.getFullYear()===y) d.classList.add('selected');
+    d.onclick = function() {
+      selectedDate = new Date(y, m, n);
+      const ms = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      const lbl = document.getElementById('dateDisplay');
+      if (lbl) { lbl.innerText = `${String(n).padStart(2,'0')} ${ms[m]} ${y}`; lbl.classList.remove('text-stone-500'); lbl.classList.add('text-stone-200'); }
+      const hid = document.getElementById('date'); if (hid) hid.value = `${y}-${String(m+1).padStart(2,'0')}-${String(n).padStart(2,'0')}`;
       toggleCalendar();
     };
-    daysContainer.appendChild(div);
+    daysEl.appendChild(d);
   }
 }
 
-function openLightbox(imageSrc) {
-  const lightbox = document.getElementById('lightbox');
-  const img = document.getElementById('lightbox-img');
-  if (!lightbox || !img) return;
-  img.src = imageSrc;
-  lightbox.classList.remove('invisible', 'opacity-0');
-  lightbox.classList.add('visible', 'opacity-100', 'open');
-}
+window.addEventListener('click', e => {
+  const dd = document.getElementById('eventTypeDropdown'), ddb = document.querySelector('button[onclick="toggleDropdown()"]');
+  if (dd?.classList.contains('open') && !dd.contains(e.target) && !ddb?.contains(e.target)) toggleDropdown();
+  const cal = document.getElementById('customCalendar'), calb = document.querySelector('button[onclick="toggleCalendar()"]');
+  if (cal?.classList.contains('open') && !cal.contains(e.target) && !calb?.contains(e.target)) toggleCalendar();
+});
 
+function openLightbox(src) {
+  const lb = document.getElementById('lightbox'), img = document.getElementById('lightbox-img');
+  if (!lb || !img) return;
+  img.src = src; lb.classList.remove('invisible','opacity-0'); lb.classList.add('visible','opacity-100','open');
+}
 function closeLightbox() {
-  const lightbox = document.getElementById('lightbox');
-  const img = document.getElementById('lightbox-img');
-  if (!lightbox || !img) return;
-  lightbox.classList.remove('visible', 'opacity-100', 'open');
-  lightbox.classList.add('invisible', 'opacity-0');
+  const lb = document.getElementById('lightbox'), img = document.getElementById('lightbox-img');
+  if (!lb || !img) return;
+  lb.classList.remove('visible','opacity-100','open'); lb.classList.add('invisible','opacity-0');
   setTimeout(() => { img.src = ''; }, 400);
 }
 
 function sendToWhatsApp() {
-  const name = document.getElementById('name')?.value.trim() || '';
-  const phone = document.getElementById('phone')?.value.trim() || '';
-  const date = document.getElementById('date')?.value || '';
-  const email = document.getElementById('email')?.value.trim() || '';
-  const location = document.getElementById('location')?.value.trim() || '';
-  const eventType = document.getElementById('eventType')?.value || '';
-  const frame = selections.frame;
-  const rope = selections.rope;
-  const carpet = selections.carpet;
-  const cardboard = selections.cardboard;
-  if (!name || !phone || !date || !email || !eventType || !location) {
-    alert(translations[currentLang].alert_contact);
-    return;
-  }
-  if (!frame || !rope || !cardboard) {
-    alert(translations[currentLang].alert_select);
-    return;
-  }
-  let dateWhatsapp = date;
-  if (date) {
-    const [y, m, d] = date.split('-');
-    const monthShort = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    const mm = parseInt(m, 10);
-    if (!isNaN(mm) && mm >= 1 && mm <= 12) dateWhatsapp = `${d} ${monthShort[mm - 1]} ${y}`;
-  }
-  const phoneNumber = '972524040714';
-  const text = `*New Mirror Booth Reservation Request* ✨\n(Language: ${currentLang.toUpperCase()})\n\n👤 *Name:* ${name}\n📱 *Phone:* ${phone}\n📅 *Date:* ${dateWhatsapp}\n📧 *Email:* ${email}\n📍 *Location:* ${location}\n🎉 *Event Type:* ${eventType}\n\n*Customization Details:*\n🪞 *Frame:* ${frame}\n🧶 *Rope:* ${rope}\n🚩 *Carpet:* ${carpet || 'None'}\n🖼️ *Mount:* ${cardboard}\n\nPlease confirm availability. Thank you!`;
-  window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`, '_blank');
+  const name = document.getElementById('name')?.value.trim()||'', phone = document.getElementById('phone')?.value.trim()||'';
+  const date = document.getElementById('date')?.value||'', email = document.getElementById('email')?.value.trim()||'';
+  const location = document.getElementById('location')?.value.trim()||'', eventType = document.getElementById('eventType')?.value||'';
+  const { frame, rope, carpet, cardboard } = selections;
+  if (!name||!phone||!date||!email||!eventType||!location) { alert(translations[currentLang].alert_contact); return; }
+  if (!frame||!rope||!cardboard) { alert(translations[currentLang].alert_select); return; }
+  let dateDisplay = date;
+  if (date) { const [y,mo,d]=date.split('-'); const ms=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; const mm=parseInt(mo,10); if(!isNaN(mm)&&mm>=1&&mm<=12) dateDisplay=`${d} ${ms[mm-1]} ${y}`; }
+  const text = `*New Mirror Booth Reservation* ✨\n(Language: ${currentLang.toUpperCase()})\n\n👤 *Name:* ${name}\n📱 *Phone:* ${phone}\n📅 *Date:* ${dateDisplay}\n📧 *Email:* ${email}\n📍 *Location:* ${location}\n🎉 *Event:* ${eventType}\n\n*Customizations:*\n🪞 *Frame:* ${frame}\n🧶 *Rope:* ${rope}\n🚩 *Carpet:* ${carpet||'None'}\n🖼️ *Mount:* ${cardboard}\n\nPlease confirm availability. Thank you!`;
+  window.open(`https://wa.me/972524040714?text=${encodeURIComponent(text)}`, '_blank');
 }
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(() => {});
-  });
-}
+if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 
 document.addEventListener('DOMContentLoaded', () => {
-  const elementsToReveal = document.querySelectorAll('header, section, .option-card, .gallery-item');
-  elementsToReveal.forEach(el => el.classList.add('reveal-hidden'));
-  const revealObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('reveal-visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  elementsToReveal.forEach(el => revealObserver.observe(el));
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('reveal-visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+  document.querySelectorAll('.reveal-hidden').forEach(el => observer.observe(el));
   applyTranslations(currentLang);
   refreshIcons();
-
-  console.assert(typeof toggleTheme === 'function', 'toggleTheme should exist');
-  console.assert(typeof showPage === 'function', 'showPage should exist');
-  console.assert(typeof setLanguage === 'function', 'setLanguage should exist');
-  console.assert(document.getElementById('booking-page'), 'booking page should exist');
-  console.assert(document.getElementById('gallery-page'), 'gallery page should exist');
-  console.assert(document.getElementById('about-page'), 'about page should exist');
 });
 </script>
 </body>
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KN9PBXP7" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </html>
