@@ -366,7 +366,7 @@ label.field-label { display: block; font-size: 0.68rem; letter-spacing: 0.2em; t
 .calendar-day { padding: 0.5rem 0.2rem; border-radius: 10px; cursor: pointer; font-size: 0.82rem; transition: all 0.2s; }
 .calendar-day:hover:not(.empty) { background: rgba(201,168,76,0.12); color: var(--gold); }
 .calendar-day.selected { background: linear-gradient(135deg, #c9a84c, #7a5228); color: #fff; }
-.calendar-day.empty { cursor: default; }
+.calendar-day.empty { cursor: default; color: #444; }
 
 .gallery-item {
   position: relative; overflow: hidden; border-radius: 22px;
@@ -374,6 +374,15 @@ label.field-label { display: block; font-size: 0.68rem; letter-spacing: 0.2em; t
 }
 .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.55s ease; }
 .gallery-item:hover img { transform: scale(1.07); }
+
+/* ── Change 1: Gold pulse on submit button ── */
+@keyframes goldPulse {
+  0%, 100% { box-shadow: 0 8px 28px rgba(201,168,76,0.28), 0 0 0 0 rgba(201,168,76,0.4); }
+  50% { box-shadow: 0 8px 28px rgba(201,168,76,0.28), 0 0 0 10px rgba(201,168,76,0); }
+}
+button[type="submit"].gold-btn {
+  animation: goldPulse 2.4s ease-in-out infinite;
+}
 
 .gold-btn {
   background: linear-gradient(105deg, #7a5228 0%, #c9a84c 40%, #fdf6d3 65%, #c9a84c 80%, #7a5228 100%);
@@ -432,6 +441,26 @@ label.field-label { display: block; font-size: 0.68rem; letter-spacing: 0.2em; t
 .hero-actions  { animation-delay: 0.48s; }
 @keyframes luxReveal { to { opacity: 1; transform: translateY(0); } }
 
+/* ── Change 4: Step indicator ── */
+.step-indicator {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.6rem; opacity: 0.75;
+}
+.step-indicator span { color: var(--text-muted); }
+
+/* ── Change 5: Toast ── */
+#toast {
+  position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(20px);
+  z-index: 9999; background: linear-gradient(135deg, #7a5228, #c9a84c);
+  color: #1a1000; font-weight: 700; font-size: 0.82rem; letter-spacing: 0.14em;
+  text-transform: uppercase; padding: 0.85rem 1.8rem; border-radius: 999px;
+  box-shadow: 0 12px 40px rgba(201,168,76,0.35);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
 /* ── Gallery soon ── */
 .soon-wrap { min-height: 55vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem; text-align: center; }
 .soon-word {
@@ -470,8 +499,8 @@ label.field-label { display: block; font-size: 0.68rem; letter-spacing: 0.2em; t
   .hero-shell { padding-top: 88px; }
   .hero-card { min-height: 68vh; padding: 1.1rem; border-radius: 26px; }
   .hero-content { max-width: 100%; }
-.hero-kicker-top { font-size: 1.2rem !important; letter-spacing: 0.3em; top: 4.5rem; gap: 0.65rem; }
-.hero-kicker-top::before, .hero-kicker-top::after { width: 1.4rem; }
+  .hero-kicker-top { font-size: 1.2rem !important; letter-spacing: 0.3em; top: 4.5rem; gap: 0.65rem; }
+  .hero-kicker-top::before, .hero-kicker-top::after { width: 1.4rem; }
   .hero-title { font-size: 2.55rem; line-height: 1.04; text-align: center; margin: 0 auto; }
   .hero-subtitle { font-size: 0.9rem; text-align: center; max-width: 19rem; margin: 1rem auto 0; }
   .hero-actions { flex-direction: column; }
@@ -485,7 +514,7 @@ label.field-label { display: block; font-size: 0.68rem; letter-spacing: 0.2em; t
   .mount-toggle .preview { max-width: 100%; width: 100%; min-height: 140px; }
   .frame-grid .option-card { padding: 0.8rem; }
   .frame-grid .option-visual { aspect-ratio: 3/5; }
-.frame-grid .option-visual img { object-fit: contain; }
+  .frame-grid .option-visual img { object-fit: contain; }
   .contact-link { font-size: 1.65rem; }
   .about-card { padding: 1.5rem 1rem; }
   .soon-word { font-size: clamp(3.5rem, 20vw, 6rem); }
@@ -494,7 +523,7 @@ label.field-label { display: block; font-size: 0.68rem; letter-spacing: 0.2em; t
 @media (max-width: 420px) {
   .hero-title { font-size: 2rem; }
   .hero-subtitle { font-size: 0.86rem; }
-.hero-kicker-top { font-size: 0.75rem; letter-spacing: 0.26em; }
+  .hero-kicker-top { font-size: 0.75rem; letter-spacing: 0.26em; }
   .frame-grid .option-card { padding: 0.7rem; }
   .contact-link { font-size: 1.45rem; }
 }
@@ -553,10 +582,7 @@ label.field-label { display: block; font-size: 0.68rem; letter-spacing: 0.2em; t
 <div id="booking-page" class="transition-all duration-500 ease-in-out opacity-100 translate-y-0">
   <div class="hero-shell px-3 md:px-6 max-w-6xl mx-auto">
     <header class="hero-card reveal-hidden">
-
-      <!-- KICKER: pinned to top center of hero image -->
       <div class="hero-kicker-top" data-i18n="hero_kicker">MIRROR BOOTH</div>
-
       <div class="hero-content">
         <h1 class="hero-title always-serif" data-i18n="hero_title">Reflect Your Elegance</h1>
         <p class="hero-subtitle" data-i18n="hero_subtitle">Customize your premium photo experience. Select your finishes below to request a reservation.</p>
@@ -578,6 +604,7 @@ label.field-label { display: block; font-size: 0.68rem; letter-spacing: 0.2em; t
 
       <!-- Frame -->
       <section class="section-wrap editorial-card reveal-hidden">
+        <div class="step-indicator">Step 1 <span>of 4</span></div>
         <h2 class="section-heading text-[1.6rem]" data-i18n="step2_title">Mirror Frame</h2>
         <p class="section-copy mt-2 mb-5" data-i18n="step2_desc">Choose the frame finish for the mirror.</p>
         <div class="choices-grid frame-grid">
@@ -611,6 +638,7 @@ label.field-label { display: block; font-size: 0.68rem; letter-spacing: 0.2em; t
 
       <!-- Rope -->
       <section class="section-wrap editorial-card reveal-hidden">
+        <div class="step-indicator">Step 2 <span>of 4</span></div>
         <h2 class="section-heading text-[1.6rem]" data-i18n="step3_title">Velvet Rope / Twisted Rope</h2>
         <p class="section-copy mt-2 mb-5" data-i18n="step3_desc">Select the color of the velvet crowd control ropes.</p>
         <div class="choices-grid rope-grid">
@@ -645,6 +673,7 @@ label.field-label { display: block; font-size: 0.68rem; letter-spacing: 0.2em; t
 
       <!-- Carpet -->
       <section class="section-wrap editorial-card reveal-hidden">
+        <div class="step-indicator">Step 3 <span>of 4</span></div>
         <h2 class="section-heading text-[1.6rem]" data-i18n="step_carpet_title">Carpet</h2>
         <p class="section-copy mt-2 mb-5" data-i18n="step_carpet_desc">Select the carpet color for your event.</p>
         <div class="choices-grid carpet-grid">
@@ -668,12 +697,19 @@ label.field-label { display: block; font-size: 0.68rem; letter-spacing: 0.2em; t
             <h3 data-i18n="carpet_pink">Pink Carpet</h3>
             <div id="check-carpet-Pink" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div>
           </div>
+          <!-- Change 2: No Carpet option -->
+          <div class="option-card group" onclick="selectOption('carpet','None')">
+            <div class="option-visual flex items-center justify-center"><i data-lucide="ban" class="w-9 h-9 text-stone-600"></i></div>
+            <h3 data-i18n="carpet_none">No Carpet</h3>
+            <div id="check-carpet-None" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div>
+          </div>
         </div>
-        <input type="hidden" id="carpetSelection">
+        <input type="hidden" id="carpetSelection" required>
       </section>
 
       <!-- Photo Mount -->
       <section class="section-wrap editorial-card reveal-hidden">
+        <div class="step-indicator">Step 4 <span>of 4</span></div>
         <h2 class="section-heading text-[1.6rem]" data-i18n="step4_title">Photo Mount</h2>
         <p class="section-copy mt-2 mb-5" data-i18n="step4_desc">The cardboard frame attached to final printed photos.</p>
         <div class="space-y-4">
@@ -704,7 +740,7 @@ label.field-label { display: block; font-size: 0.68rem; letter-spacing: 0.2em; t
               <div class="option-card group" onclick="selectOption('cardboard','White')"><div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mount-white.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img loading="lazy" src="mount-white.jpg" alt="Monochrome Mount" onerror="this.style.display='none'; this.parentElement.style.background='#fff';"></div><h3 data-i18n="mount_white">Monochrome</h3><div id="check-cardboard-White" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div></div>
               <div class="option-card group" onclick="selectOption('cardboard','Pure White')"><div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mount-pure-white.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img loading="lazy" src="mount-pure-white.jpg" alt="Pure White Mount" onerror="this.style.display='none'; this.parentElement.style.background='#f8f8f8';"></div><h3 data-i18n="mount_pure_white">Pure White</h3><div id="check-cardboard-Pure White" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div></div>
               <div class="option-card group" onclick="selectOption('cardboard','White & Gold')"><div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mount-white-gold.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img loading="lazy" src="mount-white-gold.jpg" alt="White & Gold Mount" onerror="this.style.display='none'; this.parentElement.style.background='#f1e6cc';"></div><h3 data-i18n="mount_white_gold">White & Gold</h3><div id="check-cardboard-White & Gold" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div></div>
-              <div class="option-card group" onclick="selectOption('cardboard','Natural Kraft')"><div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mount-kraft.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img loading="lazy" src="mount-kraft.jpg" alt="Natural Kraft Mount" onerror="this.style.display='none'; this.parentElement.style.background='#d2b48c';"></div><h3 data-i18n="mount_kraft">Natural Kraft</h3><div id="check-cardboard-Natural Kraft" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div></div>              
+              <div class="option-card group" onclick="selectOption('cardboard','Natural Kraft')"><div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mount-kraft.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img loading="lazy" src="mount-kraft.jpg" alt="Natural Kraft Mount" onerror="this.style.display='none'; this.parentElement.style.background='#d2b48c';"></div><h3 data-i18n="mount_kraft">Natural Kraft</h3><div id="check-cardboard-Natural Kraft" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div></div>
               <div class="option-card group" onclick="selectOption('cardboard','Classic Wine Red')"><div class="option-visual"><button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mount-wine-red.jpg')"><i data-lucide="maximize-2" class="w-4 h-4"></i></button><img loading="lazy" src="mount-wine-red.jpg" alt="Classic Wine Red Mount" onerror="this.style.display='none'; this.parentElement.style.background='#7a1726';"></div><span class="special-edition-wine">Special Order</span><h3 data-i18n="mount_wine_red">Classic Wine Red</h3><div id="check-cardboard-Classic Wine Red" class="selection-check hidden"><i data-lucide="check" class="w-4 h-4"></i></div></div>
             </div>
           </div>
@@ -835,9 +871,13 @@ label.field-label { display: block; font-size: 0.68rem; letter-spacing: 0.2em; t
   </main>
 </div>
 
+<!-- Change 3: Footer updated to 2026 -->
 <footer class="relative z-[2] text-center py-8 text-xs tracking-widest uppercase" style="color: var(--text-muted); border-top: 1px solid rgba(201,168,76,0.08);" data-i18n="footer">
-  &copy; 2025 Mirror Booth Experience. All rights reserved.
+  &copy; 2026 Mirror Booth Experience. All rights reserved.
 </footer>
+
+<!-- Change 5: Toast notification -->
+<div id="toast">✨ Opening WhatsApp...</div>
 
 <script>
 (function(){
@@ -870,24 +910,24 @@ const translations = {
     step3_title:'Velvet Rope / Twisted Rope', step3_desc:'Select the color of the velvet crowd control ropes.',
     rope_red:'Red Velvet', rope_twisted_pink:'Twisted Pink', rope_twisted_white:'Twisted White', rope_twisted_gold:'Twisted Gold', rope_none:'No Rope',
     step_carpet_title:'Carpet', step_carpet_desc:'Select the carpet color for your event.',
-    carpet_red:'Red Carpet', carpet_beige:'Beige Carpet', carpet_white:'White Carpet', carpet_pink:'Pink Carpet',
+    carpet_red:'Red Carpet', carpet_beige:'Beige Carpet', carpet_white:'White Carpet', carpet_pink:'Pink Carpet', carpet_none:'No Carpet',
     step4_title:'Photo Mount', step4_desc:'The cardboard frame attached to final printed photos.',
     mount_group_one:'1 Picture', mount_group_one_desc:'Elegant single-photo presentation',
     mount_group_two:'3 in 1 Picture', mount_group_two_desc:'Editorial multi-photo print presentation',
     mount_white:'Monochrome', mount_pure_white:'Pure White', mount_white_gold:'White & Gold',
     mount_kraft:'Natural Kraft', mount_luxury_white:'Luxury White', mount_kraft_xl:'Natural Kraft XL',
-    mount_black:'Luxury Black', mount_wine_red:'Classic Wine Red',
+    mount_wine_red:'Classic Wine Red',
     label_event_type:'Event Type', select_event_type:'Select Event Type',
     event_wedding:'Wedding', event_engagement:'Engagement', event_birthday:'Birthday', event_corporate:'Corporate', event_other:'Other',
     summary_title:'Ready to Book?', summary_desc:'Clicking the button below will open WhatsApp with your order details pre-filled.',
     btn_submit:'Get Your Offer',
-    alert_contact:'Please fill in all contact details.', alert_select:'Please select an option for Frame, Rope, and Photo Mount.',
+    alert_contact:'Please fill in all contact details.', alert_select:'Please select an option for Frame, Rope, Carpet, and Photo Mount.',
     gallery_kicker:'Gallery', gallery_heading:'Moments of Elegance',
     gallery_subheading:'Browse through our curated collection of mirror booth setups, event styling, and printed keepsakes.',
     gallery_coming_soon:"We're curating our portfolio of beautiful moments. In the meantime, follow us on Instagram for a preview.",
     about_kicker:'Contact', about_heading:'Our Story', about_subtitle:'Capturing elegance, one reflection at a time.',
     about_text:'We specialize in bringing a touch of luxury to your most cherished moments. Our vintage-styled mirror photo booths are more than just cameras — they are interactive experiences designed to reflect the beauty of your event.',
-    label_follow:'Follow Us', back_to_booking:'Back to Reservation', footer:'© 2025 Mirror Booth Experience. All rights reserved.'
+    label_follow:'Follow Us', back_to_booking:'Back to Reservation', footer:'© 2026 Mirror Booth Experience. All rights reserved.'
   },
   he: {
     nav_gallery:'גלריה', nav_reserve:'הזמנה', nav_about:'צור קשר',
@@ -901,24 +941,24 @@ const translations = {
     step3_title:'חבל קטיפה / שזור', step3_desc:'בחרו את צבע החבלים.',
     rope_red:'קטיפה אדומה', rope_twisted_pink:'ורוד שזור', rope_twisted_white:'לבן שזור', rope_twisted_gold:'זהב שזור', rope_none:'ללא חבל',
     step_carpet_title:'שטיח', step_carpet_desc:'בחרו את צבע השטיח.',
-    carpet_red:'שטיח אדום', carpet_beige:'שטיח בז׳', carpet_white:'שטיח לבן', carpet_pink:'שטיח ורוד',
+    carpet_red:'שטיח אדום', carpet_beige:'שטיח בז׳', carpet_white:'שטיח לבן', carpet_pink:'שטיח ורוד', carpet_none:'ללא שטיח',
     step4_title:'מסגרת תמונה', step4_desc:'מסגרת הקרטון שמצורפת לתמונות.',
     mount_group_one:'תמונה אחת', mount_group_one_desc:'הגשה אלגנטית להדפסה בודדת',
     mount_group_two:'3 תמונות', mount_group_two_desc:'הגשה אלגנטית למספר תמונות',
     mount_white:'מונוכרום', mount_pure_white:'לבן טהור', mount_white_gold:'לבן וזהב',
     mount_kraft:'קרפט טבעי', mount_luxury_white:'לבן יוקרתי', mount_kraft_xl:'קרפט XL',
-    mount_black:'שחור יוקרתי', mount_wine_red:'אדום יין',
+    mount_wine_red:'אדום יין',
     label_event_type:'סוג אירוע', select_event_type:'בחר סוג אירוע',
     event_wedding:'חתונה', event_engagement:'אירוסין', event_birthday:'יום הולדת', event_corporate:'עסקי', event_other:'אחר',
     summary_title:'מוכנים להזמין?', summary_desc:'לחצו על הכפתור לפתיחת וואטסאפ עם פרטי ההזמנה.',
     btn_submit:'קבלו הצעת מחיר',
-    alert_contact:'נא למלא את כל פרטי הקשר.', alert_select:'נא לבחור מסגרת, חבל ומסגרת תמונה.',
+    alert_contact:'נא למלא את כל פרטי הקשר.', alert_select:'נא לבחור מסגרת, חבל, שטיח ומסגרת תמונה.',
     gallery_kicker:'גלריה', gallery_heading:'רגעים של אלגנטיות',
     gallery_subheading:'עיינו באוסף מוקפד של עיצובים והדפסות.',
     gallery_coming_soon:'אנחנו בונים את הגלריה שלנו. בינתיים עקבו אחרינו באינסטגרם.',
     about_kicker:'צור קשר', about_heading:'הסיפור שלנו', about_subtitle:'לוכדים אלגנטיות בכל השתקפות.',
     about_text:'אנחנו מתמחים בהבאת מגע של יוקרה לרגעים היקרים ביותר שלכם.',
-    label_follow:'עקבו אחרינו', back_to_booking:'חזרה להזמנה', footer:'© 2025 Mirror Booth Experience. כל הזכויות שמורות.'
+    label_follow:'עקבו אחרינו', back_to_booking:'חזרה להזמנה', footer:'© 2026 Mirror Booth Experience. כל הזכויות שמורות.'
   },
   ar: {
     nav_gallery:'المعرض', nav_reserve:'الحجز', nav_about:'اتصل بنا',
@@ -932,24 +972,24 @@ const translations = {
     step3_title:'حبل مخمل / مجدول', step3_desc:'اختر لون الحبال.',
     rope_red:'مخمل أحمر', rope_twisted_pink:'وردي مجدول', rope_twisted_white:'أبيض مجدول', rope_twisted_gold:'ذهبي مجدول', rope_none:'بدون حبل',
     step_carpet_title:'السجاد', step_carpet_desc:'اختر لون السجاد.',
-    carpet_red:'سجاد أحمر', carpet_beige:'سجاد بيج', carpet_white:'سجاد أبيض', carpet_pink:'سجاد وردي',
+    carpet_red:'سجاد أحمر', carpet_beige:'سجاد بيج', carpet_white:'سجاد أبيض', carpet_pink:'سجاد وردي', carpet_none:'بدون سجاد',
     step4_title:'إطار الصورة', step4_desc:'إطار الكرتون المرفق مع الصور.',
     mount_group_one:'صورة واحدة', mount_group_one_desc:'تقديم أنيق لصورة واحدة',
     mount_group_two:'ثلاث صور', mount_group_two_desc:'تقديم أنيق لعدة صور',
     mount_white:'أحادي اللون', mount_pure_white:'أبيض نقي', mount_white_gold:'أبيض وذهبي',
     mount_kraft:'كرافت طبيعي', mount_luxury_white:'أبيض فاخر', mount_kraft_xl:'كرافت XL',
-    mount_black:'أسود فاخر', mount_wine_red:'أحمر نبيذي',
+    mount_wine_red:'أحمر نبيذي',
     label_event_type:'نوع المناسبة', select_event_type:'اختر النوع',
     event_wedding:'زفاف', event_engagement:'خطوبة', event_birthday:'عيد ميلاد', event_corporate:'شركة', event_other:'أخرى',
     summary_title:'جاهز للحجز؟', summary_desc:'النقر سيفتح واتساب مع تفاصيل طلبك.',
     btn_submit:'احصل على عرض السعر',
-    alert_contact:'يرجى ملء جميع تفاصيل الاتصال.', alert_select:'يرجى اختيار إطار وحبل وإطار صورة.',
+    alert_contact:'يرجى ملء جميع تفاصيل الاتصال.', alert_select:'يرجى اختيار إطار وحبل وسجاد وإطار صورة.',
     gallery_kicker:'المعرض', gallery_heading:'لحظات من الأناقة',
     gallery_subheading:'تصفح مجموعة منتقاة من التجهيزات.',
     gallery_coming_soon:'نحن نبني معرضنا. تابعنا على إنستغرام في هذه الأثناء.',
     about_kicker:'اتصل بنا', about_heading:'قصتنا', about_subtitle:'نلتقط الأناقة، انعكاساً بعد انعكاس.',
     about_text:'نحن متخصصون في إضافة لمسة فاخرة إلى مناسباتكم المميزة.',
-    label_follow:'تابعنا', back_to_booking:'العودة إلى الحجز', footer:'© 2025 Mirror Booth Experience. جميع الحقوق محفوظة.'
+    label_follow:'تابعنا', back_to_booking:'العودة إلى الحجز', footer:'© 2026 Mirror Booth Experience. جميع الحقوق محفوظة.'
   }
 };
 
@@ -1013,7 +1053,6 @@ function setLanguage(lang) {
 
 function toggleMountCategory(panelId) {
   const scrollY = window.scrollY;
-
   ['mount-1pic','mount-3in1'].forEach(id => {
     if (id === panelId) return;
     const p = document.getElementById(id); if (!p || p.classList.contains('hidden')) return;
@@ -1023,38 +1062,29 @@ function toggleMountCategory(panelId) {
     document.getElementById(`arrow-${id}`)?.classList.remove('rotate');
     document.querySelector(`button[aria-controls="${id}"]`)?.setAttribute('aria-expanded','false');
   });
-
   const panel = document.getElementById(panelId), arrow = document.getElementById(`arrow-${panelId}`);
   const btn = document.querySelector(`button[aria-controls="${panelId}"]`);
   if (!panel) return;
   const opening = panel.classList.contains('hidden');
-
   if (opening) {
     panel.classList.remove('hidden');
-    panel.style.opacity = '0';
-    panel.style.transform = 'translateY(-16px)';
-    panel.style.filter = 'blur(4px)';
-    panel.style.maxHeight = '0';
+    panel.style.opacity = '0'; panel.style.transform = 'translateY(-16px)';
+    panel.style.filter = 'blur(4px)'; panel.style.maxHeight = '0';
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         panel.style.transition = 'opacity 1s cubic-bezier(0.16,1,0.3,1), transform 1s cubic-bezier(0.16,1,0.3,1), filter 0.9s ease, max-height 1s cubic-bezier(0.16,1,0.3,1)';
-        panel.style.opacity = '1';
-        panel.style.transform = 'translateY(0)';
-        panel.style.filter = 'blur(0px)';
-        panel.style.maxHeight = '1200px';
+        panel.style.opacity = '1'; panel.style.transform = 'translateY(0)';
+        panel.style.filter = 'blur(0px)'; panel.style.maxHeight = '1200px';
       });
     });
     arrow?.classList.add('rotate'); btn?.setAttribute('aria-expanded','true');
   } else {
     panel.style.transition = 'opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1), filter 0.6s ease, max-height 0.7s cubic-bezier(0.16,1,0.3,1)';
-    panel.style.opacity = '0';
-    panel.style.transform = 'translateY(-10px)';
-    panel.style.filter = 'blur(3px)';
-    panel.style.maxHeight = '0';
+    panel.style.opacity = '0'; panel.style.transform = 'translateY(-10px)';
+    panel.style.filter = 'blur(3px)'; panel.style.maxHeight = '0';
     setTimeout(() => { panel.classList.add('hidden'); panel.style.cssText = ''; }, 700);
     arrow?.classList.remove('rotate'); btn?.setAttribute('aria-expanded','false');
   }
-
   requestAnimationFrame(() => window.scrollTo(0, scrollY));
 }
 
@@ -1091,9 +1121,17 @@ function renderCalendar() {
   header.innerText = `${months[m]} ${y}`; daysEl.innerHTML = '';
   ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(n => { const d = document.createElement('div'); d.className = 'calendar-day-name'; d.innerText = n; daysEl.appendChild(d); });
   const firstDay = new Date(y, m, 1).getDay(), dim = new Date(y, m+1, 0).getDate();
+  /* Change 6: Block past dates */
+  const today = new Date(); today.setHours(0,0,0,0);
   for (let i = 0; i < firstDay; i++) { const d = document.createElement('div'); d.className = 'calendar-day empty'; daysEl.appendChild(d); }
   for (let n = 1; n <= dim; n++) {
-    const d = document.createElement('div'); d.className = 'calendar-day'; d.innerText = n;
+    const thisDay = new Date(y, m, n);
+    const d = document.createElement('div');
+    if (thisDay < today) {
+      d.className = 'calendar-day empty'; d.innerText = n; d.style.color = '#333';
+      daysEl.appendChild(d); continue;
+    }
+    d.className = 'calendar-day'; d.innerText = n;
     if (selectedDate && selectedDate.getDate()===n && selectedDate.getMonth()===m && selectedDate.getFullYear()===y) d.classList.add('selected');
     d.onclick = function() {
       selectedDate = new Date(y, m, n);
@@ -1132,11 +1170,15 @@ function sendToWhatsApp() {
   const location = document.getElementById('location')?.value.trim()||'', eventType = document.getElementById('eventType')?.value||'';
   const { frame, rope, carpet, cardboard } = selections;
   if (!name||!phone||!date||!email||!eventType||!location) { alert(translations[currentLang].alert_contact); return; }
-  if (!frame||!rope||!cardboard) { alert(translations[currentLang].alert_select); return; }
+  if (!frame||!rope||!carpet||!cardboard) { alert(translations[currentLang].alert_select); return; }
   let dateDisplay = date;
   if (date) { const [y,mo,d]=date.split('-'); const ms=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; const mm=parseInt(mo,10); if(!isNaN(mm)&&mm>=1&&mm<=12) dateDisplay=`${d} ${ms[mm-1]} ${y}`; }
-  const text = `*New Mirror Booth Reservation* ✨\n(Language: ${currentLang.toUpperCase()})\n\n👤 *Name:* ${name}\n📱 *Phone:* ${phone}\n📅 *Date:* ${dateDisplay}\n📧 *Email:* ${email}\n📍 *Location:* ${location}\n🎉 *Event:* ${eventType}\n\n*Customizations:*\n🪞 *Frame:* ${frame}\n🧶 *Rope:* ${rope}\n🚩 *Carpet:* ${carpet||'None'}\n🖼️ *Mount:* ${cardboard}\n\nPlease confirm availability. Thank you!`;
+  const text = `*New Mirror Booth Reservation* ✨\n(Language: ${currentLang.toUpperCase()})\n\n👤 *Name:* ${name}\n📱 *Phone:* ${phone}\n📅 *Date:* ${dateDisplay}\n📧 *Email:* ${email}\n📍 *Location:* ${location}\n🎉 *Event:* ${eventType}\n\n*Customizations:*\n🪞 *Frame:* ${frame}\n🧶 *Rope:* ${rope}\n🚩 *Carpet:* ${carpet}\n🖼️ *Mount:* ${cardboard}\n\nPlease confirm availability. Thank you!`;
   window.open(`https://wa.me/972524040714?text=${encodeURIComponent(text)}`, '_blank');
+  /* Change 5: Toast notification */
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
