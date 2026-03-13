@@ -147,9 +147,15 @@ nav {
 }
 .lang-btn:hover:not(.active), .icon-pill:hover { color: var(--gold); background: rgba(201,168,76,0.08); }
 
-#lightbox { transition: opacity 0.3s ease, visibility 0.3s ease; }
-#lightbox-img { transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); transform: scale(0.92); }
-#lightbox.open #lightbox-img { transform: scale(1); }
+#lightbox {
+  transition: opacity 0.45s cubic-bezier(0.16,1,0.3,1), visibility 0.45s ease;
+}
+#lightbox-img {
+  transition: opacity 0.55s cubic-bezier(0.16,1,0.3,1), transform 0.55s cubic-bezier(0.16,1,0.3,1);
+  transform: scale(0.88);
+  opacity: 0;
+  will-change: transform, opacity;
+}
 
 #intro-screen { background: #000; }
 @keyframes logoReveal {
@@ -1204,13 +1210,32 @@ window.addEventListener('click', e => {
 function openLightbox(src) {
   const lb = document.getElementById('lightbox'), img = document.getElementById('lightbox-img');
   if (!lb || !img) return;
-  img.src = src; lb.classList.remove('invisible','opacity-0'); lb.classList.add('visible','opacity-100','open');
+  img.style.opacity = '0';
+  img.style.transform = 'scale(0.88)';
+  img.src = src;
+  lb.classList.remove('invisible','opacity-0');
+  lb.classList.add('visible','opacity-100','open');
+  img.onload = () => {
+    requestAnimationFrame(() => {
+      img.style.transition = 'opacity 0.55s cubic-bezier(0.16,1,0.3,1), transform 0.55s cubic-bezier(0.16,1,0.3,1)';
+      img.style.opacity = '1';
+      img.style.transform = 'scale(1)';
+    });
+  };
+  // fallback if already cached
+  if (img.complete) img.onload();
 }
 function closeLightbox() {
   const lb = document.getElementById('lightbox'), img = document.getElementById('lightbox-img');
   if (!lb || !img) return;
-  lb.classList.remove('visible','opacity-100','open'); lb.classList.add('invisible','opacity-0');
-  setTimeout(() => { img.src = ''; }, 400);
+  img.style.transition = 'opacity 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.4s cubic-bezier(0.4,0,0.2,1)';
+  img.style.opacity = '0';
+  img.style.transform = 'scale(0.92)';
+  setTimeout(() => {
+    lb.classList.remove('visible','opacity-100','open');
+    lb.classList.add('invisible','opacity-0');
+    setTimeout(() => { img.src = ''; img.style.cssText = ''; }, 300);
+  }, 380);
 }
 
 function sendToWhatsApp() {
