@@ -890,16 +890,75 @@ body {
     </header>
   </div>
   <main class="max-w-6xl mx-auto px-3 md:px-6 pb-24">
-    <section class="section-wrap editorial-card reveal-hidden">
-      <div class="soon-wrap">
-        <div class="soon-word">Soon</div>
-        <p class="soon-sub" data-i18n="gallery_coming_soon">We're curating our portfolio of beautiful moments. In the meantime, follow us on Instagram for a preview.</p>
-        <a href="https://www.instagram.com/framebykaram?igsh=MXJrYXcxdmd6ZmJjZw==" target="_blank" class="soon-instagram">
-          <i data-lucide="instagram" class="w-4 h-4"></i>
-          <span>@framebykaram</span>
-        </a>
-      </div>
-    </section>
+<section class="section-wrap editorial-card reveal-hidden">
+  <style>
+    .masonry-grid {
+      columns: 2;
+      column-gap: 0.85rem;
+    }
+    @media (min-width: 900px) {
+      .masonry-grid { columns: 3; }
+    }
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 0.85rem;
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+    }
+    .masonry-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.55s ease;
+    }
+    .masonry-item:hover img {
+      transform: scale(1.05);
+    }
+    .masonry-item .enlarge-btn {
+      position: absolute;
+      top: 0.6rem;
+      right: 0.6rem;
+    }
+  </style>
+  <div class="masonry-grid">
+
+    <div class="masonry-item" onclick="openLightbox('mounts.jpg')">
+      <img loading="lazy" src="mounts.jpg" alt="Photo Mounts"
+           onerror="this.style.display='none'; this.parentElement.style.minHeight='180px'; this.parentElement.style.background='rgba(255,255,255,0.04)';">
+      <button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('mounts.jpg')">
+        <i data-lucide="maximize-2" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <div class="masonry-item" onclick="openLightbox('pink-luxury.jpg')">
+      <img loading="lazy" src="pink-luxury.jpg" alt="Pink Luxury Setup"
+           onerror="this.style.display='none'; this.parentElement.style.minHeight='180px'; this.parentElement.style.background='rgba(255,255,255,0.04)';">
+      <button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('pink-luxury.jpg')">
+        <i data-lucide="maximize-2" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <div class="masonry-item" onclick="openLightbox('red-luxury.jpg')">
+      <img loading="lazy" src="red-luxury.jpg" alt="Red Luxury Setup"
+           onerror="this.style.display='none'; this.parentElement.style.minHeight='180px'; this.parentElement.style.background='rgba(255,255,255,0.04)';">
+      <button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('red-luxury.jpg')">
+        <i data-lucide="maximize-2" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <div class="masonry-item" onclick="openLightbox('white-luxury.jpg')">
+      <img loading="lazy" src="white-luxury.jpg" alt="White Luxury Setup"
+           onerror="this.style.display='none'; this.parentElement.style.minHeight='180px'; this.parentElement.style.background='rgba(255,255,255,0.04)';">
+      <button type="button" class="enlarge-btn" onclick="event.stopPropagation(); openLightbox('white-luxury.jpg')">
+        <i data-lucide="maximize-2" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+  </div>
+</section>
     <div class="text-center mt-10">
       <button onclick="showPage('booking')" class="outline-btn inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs uppercase tracking-[0.16em]">
         <i data-lucide="arrow-left" class="w-4 h-4 rtl:rotate-180"></i>
