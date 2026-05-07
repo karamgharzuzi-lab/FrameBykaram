@@ -226,18 +226,12 @@ nav {
   background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 8px rgba(201,168,76,0.55)) drop-shadow(0 0 20px rgba(201,168,76,0.3));
 }
 
 @keyframes kickerGlow {
-  0%, 100% {
-    background-position: 0% 50%;
-    filter: drop-shadow(0 0 5px rgba(201,168,76,0.3)) drop-shadow(0 0 14px rgba(201,168,76,0.12));
-  }
-  50% {
-    background-position: 130% 50%;
-    filter: drop-shadow(0 0 9px rgba(253,246,211,0.5)) drop-shadow(0 0 22px rgba(201,168,76,0.28)) drop-shadow(0 0 44px rgba(201,168,76,0.1));
-  }
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 130% 50%; }
+  100% { background-position: 0% 50%; }
 }
 .hero-kicker-top::before,
 .hero-kicker-top::after {
@@ -306,13 +300,17 @@ h2[data-i18n="step4_title"] {
   background: linear-gradient(160deg, rgba(255,255,255,0.042) 0%, rgba(0,0,0,0.12) 100%);
   border: 1px solid rgba(201,168,76,0.28);
   box-shadow: 0 0 0 1px rgba(201,168,76,0.08), 0 16px 40px rgba(0,0,0,0.28);
-  transition: transform 0.38s cubic-bezier(0.16,1,0.3,1), border-color 0.35s, box-shadow 0.35s;
+  transition: border-color 0.35s, box-shadow 0.35s;
   cursor: pointer;
 }
-.option-card:hover {
-  transform: translateY(-5px) scale(1.01);
-  border-color: rgba(201,168,76,0.55);
-  box-shadow: 0 0 0 1px rgba(201,168,76,0.18), 0 22px 52px rgba(201,168,76,0.18);
+@media (hover: hover) {
+  .option-card { transition: transform 0.38s cubic-bezier(0.16,1,0.3,1), border-color 0.35s, box-shadow 0.35s; }
+  .option-card:hover {
+    transform: translateY(-5px) scale(1.01);
+    border-color: rgba(201,168,76,0.55);
+    box-shadow: 0 0 0 1px rgba(201,168,76,0.18), 0 22px 52px rgba(201,168,76,0.18);
+  }
+  .option-card:hover .option-visual img { transform: scale(1.06); }
 }
 .option-card.selected {
   border-color: rgba(201,168,76,0.8);
@@ -327,7 +325,6 @@ h2[data-i18n="step4_title"] {
   display: grid; place-items: center; border: 1px solid rgba(255,255,255,0.06);
 }
 .option-visual img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
-.option-card:hover .option-visual img { transform: scale(1.06); }
 .option-card.compact .option-visual img { object-fit: contain; width: 80%; height: 80%; }
 
 .enlarge-btn {
@@ -356,11 +353,14 @@ h2[data-i18n="step4_title"] {
   border: 1px solid rgba(201,168,76,0.28); border-radius: 22px; padding: 1rem;
   color: var(--text-main);
   box-shadow: 0 0 0 1px rgba(201,168,76,0.08), 0 16px 40px rgba(0,0,0,0.28);
-  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease; cursor: pointer;
+  transition: box-shadow 0.35s ease, border-color 0.35s ease; cursor: pointer;
 }
-.mount-toggle:hover {
-  transform: translateY(-3px); border-color: rgba(201,168,76,0.55);
-  box-shadow: 0 0 0 1px rgba(201,168,76,0.18), 0 22px 52px rgba(201,168,76,0.18);
+@media (hover: hover) {
+  .mount-toggle { transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease; }
+  .mount-toggle:hover {
+    transform: translateY(-3px); border-color: rgba(201,168,76,0.55);
+    box-shadow: 0 0 0 1px rgba(201,168,76,0.18), 0 22px 52px rgba(201,168,76,0.18);
+  }
 }
 .mount-toggle .preview {
   width: 100%; max-width: 200px; min-height: 150px; padding: 0.6rem;
@@ -410,7 +410,7 @@ label.field-label { display: block; font-size: 0.68rem; letter-spacing: 0.2em; t
   min-height: 220px; background: rgba(255,255,255,0.025); border: 1px solid var(--border-color);
 }
 .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.55s ease; }
-.gallery-item:hover img { transform: scale(1.07); }
+@media (hover: hover) { .gallery-item:hover img { transform: scale(1.07); } }
 
 /* ── Change 1: Gold pulse on submit button ── */
 @keyframes goldPulse {
@@ -496,9 +496,6 @@ body {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
-.reveal-hidden {
-  will-change: opacity, transform;
-}
 
 /* ── Change 4: Step indicator ── */
 .step-indicator {
@@ -552,6 +549,7 @@ body {
 
 @media (max-width: 768px) {
   .editorial-card { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  nav { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(10,10,10,0.94); }
   body { padding-left: max(10px, env(safe-area-inset-left)); padding-right: max(10px, env(safe-area-inset-right)); padding-bottom: max(20px, env(safe-area-inset-bottom)); }
   nav { padding: 0.65rem 0.85rem; border-radius: 18px; top: 12px; left: 12px; right: 12px; }
   nav .desktop-links { display: none !important; }
@@ -1187,11 +1185,13 @@ function toggleMountCategory(panelId) {
     p.style.height = h + 'px';
     p.style.overflow = 'hidden';
     requestAnimationFrame(() => {
-      p.style.transition = 'height 0.38s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease';
-      p.style.height = '0';
-      p.style.opacity = '0';
+      requestAnimationFrame(() => {
+        p.style.transition = 'height 0.38s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease';
+        p.style.height = '0';
+        p.style.opacity = '0';
+      });
     });
-    setTimeout(() => { p.classList.add('hidden'); p.style.cssText = ''; }, 390);
+    setTimeout(() => { p.classList.add('hidden'); p.style.cssText = ''; }, 420);
     document.getElementById(`arrow-${id}`)?.classList.remove('rotate');
     document.querySelector(`button[aria-controls="${id}"]`)?.setAttribute('aria-expanded','false');
   }
@@ -1205,11 +1205,13 @@ function toggleMountCategory(panelId) {
     p.style.opacity = '0';
     const h = p.scrollHeight;
     requestAnimationFrame(() => {
-      p.style.transition = 'height 0.38s cubic-bezier(0.4,0,0.2,1), opacity 0.32s ease';
-      p.style.height = h + 'px';
-      p.style.opacity = '1';
+      requestAnimationFrame(() => {
+        p.style.transition = 'height 0.38s cubic-bezier(0.4,0,0.2,1), opacity 0.32s ease';
+        p.style.height = h + 'px';
+        p.style.opacity = '1';
+      });
     });
-    setTimeout(() => { p.style.cssText = ''; }, 400);
+    setTimeout(() => { p.style.cssText = ''; }, 420);
     document.getElementById(`arrow-${id}`)?.classList.add('rotate');
     document.querySelector(`button[aria-controls="${id}"]`)?.setAttribute('aria-expanded','true');
   }
