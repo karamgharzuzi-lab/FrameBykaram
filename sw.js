@@ -1,13 +1,13 @@
-const CACHE_NAME = "fbk-pwa-v1";
+const CACHE_NAME = “fbk-pwa-v2”;
 
-// Only cache your “app shell” files (minimal, safe).
-// Add more image names later if you want offline gallery images too.
 const APP_SHELL = [
-  "./",
-  "./index.html",
-  "./manifest.webmanifest",
-  "./icon-192.png",
-  "./icon-512.png"
+  “./”,
+  “./index.html”,
+  “./manifest.webmanifest”,
+  “./icon-192.png”,
+  “./icon-512.png”,
+  “./hero-bg.jpg”,
+  “./logo.png”
 ];
 
 self.addEventListener("install", (event) => {

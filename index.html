@@ -16,9 +16,14 @@
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0a0a0a">
 <link rel="apple-touch-icon" href="icon-192.png">
+<meta name="description" content="FrameByKaram — Luxury mirror photo booth rental for weddings, engagements & events in Israel. Customize with vintage frames, velvet ropes, carpets, and photo mounts.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="hero-bg.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="logo.png">
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=Rubik:wght@300;400;500;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://unpkg.com/lucide@0.475.0/dist/umd/lucide.min.js"></script>
 <style>
 :root {
   --bg-body: #0a0a0a;
@@ -495,28 +500,6 @@ body {
   will-change: opacity, transform;
 }
 
-/* ── Mobile scroll smoothness ── */
-html {
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-}
-* {
-  -webkit-tap-highlight-color: transparent;
-}
-body {
-  overscroll-behavior-y: none;
-}
-.hero-card {
-  will-change: transform;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-.reveal-hidden {
-  will-change: opacity, transform;
-}
-
 /* ── Change 4: Step indicator ── */
 .step-indicator {
   display: flex; align-items: center; gap: 0.5rem;
@@ -568,6 +551,7 @@ body {
 }
 
 @media (max-width: 768px) {
+  .editorial-card { backdrop-filter: none; -webkit-backdrop-filter: none; }
   body { padding-left: max(10px, env(safe-area-inset-left)); padding-right: max(10px, env(safe-area-inset-right)); padding-bottom: max(20px, env(safe-area-inset-bottom)); }
   nav { padding: 0.65rem 0.85rem; border-radius: 18px; top: 12px; left: 12px; right: 12px; }
   nav .desktop-links { display: none !important; }
@@ -603,12 +587,21 @@ body {
   .frame-grid .option-card { padding: 0.7rem; }
   .contact-link { font-size: 1.45rem; }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  html { scroll-behavior: auto; }
+  .gold-text, .hero-kicker-top, .soon-word { animation: none; background-position: 60% 50%; }
+  .animate-logo-reveal { animation: none; opacity: 1; transform: none; }
+  .animate-line-expand { animation: none; width: 42%; opacity: 1; }
+  button[type="submit"].gold-btn { animation: none; }
+  .reveal-hidden { opacity: 1; transform: none; transition: none; }
+}
 </style>
 </head>
 
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KN9PBXP7');</script>
-
 <body class="min-h-screen relative" lang="en">
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KN9PBXP7');</script>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KN9PBXP7" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- Intro -->
@@ -1160,7 +1153,7 @@ function showPage(pageId) {
 }
 
 function applyTranslations(lang) {
-  document.querySelectorAll('[data-i18n]').forEach(el => { const v = translations[lang][el.getAttribute('data-i18n')]; if (v) el.innerText = v; });
+  document.querySelectorAll('[data-i18n]').forEach(el => { const v = translations[lang][el.getAttribute('data-i18n')]; if (v) el.textContent = v; });
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { const v = translations[lang][el.getAttribute('data-i18n-placeholder')]; if (v) el.placeholder = v; });
 }
 function setLanguage(lang) {
@@ -1179,7 +1172,7 @@ function setLanguage(lang) {
     const etInput = document.getElementById('eventType'), etLabel = document.getElementById('eventTypeLabel');
     if (etInput?.value && etLabel) {
       const map = { Wedding:'event_wedding', Engagement:'event_engagement', Birthday:'event_birthday', Corporate:'event_corporate', Other:'event_other' };
-      const k = map[etInput.value]; if (k && translations[lang][k]) { etLabel.setAttribute('data-i18n', k); etLabel.innerText = translations[lang][k]; }
+      const k = map[etInput.value]; if (k && translations[lang][k]) { etLabel.setAttribute('data-i18n', k); etLabel.textContent = translations[lang][k]; }
     }
     active.classList.remove('opacity-0','translate-y-10'); active.classList.add('opacity-100','translate-y-0');
     refreshIcons();
@@ -1246,7 +1239,7 @@ function toggleDropdown() {
 function selectEventOption(value, key) {
   const inp = document.getElementById('eventType'), lbl = document.getElementById('eventTypeLabel');
   if (!inp || !lbl) return;
-  inp.value = value; lbl.setAttribute('data-i18n', key); lbl.innerText = translations[currentLang][key];
+  inp.value = value; lbl.setAttribute('data-i18n', key); lbl.textContent = translations[currentLang][key];
   lbl.classList.remove('text-stone-500'); lbl.classList.add('text-stone-200');
   toggleDropdown();
 }
@@ -1258,8 +1251,8 @@ function renderCalendar() {
   const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   const header = document.getElementById('currentMonthYear'), daysEl = document.getElementById('calendarDays');
   if (!header || !daysEl) return;
-  header.innerText = `${months[m]} ${y}`; daysEl.innerHTML = '';
-  ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(n => { const d = document.createElement('div'); d.className = 'calendar-day-name'; d.innerText = n; daysEl.appendChild(d); });
+  header.textContent = `${months[m]} ${y}`; daysEl.innerHTML = '';
+  ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(n => { const d = document.createElement('div'); d.className = 'calendar-day-name'; d.textContent = n; daysEl.appendChild(d); });
   const firstDay = new Date(y, m, 1).getDay(), dim = new Date(y, m+1, 0).getDate();
   /* Change 6: Block past dates */
   const today = new Date(); today.setHours(0,0,0,0);
@@ -1268,16 +1261,16 @@ function renderCalendar() {
     const thisDay = new Date(y, m, n);
     const d = document.createElement('div');
     if (thisDay < today) {
-      d.className = 'calendar-day empty'; d.innerText = n; d.style.color = '#333';
+      d.className = 'calendar-day empty'; d.textContent = n; d.style.color = '#333';
       daysEl.appendChild(d); continue;
     }
-    d.className = 'calendar-day'; d.innerText = n;
+    d.className = 'calendar-day'; d.textContent = n;
     if (selectedDate && selectedDate.getDate()===n && selectedDate.getMonth()===m && selectedDate.getFullYear()===y) d.classList.add('selected');
     d.onclick = function() {
       selectedDate = new Date(y, m, n);
       const ms = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
       const lbl = document.getElementById('dateDisplay');
-      if (lbl) { lbl.innerText = `${String(n).padStart(2,'0')} ${ms[m]} ${y}`; lbl.classList.remove('text-stone-500'); lbl.classList.add('text-stone-200'); }
+      if (lbl) { lbl.textContent = `${String(n).padStart(2,'0')} ${ms[m]} ${y}`; lbl.classList.remove('text-stone-500'); lbl.classList.add('text-stone-200'); }
       const hid = document.getElementById('date'); if (hid) hid.value = `${y}-${String(m+1).padStart(2,'0')}-${String(n).padStart(2,'0')}`;
       toggleCalendar();
     };
@@ -1290,6 +1283,16 @@ window.addEventListener('click', e => {
   if (dd?.classList.contains('open') && !dd.contains(e.target) && !ddb?.contains(e.target)) toggleDropdown();
   const cal = document.getElementById('customCalendar'), calb = document.querySelector('button[onclick="toggleCalendar()"]');
   if (cal?.classList.contains('open') && !cal.contains(e.target) && !calb?.contains(e.target)) toggleCalendar();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  const lb = document.getElementById('lightbox');
+  if (lb && !lb.classList.contains('invisible')) { closeLightbox(); return; }
+  const dd = document.getElementById('eventTypeDropdown');
+  if (dd?.classList.contains('open')) { toggleDropdown(); return; }
+  const cal = document.getElementById('customCalendar');
+  if (cal?.classList.contains('open')) toggleCalendar();
 });
 
 function openLightbox(src) {
