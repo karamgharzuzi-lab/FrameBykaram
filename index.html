@@ -22,34 +22,34 @@
 <link rel="preload" as="image" href="hero-bg.jpg" fetchpriority="high">
 <link rel="preload" as="image" href="logo.png">
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=Rubik:wght@300;400;500;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Jost:wght@300;400;500;600;700&family=Rubik:wght@300;400;500;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@0.475.0/dist/umd/lucide.min.js"></script>
 <style>
 :root {
   --bg-body: #0a0a0a;
-  --bg-card: rgba(255,255,255,0.032);
-  --bg-card-strong: rgba(20,18,14,0.97);
+  --bg-card: rgba(255, 255, 255, 0.02);
+  --bg-card-strong: rgba(20, 18, 14, 0.97);
   --text-main: #f0ebe2;
-  --text-muted: #9a9189;
-  --border-color: rgba(255,255,255,0.07);
+  --text-muted: #a1988f;
+  --border-color: rgba(201, 168, 76, 0.15); /* Gold-tinted border */
   --gold: #c9a84c;
   --gold-bright: #fdf6d3;
   --gold-deep: #7a5228;
   --gold-mid: #b8873a;
-  --input-bg: rgba(255,255,255,0.04);
-  --nav-bg: rgba(10,10,10,0.82);
-  --card-shadow: 0 32px 80px rgba(0,0,0,0.5);
+  --input-bg: rgba(255, 255, 255, 0.03);
+  --nav-bg: rgba(10, 10, 10, 0.75);
+  --card-shadow: 0 32px 80px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.02);
 }
 body.light-theme {
-  --bg-body: #f2ece0;
-  --bg-card: rgba(255,255,255,0.75);
-  --bg-card-strong: rgba(255,255,255,0.96);
-  --text-main: #2e2418;
-  --text-muted: #6b5d4f;
-  --border-color: rgba(50,38,28,0.1);
-  --input-bg: rgba(255,255,255,0.85);
-  --nav-bg: rgba(242,236,224,0.88);
-  --card-shadow: 0 32px 80px rgba(0,0,0,0.12);
+  --bg-body: #fdfbf7;
+  --bg-card: rgba(255, 255, 255, 0.65);
+  --bg-card-strong: rgba(255, 255, 255, 0.96);
+  --text-main: #2a2421;
+  --text-muted: #6e645e;
+  --border-color: rgba(201, 168, 76, 0.25);
+  --input-bg: rgba(255, 255, 255, 0.85);
+  --nav-bg: rgba(253, 251, 247, 0.88);
+  --card-shadow: 0 30px 70px rgba(42, 36, 33, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
 .frame-grid .option-visual {
@@ -68,18 +68,18 @@ html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
 body {
   min-height: 100dvh;
   background:
-    radial-gradient(ellipse 80% 40% at 50% -10%, rgba(201,168,76,0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 30% at 100% 80%, rgba(122,82,40,0.05) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 40% at 50% -10%, rgba(201,168,76,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 30% at 100% 80%, rgba(122,82,40,0.06) 0%, transparent 50%),
     var(--bg-body);
   color: var(--text-main);
-  font-family: 'Inter', sans-serif;
+  font-family: 'Jost', sans-serif;
   transition: background-color 0.4s ease, color 0.4s ease;
   overflow-x: hidden;
 }
 body[lang="he"] { font-family: 'Rubik', sans-serif; }
 body[lang="ar"] { font-family: 'Cairo', sans-serif; }
 
-h1,h2,h3,.serif-font,.always-serif { font-family: 'Playfair Display', serif; }
+h1,h2,h3,.serif-font,.always-serif { font-family: 'Cormorant Garamond', serif; }
 body:not([lang="en"]) h1:not(.always-serif),
 body:not([lang="en"]) h2:not(.always-serif),
 body:not([lang="en"]) h3:not(.always-serif) {
@@ -102,7 +102,7 @@ body::before {
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
   background-size: 180px 180px;
-  opacity: 0.4;
+  opacity: 0.3;
 }
 
 .page-frame {
@@ -125,19 +125,20 @@ body::before {
 
 nav {
   position: fixed; top: 16px; left: 16px; right: 16px; z-index: 60;
-  border-radius: 20px; padding: 0.75rem 1.1rem;
+  border-radius: 20px; padding: 0.75rem 1.4rem;
   background: var(--nav-bg);
-  border: 1px solid rgba(201,168,76,0.12);
+  border: 1px solid var(--border-color);
   backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
   box-shadow: 0 8px 32px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.04);
   transition: background 0.35s ease;
 }
-.brand-wordmark { font-size: 0.88rem; letter-spacing: 0.26em; text-transform: uppercase; cursor: pointer; }
+.brand-wordmark { font-size: 0.95rem; letter-spacing: 0.28em; text-transform: uppercase; cursor: pointer; font-weight: 500; }
 .nav-link {
-  cursor: pointer; opacity: 0.7; font-size: 0.7rem;
-  letter-spacing: 0.2em; text-transform: uppercase;
+  cursor: pointer; opacity: 0.65; font-size: 0.72rem;
+  letter-spacing: 0.22em; text-transform: uppercase;
   transition: color 0.25s, opacity 0.25s, transform 0.2s;
   position: relative; padding-bottom: 2px;
+  font-weight: 500;
 }
 .nav-link::after {
   content: ''; position: absolute; bottom: 0; left: 0; right: 0;
@@ -151,8 +152,9 @@ nav {
   height: 32px; min-width: 32px; padding: 0 9px;
   border-radius: 999px; border: 1px solid transparent;
   background: transparent; color: var(--text-muted);
-  font-size: 0.68rem; letter-spacing: 0.1em;
+  font-size: 0.7rem; letter-spacing: 0.1em;
   transition: all 0.25s ease; cursor: pointer;
+  font-weight: 500;
 }
 .lang-btn.active {
   background: linear-gradient(135deg, #c9a84c, #7a5228);
@@ -191,10 +193,10 @@ nav {
   min-height: 76dvh;
   display: flex; align-items: flex-end; padding: 1.5rem;
   background:
-    linear-gradient(180deg, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.18) 40%, rgba(0,0,0,0.68) 100%),
+    linear-gradient(180deg, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.18) 40%, rgba(0,0,0,0.72) 100%),
     url('hero-bg.jpg') center center / cover no-repeat;
-  box-shadow: 0 30px 90px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(201,168,76,0.08);
-  border: 1px solid rgba(201,168,76,0.1);
+  box-shadow: 0 30px 90px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(201,168,76,0.08);
+  border: 1px solid var(--border-color);
 }
 .hero-card::after {
   content: ''; position: absolute; inset: 0; pointer-events: none;
@@ -269,9 +271,11 @@ nav {
 main { position: relative; z-index: 2; }
 .section-wrap { margin-top: 1rem; }
 .editorial-card {
-  border-radius: 26px; padding: 1.35rem;
-  background: var(--bg-card); border: 1px solid var(--border-color);
-  box-shadow: var(--card-shadow); backdrop-filter: blur(8px);
+  border-radius: 26px; padding: 1.6rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   position: relative; overflow: hidden;
 }
 .editorial-card::before {
@@ -298,30 +302,32 @@ h2[data-i18n="step4_title"] {
 
 .option-card {
   position: relative; border-radius: 22px; padding: 1rem;
-  background: linear-gradient(160deg, rgba(255,255,255,0.042) 0%, rgba(0,0,0,0.12) 100%);
-  border: 1px solid transparent;
-  box-shadow: 0 0 0 1px rgba(201,168,76,0.28), 0 16px 40px rgba(0,0,0,0.28);
-  transition: box-shadow 0.35s;
+  background: linear-gradient(160deg, rgba(255,255,255,0.035) 0%, rgba(0,0,0,0.15) 100%);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.28);
+  transition: box-shadow 0.35s ease, border-color 0.35s ease, background 0.35s ease;
   cursor: pointer;
 }
 @media (hover: hover) {
-  .option-card { transition: transform 0.38s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s; }
+  .option-card { transition: transform 0.38s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s, border-color 0.35s; }
   .option-card:hover {
-    transform: translateY(-5px) scale(1.01);
-    box-shadow: 0 0 0 1px rgba(201,168,76,0.55), 0 22px 52px rgba(201,168,76,0.18);
+    transform: translateY(-4px);
+    border-color: rgba(201,168,76,0.45);
+    box-shadow: 0 0 0 1px rgba(201,168,76,0.25), 0 20px 45px rgba(201,168,76,0.12);
   }
-  .option-card:hover .option-visual img { transform: scale(1.06); }
+  .option-card:hover .option-visual img { transform: scale(1.04); }
 }
 .option-card.selected {
-  background: radial-gradient(circle at top left, rgba(201,168,76,0.14), rgba(255,255,255,0.025));
-  box-shadow: 0 0 0 2px rgba(201,168,76,0.9), 0 0 28px rgba(201,168,76,0.22), 0 22px 56px rgba(201,168,76,0.28);
+  background: radial-gradient(circle at top left, rgba(201,168,76,0.12), rgba(255,255,255,0.015));
+  border-color: rgba(201,168,76,0.85);
+  box-shadow: 0 0 25px rgba(201,168,76,0.25), 0 20px 50px rgba(0,0,0,0.35);
 }
-.option-card h3 { font-size: 0.92rem; line-height: 1.3; margin-top: 0.85rem; }
+.option-card h3 { font-size: 0.92rem; line-height: 1.3; margin-top: 0.85rem; font-weight: 500; }
 
 .option-visual {
   position: relative; border-radius: 17px; overflow: hidden;
-  aspect-ratio: 1/1; background: rgba(255,255,255,0.025);
-  display: grid; place-items: center; border: 1px solid rgba(255,255,255,0.06);
+  aspect-ratio: 1/1; background: rgba(255,255,255,0.02);
+  display: grid; place-items: center; border: 1px solid rgba(255,255,255,0.05);
 }
 .option-visual img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
 .option-card.compact .option-visual img { object-fit: contain; width: 80%; height: 80%; }
@@ -348,32 +354,32 @@ h2[data-i18n="step4_title"] {
 .mount-toggle {
   width: 100%; display: flex; align-items: center; justify-content: space-between;
   gap: 1rem; text-align: left;
-  background: linear-gradient(160deg, rgba(255,255,255,0.042) 0%, rgba(0,0,0,0.12) 100%);
-  border: 1px solid rgba(201,168,76,0.28); border-radius: 22px; padding: 1rem;
+  background: linear-gradient(160deg, rgba(255,255,255,0.035) 0%, rgba(0,0,0,0.12) 100%);
+  border: 1px solid var(--border-color); border-radius: 22px; padding: 1rem;
   color: var(--text-main);
-  box-shadow: 0 0 0 1px rgba(201,168,76,0.08), 0 16px 40px rgba(0,0,0,0.28);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.2);
   transition: box-shadow 0.35s ease, border-color 0.35s ease; cursor: pointer;
 }
 @media (hover: hover) {
   .mount-toggle { transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease; }
   .mount-toggle:hover {
-    transform: translateY(-3px); border-color: rgba(201,168,76,0.55);
-    box-shadow: 0 0 0 1px rgba(201,168,76,0.18), 0 22px 52px rgba(201,168,76,0.18);
+    transform: translateY(-3px); border-color: rgba(201,168,76,0.45);
+    box-shadow: 0 20px 45px rgba(201,168,76,0.12);
   }
 }
 .mount-toggle .preview {
   width: 100%; max-width: 200px; min-height: 150px; padding: 0.6rem;
-  border-radius: 15px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 15px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);
   display: flex; align-items: center; justify-content: center;
-  background: rgba(255,255,255,0.02);
+  background: rgba(255,255,255,0.015);
 }
 .mount-toggle .preview img { max-width: 100%; height: auto; object-fit: contain; display: block; }
 .dropdown-arrow { transition: transform 0.3s ease; }
 .dropdown-arrow.rotate { transform: rotate(180deg); }
-.special-edition-wine { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: #a0293e; margin-top: 0.6rem; display: inline-block; }
+.special-edition-wine { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: #b84255; margin-top: 0.6rem; display: inline-block; font-weight: 600; }
 .mount-options-2, .mount-options-3 { display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0,1fr)); }
 
-/* ── CSS Grid accordion (no JS height measurement, no layout thrash) ── */
+/* ── CSS Grid accordion ── */
 .mount-panel {
   display: grid;
   grid-template-rows: 0fr;
@@ -395,62 +401,71 @@ h2[data-i18n="step4_title"] {
 .lux-input {
   width: 100%; min-height: 52px; padding: 0.9rem 1rem;
   background: var(--input-bg); border: 1px solid var(--border-color);
-  border-radius: 16px; color: var(--text-main);
+  border-radius: 14px; color: var(--text-main);
   font-family: inherit; font-size: 0.93rem;
   transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
 }
 .lux-input:focus {
-  outline: none; border-color: rgba(201,168,76,0.65);
-  background: rgba(201,168,76,0.04); box-shadow: 0 0 0 4px rgba(201,168,76,0.08);
+  outline: none;
+  border-color: rgba(201, 168, 76, 0.65);
+  background: rgba(201, 168, 76, 0.04);
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.15), 0 4px 20px rgba(0, 0, 0, 0.2);
 }
-label.field-label { display: block; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.55rem; }
+label.field-label { display: block; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.55rem; font-weight: 500; }
 
 .custom-dropdown-menu, .calendar-popup {
   transform-origin: top;
   transition: transform 0.38s cubic-bezier(0.16,1,0.3,1), opacity 0.35s ease, visibility 0.35s ease;
   opacity: 0; visibility: hidden; transform: translateY(-10px) scale(0.97);
-  background: var(--bg-card-strong); border: 1px solid rgba(201,168,76,0.14);
+  background: var(--bg-card-strong); border: 1px solid rgba(201, 168, 76, 0.22);
   backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-  border-radius: 18px; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+  border-radius: 18px; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,0.6);
 }
 .custom-dropdown-menu.open, .calendar-popup.open { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
 .calendar-popup { padding: 1rem; }
 .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; color: var(--gold); font-weight: 700; }
 .calendar-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 0.2rem; text-align: center; }
-.calendar-day-name { font-size: 0.68rem; color: var(--text-muted); padding-bottom: 0.35rem; }
+.calendar-day-name { font-size: 0.68rem; color: var(--text-muted); padding-bottom: 0.35rem; font-weight: 500; }
 .calendar-day { padding: 0.5rem 0.2rem; border-radius: 10px; cursor: pointer; font-size: 0.82rem; transition: all 0.2s; }
 .calendar-day:hover:not(.empty) { background: rgba(201,168,76,0.12); color: var(--gold); }
-.calendar-day.selected { background: linear-gradient(135deg, #c9a84c, #7a5228); color: #fff; }
+.calendar-day.selected { background: linear-gradient(135deg, #c9a84c, #b8873a); color: #fff; box-shadow: 0 4px 10px rgba(201, 168, 76, 0.3); }
 .calendar-day.empty { cursor: default; color: #444; }
 
 .gallery-item {
   position: relative; overflow: hidden; border-radius: 22px;
-  min-height: 220px; background: rgba(255,255,255,0.025); border: 1px solid var(--border-color);
+  min-height: 220px; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color);
 }
 .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.55s ease; }
 @media (hover: hover) { .gallery-item:hover img { transform: scale(1.07); } }
 
-/* ── Change 1: Gold pulse on submit button ── */
-@keyframes goldPulse {
-  0%, 100% { box-shadow: 0 8px 28px rgba(201,168,76,0.28), 0 0 0 0 rgba(201,168,76,0.4); }
-  50% { box-shadow: 0 8px 28px rgba(201,168,76,0.28), 0 0 0 10px rgba(201,168,76,0); }
-}
-button[type="submit"].gold-btn {
-  animation: goldPulse 2.4s ease-in-out infinite;
-}
-
+/* ── Submit button shimmer and styling ── */
 .gold-btn {
+  position: relative;
+  overflow: hidden;
   background: linear-gradient(105deg, #7a5228 0%, #c9a84c 40%, #fdf6d3 65%, #c9a84c 80%, #7a5228 100%);
   background-size: 220% auto; color: #1a1000; font-weight: 700; border: none;
-  box-shadow: 0 8px 28px rgba(201,168,76,0.28), inset 0 1px 0 rgba(255,255,255,0.2);
-  transition: transform 0.35s ease, box-shadow 0.35s ease, background-position 0.5s ease;
+  box-shadow: 0 8px 28px rgba(201,168,76,0.2), inset 0 1px 0 rgba(255,255,255,0.2);
+  transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s ease, background-position 0.5s ease;
   letter-spacing: 0.12em;
 }
-.gold-btn:hover { background-position: right center; transform: translateY(-3px); box-shadow: 0 18px 40px rgba(201,168,76,0.38); }
+.gold-btn::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: skewX(-25deg);
+  pointer-events: none;
+}
+.gold-btn:hover::after {
+  left: 125%;
+  transition: 0.75s cubic-bezier(0.16,1,0.3,1);
+}
+.gold-btn:hover { background-position: right center; transform: translateY(-3px); box-shadow: 0 18px 40px rgba(201,168,76,0.35); }
 .gold-btn:active { transform: translateY(-1px); }
 
 .outline-btn {
-  border: 1px solid rgba(201,168,76,0.28); background: rgba(255,255,255,0.02); color: var(--text-main); transition: all 0.3s ease;
+  border: 1px solid var(--border-color); background: rgba(255,255,255,0.01); color: var(--text-main); transition: all 0.3s ease;
 }
 .outline-btn:hover { border-color: rgba(201,168,76,0.6); background: rgba(201,168,76,0.07); color: var(--gold); }
 
@@ -458,14 +473,14 @@ button[type="submit"].gold-btn {
   font-size: 1.9rem; font-weight: 300; letter-spacing: 0.05em;
   color: var(--text-main); text-decoration: none;
   transition: color 0.3s ease, letter-spacing 0.3s ease;
-  font-family: 'Playfair Display', serif; font-style: italic;
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
 }
 .contact-link:hover { color: var(--gold); letter-spacing: 0.08em; }
 
 .about-card {
   border-radius: 26px; padding: 2rem 1.4rem;
-  background: linear-gradient(160deg, rgba(255,255,255,0.035) 0%, rgba(0,0,0,0.16) 100%);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: linear-gradient(160deg, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.15) 100%);
+  border: 1px solid var(--border-color);
   box-shadow: var(--card-shadow); position: relative; overflow: hidden;
 }
 .about-card::before {
@@ -473,16 +488,16 @@ button[type="submit"].gold-btn {
   background: linear-gradient(to right, transparent, rgba(201,168,76,0.3), transparent);
 }
 .about-divider { width: 100%; height: 1px; margin: 2rem 0; background: linear-gradient(to right, transparent, rgba(201,168,76,0.2), transparent); }
-.about-label { font-size: 0.68rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold); }
+.about-label { font-size: 0.68rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold); font-weight: 500; }
 
 .instagram-glow {
   border: 1px solid rgba(201,168,76,0.45);
-  box-shadow: 0 0 0 1px rgba(201,168,76,0.2), 0 0 20px rgba(201,168,76,0.25), 0 0 40px rgba(201,168,76,0.14);
+  box-shadow: 0 0 0 1px rgba(201,168,76,0.15), 0 0 20px rgba(201,168,76,0.2), 0 0 40px rgba(201,168,76,0.1);
   transition: all 0.45s ease;
 }
 .instagram-glow:hover {
-  box-shadow: 0 0 0 1px rgba(201,168,76,0.5), 0 0 28px rgba(201,168,76,0.45), 0 0 60px rgba(201,168,76,0.28);
-  transform: scale(1.08);
+  box-shadow: 0 0 0 1px rgba(201,168,76,0.5), 0 0 28px rgba(201,168,76,0.4), 0 0 60px rgba(201,168,76,0.25);
+  transform: scale(1.06);
 }
 
 .reveal-hidden { opacity: 0; transform: translateY(20px); transition: opacity 0.65s cubic-bezier(0.22,1,0.36,1), transform 0.65s cubic-bezier(0.22,1,0.36,1); }
@@ -519,15 +534,26 @@ main {
   -webkit-backface-visibility: hidden;
 }
 
-/* ── Change 4: Step indicator ── */
-.step-indicator {
-  display: flex; align-items: center; gap: 0.5rem;
-  font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 0.6rem; opacity: 0.75;
+/* ── Step progress bar ── */
+.step-progress-track {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-top: 0.4rem;
+  position: relative;
 }
-.step-indicator span { color: var(--text-muted); }
+body.light-theme .step-progress-track {
+  background: rgba(0, 0, 0, 0.05);
+}
+.step-progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, #7a5228, #c9a84c);
+  border-radius: 99px;
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-/* ── Change 5: Toast ── */
+/* ── Toast ── */
 #toast {
   position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(20px);
   z-index: 9999; background: linear-gradient(135deg, #7a5228, #c9a84c);
@@ -542,7 +568,7 @@ main {
 /* ── Gallery soon ── */
 .soon-wrap { min-height: 55dvh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem; text-align: center; }
 .soon-word {
-  font-family: 'Playfair Display', serif; font-style: italic;
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
   font-size: clamp(4rem, 14vw, 9rem); line-height: 1;
   background: linear-gradient(105deg, #7a5228 0%, #c9a84c 30%, #fdf6d3 52%, #b8873a 72%, #7a5228 100%);
   background-size: 220% auto; -webkit-background-clip: text; background-clip: text; color: transparent;
@@ -561,10 +587,30 @@ main {
 ::-webkit-scrollbar-track { background: var(--bg-body); }
 ::-webkit-scrollbar-thumb { background: linear-gradient(var(--gold-deep), var(--gold)); border-radius: 999px; border: 2px solid var(--bg-body); }
 
+/* ── Grid Layout for Booking Form (Desktop Sidebar) ── */
+@media (min-width: 1024px) {
+  #bookingForm {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  .left-form-section {
+    grid-column: 1;
+  }
+  .preview-card-wrap {
+    grid-column: 2;
+    grid-row: 1 / span 5; /* Spans Steps 1 to 4 and details */
+    position: sticky;
+    top: 110px;
+    z-index: 10;
+  }
+}
+
 @media (min-width: 900px) {
   .choices-grid.frame-grid   { grid-template-columns: repeat(3, minmax(0,1fr)); }
   .choices-grid.rope-grid    { grid-template-columns: repeat(5, minmax(0,1fr)); }
-  .choices-grid.carpet-grid  { grid-template-columns: repeat(4, minmax(0,1fr)); }
+  .choices-grid.carpet-grid  { grid-template-columns: repeat(5, minmax(0,1fr)); } /* Adjusted to 5 for no-carpet option */
   .details-grid              { grid-template-columns: repeat(2, minmax(0,1fr)); }
   .about-stack               { grid-template-columns: 1.1fr 0.9fr; }
 }
@@ -692,9 +738,16 @@ main {
       <div id="booking-form-start"></div>
 
       <!-- Frame -->
-      <section class="section-wrap editorial-card reveal-hidden">
-        <div class="step-indicator">Step 1 <span>of 4</span></div>
-        <h2 class="section-heading text-[1.6rem]" data-i18n="step2_title">Mirror Frame</h2>
+      <section class="section-wrap editorial-card reveal-hidden left-form-section">
+        <div class="step-indicator mb-5">
+          <div class="flex justify-between items-center text-[0.62rem] tracking-[0.2em] uppercase text-stone-500 mb-1 w-full">
+            <span>Step 1 <span class="text-stone-600">of 5</span></span>
+            <span class="text-[var(--gold)] font-medium" data-i18n="step2_title">Mirror Frame</span>
+          </div>
+          <div class="step-progress-track w-full">
+            <div class="step-progress-fill" style="width: 20%;"></div>
+          </div>
+        </div>
         <p class="section-copy mt-2 mb-5" data-i18n="step2_desc">Choose the frame finish for the mirror.</p>
         <div class="choices-grid frame-grid">
           <div class="option-card group" onclick="selectOption('frame','Vintage Gold')">
@@ -726,9 +779,16 @@ main {
       </section>
 
       <!-- Rope -->
-      <section class="section-wrap editorial-card reveal-hidden">
-        <div class="step-indicator">Step 2 <span>of 4</span></div>
-        <h2 class="section-heading text-[1.6rem]" data-i18n="step3_title">Velvet Rope / Twisted Rope</h2>
+      <section class="section-wrap editorial-card reveal-hidden left-form-section">
+        <div class="step-indicator mb-5">
+          <div class="flex justify-between items-center text-[0.62rem] tracking-[0.2em] uppercase text-stone-500 mb-1 w-full">
+            <span>Step 2 <span class="text-stone-600">of 5</span></span>
+            <span class="text-[var(--gold)] font-medium" data-i18n="step3_title">Velvet Rope / Twisted Rope</span>
+          </div>
+          <div class="step-progress-track w-full">
+            <div class="step-progress-fill" style="width: 40%;"></div>
+          </div>
+        </div>
         <p class="section-copy mt-2 mb-5" data-i18n="step3_desc">Select the color of the velvet crowd control ropes.</p>
         <div class="choices-grid rope-grid">
           <div class="option-card compact group" onclick="selectOption('rope','Red')">
@@ -761,9 +821,16 @@ main {
       </section>
 
       <!-- Carpet -->
-      <section class="section-wrap editorial-card reveal-hidden">
-        <div class="step-indicator">Step 3 <span>of 4</span></div>
-        <h2 class="section-heading text-[1.6rem]" data-i18n="step_carpet_title">Carpet</h2>
+      <section class="section-wrap editorial-card reveal-hidden left-form-section">
+        <div class="step-indicator mb-5">
+          <div class="flex justify-between items-center text-[0.62rem] tracking-[0.2em] uppercase text-stone-500 mb-1 w-full">
+            <span>Step 3 <span class="text-stone-600">of 5</span></span>
+            <span class="text-[var(--gold)] font-medium" data-i18n="step_carpet_title">Carpet</span>
+          </div>
+          <div class="step-progress-track w-full">
+            <div class="step-progress-fill" style="width: 60%;"></div>
+          </div>
+        </div>
         <p class="section-copy mt-2 mb-5" data-i18n="step_carpet_desc">Select the carpet color for your event.</p>
         <div class="choices-grid carpet-grid">
           <div class="option-card group" onclick="selectOption('carpet','Red')">
@@ -797,9 +864,16 @@ main {
       </section>
 
       <!-- Photo Mount -->
-      <section class="section-wrap editorial-card reveal-hidden">
-        <div class="step-indicator">Step 4 <span>of 4</span></div>
-        <h2 class="section-heading text-[1.6rem]" data-i18n="step4_title">Photo Mount</h2>
+      <section class="section-wrap editorial-card reveal-hidden left-form-section">
+        <div class="step-indicator mb-5">
+          <div class="flex justify-between items-center text-[0.62rem] tracking-[0.2em] uppercase text-stone-500 mb-1 w-full">
+            <span>Step 4 <span class="text-stone-600">of 5</span></span>
+            <span class="text-[var(--gold)] font-medium" data-i18n="step4_title">Photo Mount</span>
+          </div>
+          <div class="step-progress-track w-full">
+            <div class="step-progress-fill" style="width: 80%;"></div>
+          </div>
+        </div>
         <p class="section-copy mt-2 mb-5" data-i18n="step4_desc">The cardboard frame attached to final printed photos.</p>
         <div class="space-y-4">
           <button type="button" class="mount-toggle" onclick="toggleMountCategory('mount-1pic')" aria-expanded="false" aria-controls="mount-1pic">
@@ -837,9 +911,77 @@ main {
         <input type="hidden" id="cardboardSelection" required>
       </section>
 
+      <!-- Live Preview Card -->
+      <section class="section-wrap preview-card-wrap reveal-hidden">
+        <div class="editorial-card p-6 border border-[#c9a84c]/20 rounded-3xl bg-black/40 backdrop-blur-md shadow-2xl">
+          <div class="about-label mb-2" data-i18n="preview_kicker">Your Setup</div>
+          <h3 class="always-serif text-2xl gold-text mb-6" data-i18n="preview_title">Live Preview</h3>
+          
+          <div class="grid grid-cols-2 gap-3 mb-6">
+            <!-- Frame Preview -->
+            <div id="preview-box-frame" class="border border-white/5 bg-white/2 rounded-2xl p-2 flex flex-col items-center justify-center text-center aspect-square transition-all duration-300">
+              <span class="text-[10px] text-stone-500 uppercase tracking-wider mb-1" data-i18n="step2_title">Frame</span>
+              <div class="w-16 h-16 rounded-lg overflow-hidden flex items-center justify-center bg-black/20 mb-1">
+                <img id="preview-img-frame" src="" class="hidden w-full h-full object-cover">
+                <i id="preview-icon-frame" data-lucide="help-circle" class="w-6 h-6 text-stone-600"></i>
+              </div>
+              <span id="preview-text-frame" class="text-[11px] text-stone-400 font-medium truncate w-full" data-i18n="select_frame">Select Frame</span>
+            </div>
+
+            <!-- Rope Preview -->
+            <div id="preview-box-rope" class="border border-white/5 bg-white/2 rounded-2xl p-2 flex flex-col items-center justify-center text-center aspect-square transition-all duration-300">
+              <span class="text-[10px] text-stone-500 uppercase tracking-wider mb-1" data-i18n="step3_title">Ropes</span>
+              <div class="w-16 h-16 rounded-lg overflow-hidden flex items-center justify-center bg-black/20 mb-1">
+                <img id="preview-img-rope" src="" class="hidden w-full h-full object-cover">
+                <i id="preview-icon-rope" data-lucide="help-circle" class="w-6 h-6 text-stone-600"></i>
+              </div>
+              <span id="preview-text-rope" class="text-[11px] text-stone-400 font-medium truncate w-full" data-i18n="select_rope">Select Rope</span>
+            </div>
+
+            <!-- Carpet Preview -->
+            <div id="preview-box-carpet" class="border border-white/5 bg-white/2 rounded-2xl p-2 flex flex-col items-center justify-center text-center aspect-square transition-all duration-300">
+              <span class="text-[10px] text-stone-500 uppercase tracking-wider mb-1" data-i18n="step_carpet_title">Carpet</span>
+              <div class="w-16 h-16 rounded-lg overflow-hidden flex items-center justify-center bg-black/20 mb-1">
+                <img id="preview-img-carpet" src="" class="hidden w-full h-full object-cover">
+                <i id="preview-icon-carpet" data-lucide="help-circle" class="w-6 h-6 text-stone-600"></i>
+              </div>
+              <span id="preview-text-carpet" class="text-[11px] text-stone-400 font-medium truncate w-full" data-i18n="select_carpet">Select Carpet</span>
+            </div>
+
+            <!-- Mount Preview -->
+            <div id="preview-box-cardboard" class="border border-white/5 bg-white/2 rounded-2xl p-2 flex flex-col items-center justify-center text-center aspect-square transition-all duration-300">
+              <span class="text-[10px] text-stone-500 uppercase tracking-wider mb-1" data-i18n="step4_title">Mount</span>
+              <div class="w-16 h-16 rounded-lg overflow-hidden flex items-center justify-center bg-black/20 mb-1">
+                <img id="preview-img-cardboard" src="" class="hidden w-full h-full object-cover">
+                <i id="preview-icon-cardboard" data-lucide="help-circle" class="w-6 h-6 text-stone-600"></i>
+              </div>
+              <span id="preview-text-cardboard" class="text-[11px] text-stone-400 font-medium truncate w-full" data-i18n="select_mount">Select Mount</span>
+            </div>
+          </div>
+
+          <div class="border-t border-white/10 pt-4">
+            <div class="flex justify-between items-center text-xs mb-2">
+              <span class="text-stone-500" data-i18n="preview_completion">Status</span>
+              <span id="preview-status-text" class="text-rose-500 font-semibold tracking-wider uppercase text-[10px]" data-i18n="status_incomplete">Incomplete</span>
+            </div>
+            <div class="h-1 bg-white/10 rounded-full overflow-hidden">
+              <div id="preview-progress-bar" class="h-full bg-gradient-to-r from-red-500 to-amber-500 w-0 transition-all duration-500"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Details -->
-      <section class="section-wrap editorial-card reveal-hidden">
-        <h2 class="section-heading text-[1.6rem]" data-i18n="step1_title">Your Details</h2>
+      <section class="section-wrap editorial-card reveal-hidden left-form-section">
+        <div class="step-indicator mb-5">
+          <div class="flex justify-between items-center text-[0.62rem] tracking-[0.2em] uppercase text-stone-500 mb-1 w-full">
+            <span>Step 5 <span class="text-stone-600">of 5</span></span>
+            <span class="text-[var(--gold)] font-medium" data-i18n="step1_title">Your Details</span>
+          </div>
+          <div class="step-progress-track w-full">
+            <div class="step-progress-fill" style="width: 100%;"></div>
+          </div>
+        </div>
         <p class="section-copy mt-2 mb-6" data-i18n="details_desc">Complete your reservation request and receive your offer on WhatsApp.</p>
         <div class="details-grid">
           <div><label class="field-label" data-i18n="label_name">Full Name</label><input required type="text" id="name" placeholder="Your Name" class="lux-input" data-i18n-placeholder="placeholder_name"></div>
@@ -1044,9 +1186,40 @@ let currentTheme = 'dark', currentLang = 'en';
 let currentDate = new Date(), selectedDate = null;
 const selections = { frame: null, rope: null, carpet: null, cardboard: null };
 
+const previewImages = {
+  frame: {
+    'Vintage Gold': 'royal-gold.jpg',
+    'Vintage Silver': 'vintage-silver.jpg',
+    'None': 'mirror-no-frame.jpg'
+  },
+  rope: {
+    'Red': 'red-rope.jpg',
+    'Twisted Pink': 'twisted-pink.jpg',
+    'Twisted White': 'twisted-white.jpg',
+    'Twisted Gold': 'twisted-gold.jpg',
+    'None': 'ban'
+  },
+  carpet: {
+    'Red': 'carpet-red.jpg',
+    'Beige': 'carpet-beige.jpg',
+    'White': 'carpet-white.jpg',
+    'Pink': 'carpet-pink.jpg',
+    'None': 'ban'
+  },
+  cardboard: {
+    'Luxury White': 'mount-luxury-white.jpg',
+    'Natural Kraft XL': 'mount-kraft-xl.jpg',
+    'White': 'mount-white.jpg',
+    'Pure White': 'mount-pure-white.jpg',
+    'White & Gold': 'mount-white-gold.jpg',
+    'Natural Kraft': 'mount-kraft.jpg',
+    'Classic Wine Red': 'mount-wine-red.jpg'
+  }
+};
+
 const translations = {
   en: {
-    nav_gallery:'Gallery', nav_reserve:'Reserve', nav_about:'Contact Us',
+    nav_gallery:'Gallery', nav_reserve:'Book Experience', nav_about:'Contact Us',
     hero_kicker:'MIRROR BOOTH', hero_title:'Reflect Your Elegance',
     hero_subtitle:'Customize your premium photo experience. Select your finishes below to request a reservation.',
     btn_start_reservation:'Begin Reservation',
@@ -1068,17 +1241,22 @@ const translations = {
     label_event_type:'Event Type', select_event_type:'Select Event Type',
     event_wedding:'Wedding', event_engagement:'Engagement', event_birthday:'Birthday', event_corporate:'Corporate', event_other:'Other',
     summary_title:'Ready to Book?', summary_desc:'Clicking the button below will open WhatsApp with your order details pre-filled.',
-    btn_submit:'Get Your Offer',
+    btn_submit:'Request Your Experience',
     alert_contact:'Please fill in all contact details.', alert_select:'Please select an option for Frame, Rope, Carpet, and Photo Mount.',
     gallery_kicker:'Gallery', gallery_heading:'Moments of Elegance',
     gallery_subheading:'Browse through our curated collection of mirror booth setups, event styling, and printed keepsakes.',
     gallery_coming_soon:"We're curating our portfolio of beautiful moments. In the meantime, follow us on Instagram for a preview.",
     about_kicker:'Contact', about_heading:'Our Story', about_subtitle:'Capturing elegance, one reflection at a time.',
     about_text:'We specialize in bringing a touch of luxury to your most cherished moments. Our vintage-styled mirror photo booths are more than just cameras — they are interactive experiences designed to reflect the beauty of your event.',
-    label_follow:'Follow Us', back_to_booking:'Back to Reservation', footer:'© 2026 Mirror Booth Experience. All rights reserved.'
+    label_follow:'Follow Us', back_to_booking:'Back to Reservation', footer:'© 2026 Mirror Booth Experience. All rights reserved.',
+    preview_kicker:'Your Setup', preview_title:'Live Preview',
+    select_frame:'No Frame selected', select_rope:'No Rope selected',
+    select_carpet:'No Carpet selected', select_mount:'No Mount selected',
+    preview_completion:'Configuration', status_incomplete:'Incomplete',
+    status_complete:'Ready'
   },
   he: {
-    nav_gallery:'גלריה', nav_reserve:'הזמנה', nav_about:'צור קשר',
+    nav_gallery:'גלריה', nav_reserve:'תיאום חוויה', nav_about:'צור קשר',
     hero_kicker:'עמדת מראה', hero_title:'שקפו את האלגנטיות שלכם',
     hero_subtitle:'התאימו את חוויית הצילום היוקרתית. בחרו את העיצוב המועדף עליכם כדי לשלוח בקשת הזמנה.',
     btn_start_reservation:'התחל הזמנה',
@@ -1099,17 +1277,22 @@ const translations = {
     label_event_type:'סוג אירוע', select_event_type:'בחר סוג אירוע',
     event_wedding:'חתונה', event_engagement:'אירוסין', event_birthday:'יום הולדת', event_corporate:'עסקי', event_other:'אחר',
     summary_title:'מוכנים להזמין?', summary_desc:'לחצו על הכפתור לפתיחת וואטסאפ עם פרטי ההזמנה.',
-    btn_submit:'קבלו הצעת מחיר',
+    btn_submit:'שלחו בקשת תיאום',
     alert_contact:'נא למלא את כל פרטי הקשר.', alert_select:'נא לבחור מסגרת, חבל, שטיח ומסגרת תמונה.',
     gallery_kicker:'גלריה', gallery_heading:'רגעים של אלגנטיות',
     gallery_subheading:'עיינו באוסף מוקפד של עיצובים והדפסות.',
     gallery_coming_soon:'אנחנו בונים את הגלריה שלנו. בינתיים עקבו אחרינו באינסטגרם.',
     about_kicker:'צור קשר', about_heading:'הסיפור שלנו', about_subtitle:'לוכדים אלגנטיות בכל השתקפות.',
     about_text:'אנחנו מתמחים בהבאת מגע של יוקרה לרגעים היקרים ביותר שלכם.',
-    label_follow:'עקבו אחרינו', back_to_booking:'חזרה להזמנה', footer:'© 2026 Mirror Booth Experience. כל הזכויות שמורות.'
+    label_follow:'עקבו אחרינו', back_to_booking:'חזרה להזמנה', footer:'© 2026 Mirror Booth Experience. כל הזכויות שמורות.',
+    preview_kicker:'העיצוב שלכם', preview_title:'תצוגה מקדימה',
+    select_frame:'לא נבחרה מסגרת', select_rope:'לא נבחר חבל',
+    select_carpet:'לא נבחר שטיח', select_mount:'לא נבחרה מסגרת תמונה',
+    preview_completion:'מצב הגדרה', status_incomplete:'לא הושלם',
+    status_complete:'מוכן'
   },
   ar: {
-    nav_gallery:'المعرض', nav_reserve:'الحجز', nav_about:'اتصل بنا',
+    nav_gallery:'المعرض', nav_reserve:'احجز تجربتك', nav_about:'اتصل بنا',
     hero_kicker:'مرآة التصوير', hero_title:'اعكس أناقتك',
     hero_subtitle:'خصص تجربة التصوير الفاخرة. اختر اللمسات التي تفضلها لإرسال طلب حجز.',
     btn_start_reservation:'ابدأ الحجز',
@@ -1130,14 +1313,19 @@ const translations = {
     label_event_type:'نوع المناسبة', select_event_type:'اختر النوع',
     event_wedding:'زفاف', event_engagement:'خطوبة', event_birthday:'عيد ميلاد', event_corporate:'شركة', event_other:'أخرى',
     summary_title:'جاهز للحجز؟', summary_desc:'النقر سيفتح واتساب مع تفاصيل طلبك.',
-    btn_submit:'احصل على عرض السعر',
+    btn_submit:'أرسل طلب الحجز الفاخر',
     alert_contact:'يرجى ملء جميع تفاصيل الاتصال.', alert_select:'يرجى اختيار إطار وحبل وسجاد وإطار صورة.',
     gallery_kicker:'المعرض', gallery_heading:'لحظات من الأناقة',
     gallery_subheading:'تصفح مجموعة منتقاة من التجهيزات.',
     gallery_coming_soon:'نحن نبني معرضنا. تابعنا على إنستغرام في هذه الأثناء.',
     about_kicker:'اتصل بنا', about_heading:'قصتنا', about_subtitle:'نلتقط الأناقة، انعكاساً بعد انعكاس.',
     about_text:'نحن متخصصون في إضافة لمسة فاخرة إلى مناسباتكم المميزة.',
-    label_follow:'تابعنا', back_to_booking:'العودة إلى الحجز', footer:'© 2026 Mirror Booth Experience. جميع الحقوق محفوظة.'
+    label_follow:'تابعنا', back_to_booking:'العودة إلى الحجز', footer:'© 2026 Mirror Booth Experience. جميع الحقوق محفوظة.',
+    preview_kicker:'تنسيقك المخصص', preview_title:'معاينة مباشرة',
+    select_frame:'لم يتم اختيار إطار', select_rope:'لم يتم اختيار حبال',
+    select_carpet:'لم يتم اختيار سجاد', select_mount:'لم يتم اختيار إطار صورة',
+    preview_completion:'الحالة', status_incomplete:'غير مكتمل',
+    status_complete:'جاهز'
   }
 };
 
@@ -1189,6 +1377,7 @@ function setLanguage(lang) {
     document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
     document.getElementById(`lang-${lang}`)?.classList.add('active');
     applyTranslations(lang);
+    updateLivePreview();
     const etInput = document.getElementById('eventType'), etLabel = document.getElementById('eventTypeLabel');
     if (etInput?.value && etLabel) {
       const map = { Wedding:'event_wedding', Engagement:'event_engagement', Birthday:'event_birthday', Corporate:'event_corporate', Other:'event_other' };
@@ -1223,6 +1412,103 @@ function selectOption(category, value) {
   });
   const check = document.getElementById(`check-${category}-${value}`);
   if (check) { check.classList.remove('hidden'); check.closest('.option-card')?.classList.add('selected'); }
+  updateLivePreview();
+}
+
+function updateLivePreview() {
+  const categories = ['frame', 'rope', 'carpet', 'cardboard'];
+  let selectedCount = 0;
+  
+  categories.forEach(cat => {
+    const val = selections[cat];
+    const box = document.getElementById(`preview-box-${cat}`);
+    const img = document.getElementById(`preview-img-${cat}`);
+    const icon = document.getElementById(`preview-icon-${cat}`);
+    const txt = document.getElementById(`preview-text-${cat}`);
+    
+    if (!box || !txt) return;
+    
+    if (val) {
+      selectedCount++;
+      box.classList.remove('border-white/5', 'bg-white/2');
+      box.classList.add('border-[#c9a84c]/30', 'bg-[#c9a84c]/5', 'shadow-[0_0_15px_rgba(201,168,76,0.06)]');
+      
+      const imgPath = previewImages[cat][val];
+      if (img && icon) {
+        if (imgPath && imgPath !== 'ban') {
+          img.src = imgPath;
+          img.classList.remove('hidden');
+          icon.classList.add('hidden');
+        } else {
+          img.classList.add('hidden');
+          icon.classList.remove('hidden');
+          icon.setAttribute('data-lucide', 'ban');
+          icon.className = 'w-6 h-6 text-rose-500/80';
+        }
+      }
+      
+      // Update text to translation or value name
+      const translationKeyMap = {
+        frame: { 'Vintage Gold': 'frame_gold', 'Vintage Silver': 'frame_silver', 'None': 'frame_none' },
+        rope: { 'Red': 'rope_red', 'Twisted Pink': 'rope_twisted_pink', 'Twisted White': 'rope_twisted_white', 'Twisted Gold': 'rope_twisted_gold', 'None': 'rope_none' },
+        carpet: { 'Red': 'carpet_red', 'Beige': 'carpet_beige', 'White': 'carpet_white', 'Pink': 'carpet_pink', 'None': 'carpet_none' },
+        cardboard: { 'Luxury White': 'mount_luxury_white', 'Natural Kraft XL': 'mount_kraft_xl', 'White': 'mount_white', 'Pure White': 'mount_pure_white', 'White & Gold': 'mount_white_gold', 'Natural Kraft': 'mount_kraft', 'Classic Wine Red': 'mount_wine_red' }
+      };
+      
+      const key = translationKeyMap[cat][val];
+      if (key && translations[currentLang][key]) {
+        txt.textContent = translations[currentLang][key];
+        txt.setAttribute('data-i18n', key);
+      } else {
+        txt.textContent = val;
+        txt.removeAttribute('data-i18n');
+      }
+      txt.classList.remove('text-stone-500');
+      txt.classList.add('text-stone-200');
+    } else {
+      box.classList.add('border-white/5', 'bg-white/2');
+      box.classList.remove('border-[#c9a84c]/30', 'bg-[#c9a84c]/5', 'shadow-[0_0_15px_rgba(201,168,76,0.06)]');
+      if (img && icon) {
+        img.classList.add('hidden');
+        icon.classList.remove('hidden');
+        icon.setAttribute('data-lucide', 'help-circle');
+        icon.className = 'w-6 h-6 text-stone-600';
+      }
+      
+      const selectKeys = {
+        frame: 'select_frame',
+        rope: 'select_rope',
+        carpet: 'select_carpet',
+        cardboard: 'select_mount'
+      };
+      txt.textContent = translations[currentLang][selectKeys[cat]];
+      txt.setAttribute('data-i18n', selectKeys[cat]);
+      txt.classList.add('text-stone-500');
+      txt.classList.remove('text-stone-200');
+    }
+  });
+  
+  const progressBar = document.getElementById('preview-progress-bar');
+  const statusText = document.getElementById('preview-status-text');
+  const pct = (selectedCount / 4) * 100;
+  
+  if (progressBar && statusText) {
+    progressBar.style.width = `${pct}%`;
+    if (pct === 100) {
+      progressBar.classList.remove('from-red-500', 'to-amber-500');
+      progressBar.classList.add('from-emerald-600', 'to-[#c9a84c]');
+      statusText.textContent = translations[currentLang].status_complete;
+      statusText.setAttribute('data-i18n', 'status_complete');
+      statusText.className = 'text-emerald-500 font-semibold tracking-wider uppercase text-[10px]';
+    } else {
+      progressBar.classList.remove('from-emerald-600', 'to-[#c9a84c]');
+      progressBar.classList.add('from-red-500', 'to-amber-500');
+      statusText.textContent = translations[currentLang].status_incomplete;
+      statusText.setAttribute('data-i18n', 'status_incomplete');
+      statusText.className = 'text-rose-500 font-semibold tracking-wider uppercase text-[10px]';
+    }
+  }
+  refreshIcons();
 }
 
 function toggleDropdown() {
@@ -1344,6 +1630,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.06, rootMargin: '0px 0px -10px 0px' });
   document.querySelectorAll('.reveal-hidden').forEach(el => observer.observe(el));
   applyTranslations(currentLang);
+  updateLivePreview();
   refreshIcons();
 });
 </script>

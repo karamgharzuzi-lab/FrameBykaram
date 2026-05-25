@@ -1,14 +1,15 @@
-const CACHE_NAME = “fbk-pwa-v2”;
+const CACHE_NAME = "fbk-pwa-v2";
 
 const APP_SHELL = [
-  “./”,
-  “./index.html”,
-  “./manifest.webmanifest”,
-  “./icon-192.png”,
-  “./icon-512.png”,
-  “./hero-bg.jpg”,
-  “./logo.png”
+  "./",
+  "./index.html",
+  "./manifest.webmanifest",
+  "./icon-192.png",
+  "./icon-512.png",
+  "./hero-bg.jpg",
+  "./logo.png"
 ];
+
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
